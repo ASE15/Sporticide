@@ -45,3 +45,4 @@ gem 'spring',        group: :development
 gem 'tzinfo-data'
 
 
+gem 'devise'
