@@ -11,7 +11,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <% if user_signed_in? %>
-            <li class="<%= 'active' if current_page?(mybikes_path) %>"><a href="<%=mybikes_path%>">My Bikes</a></li>
+            <li class="<%= 'active' if current_page?(controller:'home', action:'index') %>"><a href="<%=root_path%>">Home</a></li>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
