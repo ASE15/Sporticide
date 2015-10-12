@@ -12,9 +12,13 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'mytrainings', to: 'trainings#mytrainings'
+
   resources :chats do
     resources :messages
   end
+
+  resources :friends
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
