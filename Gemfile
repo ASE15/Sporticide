@@ -43,6 +43,6 @@ gem 'bcrypt'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'tzinfo-data'
-
+gem 'rails_12factor'
 
 gem 'devise', '~> 3.4.1'
