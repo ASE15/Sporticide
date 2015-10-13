@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151012125929) do
+ActiveRecord::Schema.define(version: 20151013101844) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20151012125929) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.string   "sport"
   end
 
   add_index "trainings", ["comment_id"], name: "index_trainings_on_comment_id"
