@@ -47,6 +47,7 @@ class TrainingsController < ApplicationController
   end
 
   def mytrainings
+    @trainings = current_user.trainings
     render 'index_private'
   end
 
