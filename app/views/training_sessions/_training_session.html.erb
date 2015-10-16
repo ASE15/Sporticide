@@ -1,0 +1,33 @@
+<blockquote>
+<p>
+  <strong>Date:</strong>
+  <%= training_session.datetime %>
+</p>
+
+<p>
+  <strong>Duration (Min:sec):</strong>
+  <%= training_session.duration %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= training_session.level %>
+</p>
+
+<p>
+  <strong>Length (km):</strong>
+  <%= training_session.length %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= training_session.location %>
+</p>
+
+<% if is_own_training? training_session.training %>
+    <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>
+    <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
+                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
+<%end%>
+
+</blockquote>

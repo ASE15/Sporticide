@@ -1,0 +1,11 @@
+<h3>Session</h3>
+
+<% if is_own_training? @training %>
+    <%= button_to('Destroy', training_session_path(@training, @session),
+                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger pull-right'  ) %><span style="float:right;">&nbsp;&nbsp;</span>
+    <%= button_to 'Edit', edit_training_session_path(@training, @session), class: "btn btn-info pull-right" , :method => :get%><span style="float:right;">&nbsp;&nbsp;</span>
+<%end%>
+
+<%= render @session %>
+
+<br /><br />
