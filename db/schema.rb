@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013101844) do
+ActiveRecord::Schema.define(version: 20151016105031) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -28,7 +28,10 @@ ActiveRecord::Schema.define(version: 20151013101844) do
     t.datetime "datetime"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
   end
+
+  add_index "comments", ["training_id"], name: "index_comments_on_training_id"
 
   create_table "friend_requests", force: :cascade do |t|
     t.integer  "user_id"
@@ -51,7 +54,10 @@ ActiveRecord::Schema.define(version: 20151013101844) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
   end
+
+  add_index "logs", ["training_id"], name: "index_logs_on_training_id"
 
   create_table "members_trainings", id: false, force: :cascade do |t|
     t.integer "user_id",     null: false
@@ -67,8 +73,10 @@ ActiveRecord::Schema.define(version: 20151013101844) do
     t.datetime "updated_at"
     t.integer  "sender_id"
     t.integer  "receiver_id"
+    t.integer  "chat_id"
   end
 
+  add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
   add_index "messages", ["receiver_id"], name: "index_messages_on_receiver_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
@@ -81,39 +89,37 @@ ActiveRecord::Schema.define(version: 20151013101844) do
     t.integer  "log_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
   end
 
   add_index "training_sessions", ["log_id"], name: "index_training_sessions_on_log_id"
+  add_index "training_sessions", ["training_id"], name: "index_training_sessions_on_training_id"
 
   create_table "trainings", force: :cascade do |t|
     t.boolean  "isPublic"
     t.string   "title"
     t.text     "description"
-    t.integer  "session_id"
-    t.integer  "comment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "sport"
   end
 
-  add_index "trainings", ["comment_id"], name: "index_trainings_on_comment_id"
   add_index "trainings", ["owner_id"], name: "index_trainings_on_owner_id"
-  add_index "trainings", ["session_id"], name: "index_trainings_on_session_id"
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
