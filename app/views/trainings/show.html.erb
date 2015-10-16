@@ -1,0 +1,11 @@
+<h1>Overview Training</h1>
+
+<% if is_own_training? @training %>
+    <%= button_to('Destroy', trainings_path(@training),
+                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger pull-right'  ) %><span style="float:right;">&nbsp;&nbsp;</span>
+    <%= button_to 'Edit', edit_trainings_path(@training), class: "btn btn-info pull-right" , :method => :get%><span style="float:right;">&nbsp;&nbsp;</span>
+<%end%>
+
+<%= render @training %>
+
+<br /><br />
