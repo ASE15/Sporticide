@@ -9,3 +9,12 @@
 <%= render @training %>
 
 <br /><br />
+<h2>Trainings</h2>
+
+
+<% @training.training_sessions.each do |s| %>
+    <%= render s %>
+<% end %>
+
+<br /><br />
+<%= link_to 'New session', new_training_trainingsession_path(@training), class:'btn btn-info' %>

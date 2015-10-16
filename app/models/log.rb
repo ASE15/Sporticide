@@ -1,3 +1,3 @@
 class Log < ActiveRecord::Base
-  belongs_to :trainingsession, :inverse_of => :logs
+  belongs_to :training_session, :inverse_of => :logs
 end

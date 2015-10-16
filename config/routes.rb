@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :trainings do
-    resources :trainingsessions do
+    resources :trainingsessions, controller:'training_sessions' do
       resources :logs
     end
   end

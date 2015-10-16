@@ -1,24 +1,29 @@
 <p>
   <strong>Title:</strong>
-  <%= @training.title %>
+  <%= training.title %>
 </p>
 
 <p>
   <strong>Sport:</strong>
-  <%= @training.sport %>
+  <%= training.sport %>
 </p>
 
 <p>
   <strong>is Public?:</strong>
-  <%= @training.isPublic %>
+  <%= training.isPublic %>
 </p>
 
 <p>
   <strong>Description:</strong>
-  <%= @training.description %>
+  <%= training.description %>
 </p>
 
 <p>
   <strong>Created:</strong>
-  <%= @training.created_at %>
+  <%= training.created_at %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= training.owner.email %>
 </p>
