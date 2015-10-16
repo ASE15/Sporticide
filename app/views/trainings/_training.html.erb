@@ -1,48 +1,24 @@
 <p>
-  <strong>Name:</strong>
-  <%= @bike.name %>
+  <strong>Title:</strong>
+  <%= @training.title %>
 </p>
 
 <p>
-  <strong>Brand:</strong>
-  <%= @bike.brand %>
+  <strong>Sport:</strong>
+  <%= @training.sport %>
 </p>
 
 <p>
-  <strong>Color:</strong>
-  <%= @bike.color %>
+  <strong>is Public?:</strong>
+  <%= @training.isPublic %>
 </p>
 
 <p>
-  <strong>Weight (kg):</strong>
-  <%= @bike.weight %>
+  <strong>Description:</strong>
+  <%= @training.description %>
 </p>
 
 <p>
-  <strong>Battery type:</strong>
-  <%= @bike.batterytype %>
+  <strong>Created:</strong>
+  <%= @training.created_at %>
 </p>
-
-<p>
-  <strong>kWh:</strong>
-  <%= @bike.kwh %>
-</p>
-
-<p>
-  <strong>Max speed (km/h):</strong>
-  <%= @bike.maxspeed %>
-</p>
-
-<p>
-  <strong>Charging time (hours):</strong>
-  <%= @bike.chargingtime %>
-</p>
-
-<%= render @bike.pictures %>
-
-<% if is_own_bike(@bike) %>
-
-    <h2>Add Picture</h2>
-    <%= render 'pictures/form' %>
-
-<% end %>
