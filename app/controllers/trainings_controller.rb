@@ -1,6 +1,7 @@
 class TrainingsController < ApplicationController
 
   before_action :authenticate_user!
+  before_filter :owns_training!, :only => [:update, :edit, :destroy]
 
   def index
     @trainings = Training.all

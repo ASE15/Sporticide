@@ -1,0 +1,28 @@
+<blockquote>
+<p>
+  <strong>Date:</strong>
+  <%= log.created_at %>
+</p>
+
+<p>
+  <strong>Intensity (1: easy, 5: hard):</strong>
+  <%= log.intensity %>
+</p>
+
+<p>
+  <strong>Rating (1: bad, 5: good):</strong>
+  <%= log.rating %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= log.comment %>
+</p>
+
+
+<% if is_own_log? log %>
+    <%= link_to 'Edit', edit_training_trainingsession_log_path(log.training_session.training, log.training_session, log), class: "btn btn-info" , :method => :get%>
+    <%= link_to('Destroy', training_trainingsession_log_path(log.training_session.training, log.training_session, log),
+                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
+<%end%>
+</blockquote>
