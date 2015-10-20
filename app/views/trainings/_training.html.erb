@@ -27,3 +27,16 @@
   <strong>Owner:</strong>
   <%= training.owner.email %>
 </p>
+
+<strong>Member:</strong>
+<ul>
+  <% training.users.each do |m| %>
+    <li><%= m.email %></li>
+  <% end %>
+</ul>
+
+<% if training.users.exists?(current_user) %>
+    <%= link_to 'Leave this training', training_leave_path(training), class: 'btn btn-danger' %>
+<% else %>
+    <%= link_to 'Join this training', training_join_path(training), class:'btn btn-default' %>
+<% end %>

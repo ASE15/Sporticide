@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016105031) do
+ActiveRecord::Schema.define(version: 20151020090605) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -59,11 +59,6 @@ ActiveRecord::Schema.define(version: 20151016105031) do
 
   add_index "logs", ["training_id"], name: "index_logs_on_training_id"
 
-  create_table "members_trainings", id: false, force: :cascade do |t|
-    t.integer "user_id",     null: false
-    t.integer "training_id", null: false
-  end
-
   create_table "messages", force: :cascade do |t|
     t.datetime "datetime"
     t.boolean  "isRead"
@@ -106,6 +101,11 @@ ActiveRecord::Schema.define(version: 20151016105031) do
   end
 
   add_index "trainings", ["owner_id"], name: "index_trainings_on_owner_id"
+
+  create_table "trainings_users", id: false, force: :cascade do |t|
+    t.integer "user_id",     null: false
+    t.integer "training_id", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

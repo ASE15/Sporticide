@@ -18,6 +18,8 @@ class TrainingsController < ApplicationController
     @training = Training.new(training_params)
     @training.owner = current_user
 
+    @training.users << current_user #join the training
+
     if @training.save
       redirect_to @training
     else
@@ -49,6 +51,30 @@ class TrainingsController < ApplicationController
   def mytrainings
     @trainings = current_user.trainings
     render 'index_private'
+  end
+
+  def join
+    @training = Training.find(params[:training_id])
+    #
+    unless @training.users.exists?(current_user)
+      #join
+      @training.users << current_user
+      @training.save
+      redirect_to @training, :notice => 'You joined this training.'
+    else
+      #already joined
+      redirect_to @training, :error => 'You have already joined this training.'
+    end
+  end
+
+  def leave
+    @training = Training.find(params[:training_id])
+    if @training.users.exists?(current_user)
+      @training.users.delete(current_user)
+      redirect_to @training, :notice => 'You have left this training.'
+    else
+      redirect_to @training, :error => 'You are not member of this training.'
+    end
   end
 
   private
