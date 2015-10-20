@@ -31,6 +31,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Create environment variables  and keep them secret
 gem 'figaro', "~> 1.1.1"
 
+# Omniauth for login with facebook
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
