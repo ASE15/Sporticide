@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020090605) do
+ActiveRecord::Schema.define(version: 20151020122147) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 20151020090605) do
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "training_id"
+    t.integer  "user_id"
+    t.integer  "training_session_id"
   end
 
-  add_index "logs", ["training_id"], name: "index_logs_on_training_id"
+  add_index "logs", ["training_session_id"], name: "index_logs_on_training_session_id"
+  add_index "logs", ["user_id"], name: "index_logs_on_user_id"
 
   create_table "messages", force: :cascade do |t|
     t.datetime "datetime"
@@ -81,13 +83,11 @@ ActiveRecord::Schema.define(version: 20151020090605) do
     t.integer  "level"
     t.integer  "length"
     t.string   "location"
-    t.integer  "log_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "training_id"
   end
 
-  add_index "training_sessions", ["log_id"], name: "index_training_sessions_on_log_id"
   add_index "training_sessions", ["training_id"], name: "index_training_sessions_on_training_id"
 
   create_table "trainings", force: :cascade do |t|
