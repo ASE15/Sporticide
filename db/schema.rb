@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016105031) do
+ActiveRecord::Schema.define(version: 20151020101054) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -47,6 +47,24 @@ ActiveRecord::Schema.define(version: 20151016105031) do
     t.integer "user_a_id", null: false
     t.integer "user_b_id", null: false
   end
+
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "accesstoken"
+    t.string   "refreshtoken"
+    t.string   "uid"
+    t.string   "name"
+    t.string   "email"
+    t.string   "nickname"
+    t.string   "image"
+    t.string   "phone"
+    t.string   "urls"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
   create_table "logs", force: :cascade do |t|
     t.integer  "intensity"
