@@ -36,7 +36,9 @@
 </ul>
 
 <% if training.users.exists?(current_user) %>
-    <%= link_to 'Leave this training', training_leave_path(training), class: 'btn btn-danger' %>
+    <% if not training.owner == current_user %>
+        <%= link_to 'Leave this training', training_leave_path(training), class: 'btn btn-danger' %>
+    <% end %>
 <% else %>
     <%= link_to 'Join this training', training_join_path(training), class:'btn btn-default' %>
 <% end %>

@@ -70,11 +70,15 @@ class TrainingsController < ApplicationController
 
   def leave
     @training = Training.find(params[:training_id])
-    if @training.users.exists?(current_user)
-      @training.users.delete(current_user)
-      redirect_to @training, :notice => 'You have left this training.'
+    if @training.owner == current_user
+      redirect_to @training, :error => 'You cant leave the training because you are the owner!'
     else
-      redirect_to @training, :error => 'You are not member of this training.'
+      if @training.users.exists?(current_user)
+        @training.users.delete(current_user)
+        redirect_to @training, :notice => 'You have left this training.'
+      else
+        redirect_to @training, :error => 'You are not member of this training.'
+      end
     end
   end
 
