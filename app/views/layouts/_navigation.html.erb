@@ -20,10 +20,8 @@
         <% if user_signed_in? %>
             <li class="<%= 'active' if current_page?(mytrainings_path) %>"><a href="<%=mytrainings_path%>">My Trainings</a></li>
             <li class="<%= 'active' if current_page?(chats_path) %>"><a href="<%=chats_path%>">Chats</a></li>
-            <!-- currently not working -->
-            <li><a href="<%= user_path(current_user) %>"><span class="glyphicon glyphicon-user"></span> <%=current_user.email%></a></li>
-            <!-- Logout currently not working -->
-            <!--<li><a href="<%= session_path(session) %>"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
+            <li><a href="<%= user_path(current_user) %>"><span class="glyphicon glyphicon-user"></span> <%=current_user.username%></a></li>
+            <li><a href="<%= session_path(session)  %>" data-method='delete'><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         <% else %>
             <li><a href="<%=new_user_path%>"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><a href="<%=new_session_path%>"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
