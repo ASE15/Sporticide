@@ -16,26 +16,6 @@
   <dd><%= @user.publicvisible %></dd>
 </dl>
 
-<h2>Subscriptions</h2>
-<ul>
-  <% if not @user.subscriptions.nil? %>
-      <% @user.subscriptions.each do |sub| %>
-
-          <li><%= link_to sub.attributes["uri"].split('/').last, user_path+subscriptions_path+"/"+sub.attributes["uri"].split('/').last %></li>
-      <% end %>
-  <% end %>
-</ul>
-
-
-<h2>Partnerships</h2>
-<ul>
-  <% if not @user.partnerships.nil? %>
-      <% @user.partnerships.each do |partner| %>
-
-          <li><%= link_to partner.attributes["uri"].split('/').last, user_path+"/"+partner.attributes["uri"].split('/').last %></li>
-      <% end %>
-  <% end %>
-</ul>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
