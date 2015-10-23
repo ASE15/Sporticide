@@ -31,10 +31,10 @@ class User  < Api::Base
     end
   end
 
-  #schema do
-  #  string 'uri', 'username', 'password', 'realname', 'email', 'subscriptions', 'partnerships'
-  #  integer 'publicvisible'
-  #  end
+  schema do
+    string 'uri', 'username', 'password', 'realname', 'email', 'subscriptions', 'partnerships'
+    integer 'publicvisible'
+    end
 
   #validates :lastName,  :presence => true, :length => { :maximum => 50 }
   #validates :firstName, :presence => true, :length => { :minimum => 6 }
