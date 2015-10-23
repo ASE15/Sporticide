@@ -21,7 +21,7 @@
             <li class="<%= 'active' if current_page?(mytrainings_path) %>"><a href="<%=mytrainings_path%>">My Trainings</a></li>
             <li class="<%= 'active' if current_page?(chats_path) %>"><a href="<%=chats_path%>">Chats</a></li>
             <!-- currently not working -->
-            <li><a href="/"><span class="glyphicon glyphicon-user"></span> <%=current_user.email%></a></li>
+            <li><a href="<%= user_path(current_user) %>"><span class="glyphicon glyphicon-user"></span> <%=current_user.email%></a></li>
             <!-- Logout currently not working -->
             <!--<li><a href="<%= session_path(session) %>"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>-->
         <% else %>

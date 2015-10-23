@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :friends
   resources :users
-
+  resources :sessions, only: [:new, :create, :destroy]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
