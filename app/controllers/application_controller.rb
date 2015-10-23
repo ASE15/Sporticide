@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def owns_log!
     @log = Log.find(params[:id])
-    if not @log.cyber_user == current_user
+    if not @log.user == current_user
       flash[:error] = 'You are not the owner of this log!'
       redirect_to @log.training_session.training
     end
@@ -25,14 +25,14 @@ class ApplicationController < ActionController::Base
 
   def is_member_of_training!
     @training = Training.find(params[:training_id].nil? ? params[:id] : params[:training_id])
-    if not @training.cyber_users.exists?(current_user)
+    if not @training.users.exists?(current_user)
       flash[:error] = 'You are not a member of this training!'
       redirect_to @training
     end
   end
 
   def current_user
-    @current_user ||= CyberUser.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   helper_method :current_user

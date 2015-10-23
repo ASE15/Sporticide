@@ -34,7 +34,7 @@
     <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
                   method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
 <%end%>
-<% if training_session.training.cyber_users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
+<% if training_session.training.users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
   <%= link_to 'Add log', new_training_trainingsession_log_path(training_session.training, training_session), class: 'btn btn-default' %>
 <% end %>
 

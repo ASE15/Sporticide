@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = CyberUser.find(params[:username])
+    user = User.find(params[:username])
     begin
       digest = Base64.encode64(params[:username]+':'+params[:passwd])
-      # checks if the cyber_user put in the form is a cyber_user on cybercoach
+      # checks if the user put in the form is a user on cybercoach
       RestClient.get 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser/', :Authorization => 'Basic '+digest
       status = true
     rescue Exception => e
