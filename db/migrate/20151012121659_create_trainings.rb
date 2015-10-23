@@ -11,7 +11,7 @@ class CreateTrainings < ActiveRecord::Migration
     end
 
     add_reference :trainings, :owner, references: :users, index: true
-    add_foreign_key :trainings, :users, column: :owner_id
+    add_foreign_key :trainings, :CyberUsers, column: :owner_id
 
   end
 end

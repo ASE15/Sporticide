@@ -1,5 +1,5 @@
 require 'active_resource'
-class User  < Api::Base
+class CyberUser < Api::Base
   #has_many :trainings, foreign_key: "owner_id"
   #has_and_belongs_to_many :trainings
 
@@ -14,7 +14,7 @@ class User  < Api::Base
 
   self.prefix = '/CyberCoachServer/resources/'
 
-  #self.user = "newuser1"
+  #CyberUser.user = "newuser1"
   #self.password = "newuser"
 
   # To handle the issue with getting the resources by name (e.g. ../resources/sports/Running not ../sports/1)
@@ -22,11 +22,11 @@ class User  < Api::Base
   self.primary_key = 'username'
 
   # singular name of the resource. you only need to specify this if this class name is not the resource name
-  self.element_name = 'user'
+  self.element_name = 'cyber_user'
 
   class << self
     def instantiate_collection(collection, prefix_options = {}, b = nil)
-      collection = collection['users'] if collection.instance_of?(Hash)
+      collection = collection['CyberUsers'] if collection.instance_of?(Hash)
       collection.collect! { |record| instantiate_record(record, prefix_options) }
     end
   end

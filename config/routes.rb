@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :friends
-  resources :users
+  resources :cyberusers
   resources :sessions, only: [:new, :create, :destroy]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

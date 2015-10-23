@@ -1,98 +1,98 @@
-class UsersController < ApplicationController
+class CyberUsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
 
-  # GET /users
-  # GET /users.json
+  # GET /CyberUsers
+  # GET /CyberUsers.json
   def index
     if params[:start].nil?
       params[:start] = 0
       params[:size] = 20
     end
-    @users = User.find(:all) #, :params => {:start => params[:start], :size => params[:size]})
+    cyber_users = CyberUser.find(:all) #, :params => {:start => params[:start], :size => params[:size]})
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /CyberUsers/1
+  # GET /CyberUsers/1.json
   def show
     #nothing to do since we have the set_user method
   end
 
-  # GET /users/new
+  # GET /CyberUsers/new
   def new
-    @user = User.new
+    cyber_user = CyberUser.new
   end
 
-  # GET /users/1/edit
+  # GET /CyberUsers/1/edit
   def edit
     #nothing to do since we have the set_user method
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /CyberUsers
+  # POST /CyberUsers.json
   def create
     respond_to do |format|
 
-      #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
+      #@cyber_user = CyberUser.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'
-      #  @user.password = user_params[:password]
+      #  @cyber_user.password = user_params[:password]
       #else
-      #  @user.password = nil
+      #  @cyber_user.password = nil
       #end
-      @user = User.new(user_params, true)
+      cyber_user = CyberUser.new(user_params, true)
 
       begin
-        status = @user.save!
+        status = cyber_user.save!
       rescue ActiveResource::UnauthorizedAccess,  ActiveResource::ResourceConflict
         status = false
       end
 
       if status
-        format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'User was successfully Created.' }
+        format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'CyberUser was successfully Created.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit', alert: "Could not Create" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: cyber_user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /CyberUsers/1
+  # PATCH/PUT /CyberUsers/1.json
   def update
     respond_to do |format|
 
-      @user.email = user_params[:email]
-      @user.publicvisible = user_params[:publicvisible]
-      @user.realname = user_params[:realname]
+      cyber_user.email = user_params[:email]
+      cyber_user.publicvisible = user_params[:publicvisible]
+      cyber_user.realname = user_params[:realname]
       if user_params[:password] != '*'
-        @user.password = user_params[:password]
+        cyber_user.password = user_params[:password]
       else
-        @user.password = nil
+        cyber_user.password = nil
       end
 
 
       begin
-        status = @user.save
+        status = cyber_user.save
       rescue ActiveResource::UnauthorizedAccess
         status = false
       end
 
       if status
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to cyber_user, notice: 'CyberUser was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { redirect_to @user, alert: "Could not update" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { redirect_to cyber_user, alert: "Could not update" }
+        format.json { render json: cyber_user.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /CyberUsers/1
+  # DELETE /CyberUsers/1.json
   def destroy
     begin
-      status = @user.destroy
+      status = cyber_user.destroy
     rescue ActiveResource::UnauthorizedAccess
       status = false
     end
@@ -104,8 +104,8 @@ class UsersController < ApplicationController
         format.html {redirect_to root_path}
         format.json { head :no_content }
       else
-        format.html { redirect_to @user, alert: "Could not delete"}
-        format.json { render json: @users.errors, status: "Could not delete" }
+        format.html { redirect_to cyber_user, alert: "Could not delete"}
+        format.json { render json: cyber_users.errors, status: "Could not delete" }
       end
     end
   end
@@ -118,13 +118,13 @@ class UsersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    #User.user = session[:user_id]
-    #User.password = session[:passwd]
+    #CyberUser.cyber_user = session[:user_id]
+    #CyberUser.password = session[:passwd]
     Api::Base.user = session[:user_id]
     Api::Base.password = session[:passwd]
 
     begin
-      @user = User.find(params[:id])
+      cyber_user = CyberUser.find(params[:id])
     rescue ActiveResource::ResourceNotFound
       redirect_to :action => 'not_found'
     rescue ActiveResource::ResourceConflict, ActiveResource::ResourceInvalid
@@ -134,7 +134,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:uri, :username, :password, :realname, :email, :publicvisible)
+    params.require(:cyber_user).permit(:uri, :username, :password, :realname, :email, :publicvisible)
   end
 
   def sort_column

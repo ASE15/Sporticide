@@ -4,7 +4,7 @@ class TrainingSession < ActiveRecord::Base
 
   def user_already_logged?(user)
     self.logs.each do |l|
-      if l.user == user
+      if l.cyber_user == user
         return true
       end
     end

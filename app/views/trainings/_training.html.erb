@@ -30,12 +30,12 @@
 
 <strong>Member:</strong>
 <ul>
-  <% training.users.each do |m| %>
+  <% training.cyber_users.each do |m| %>
     <li><%= m.email %></li>
   <% end %>
 </ul>
 
-<% if training.users.exists?(current_user) %>
+<% if training.cyber_users.exists?(current_user) %>
     <% if not training.owner == current_user %>
         <%= link_to 'Leave this training', training_leave_path(training), class: 'btn btn-danger' %>
     <% end %>
