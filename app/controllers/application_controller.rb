@@ -36,11 +36,13 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
+
   def user_signed_in?
-    unless current_user == nil
+    if current_user.nil?
       return false
     end
     return true
   end
+  helper_method :user_signed_in?
 
 end
