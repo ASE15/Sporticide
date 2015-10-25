@@ -9,7 +9,7 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
 		 FB.api('/me', function(response) {
-			alert('Successful login for: ' + JSON.stringify(response));
+			console.log('Successful login for: ' + JSON.stringify(response));
 		});
 		window.location.replace("/users/auth/facebook/callback");
     } else if (response.status === 'not_authorized') {
