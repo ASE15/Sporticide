@@ -101,13 +101,11 @@ ActiveRecord::Schema.define(version: 20151020122147) do
     t.integer  "level"
     t.integer  "length"
     t.string   "location"
-    t.integer  "log_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "training_id"
   end
 
-  add_index "training_sessions", ["log_id"], name: "index_training_sessions_on_log_id"
   add_index "training_sessions", ["training_id"], name: "index_training_sessions_on_training_id"
 
   create_table "trainings", force: :cascade do |t|
@@ -121,6 +119,11 @@ ActiveRecord::Schema.define(version: 20151020122147) do
   end
 
   add_index "trainings", ["owner_id"], name: "index_trainings_on_owner_id"
+
+  create_table "trainings_users", id: false, force: :cascade do |t|
+    t.integer "user_id",     null: false
+    t.integer "training_id", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

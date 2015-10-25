@@ -5,13 +5,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def generic_callback( provider )
     puts(env["omniauth.auth"])
-    @identity = Identity.find_for_oauth env["omniauth.auth"]
+   @identity = Identity.find_for_oauth env["omniauth.auth"]
 
     @user = @identity.user || current_user
     if @user.nil?
-      puts("no user!")
-      puts(@identity.email)
-      puts("email")
       @user = User.create( email: @identity.email || "" )
       @identity.update_attribute( :user_id, @user.id )
     end
@@ -24,7 +21,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @identity.update_attribute( :user_id, @user.id )
       # This is because we've created the user manually, and Device expects a
       # FormUser class (with the validations)
-      @user = User.find @user.id
+      @user = FormUser.find @user.id
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: provider.capitalize) if is_navigational_format?
     else
