@@ -2,6 +2,9 @@ source 'http://rubygems.org'
 
 # ruby '2.1.5'
 
+#Active resource to query the cyber coach database
+gem 'activeresource'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.4'
 # Use sqlite3 as the database for Active Record
@@ -47,4 +50,3 @@ gem 'tzinfo-data'
 gem 'rails_12factor'
 
 gem 'devise', '~> 3.4.1'
-gem 'activeresource'
