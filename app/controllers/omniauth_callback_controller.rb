@@ -4,7 +4,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
   
   def generic_callback( provider )
-    puts(env["omniauth.auth"])
+   puts("here!")
+   puts(env["omniauth.auth"])
    @identity = Identity.find_for_oauth env["omniauth.auth"]
 
     @user = @identity.user || current_user
