@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :trainings do
+    get 'join', to: 'trainings#join'
+    get 'leave', to: 'trainings#leave'
     resources :trainingsessions, controller:'training_sessions' do
       resources :logs
     end
