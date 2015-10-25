@@ -1,5 +1,3 @@
-require 'activeresource'
-
 class Api::Base < ActiveResource::Base
 
   #### More information about how to work with ActiveResource::Base can be found on GitHub
