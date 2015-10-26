@@ -6,6 +6,26 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+#
+# Hot fix for omniauth-facebook
+#
+module OmniAuth
+  module Strategies
+    class Facebook < OmniAuth::Strategies::OAuth2
+      # NOTE If we're using code from the signed request then FB sets the redirect_uri to '' during the authorize
+      # phase and it must match during the access_token phase:
+      # https://github.com/facebook/facebook-php-sdk/blob/master/src/base_facebook.php#L477
+      def callback_url
+        if @authorization_code_from_signed_request_in_cookie
+          ''
+        else
+          options[:callback_url] || (full_host + script_name + callback_path)
+        end
+      end
+    end
+  end
+end
+
 module Sporticide
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
