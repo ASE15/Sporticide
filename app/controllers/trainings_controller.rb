@@ -22,6 +22,8 @@ class TrainingsController < ApplicationController
     @training.users << current_user #join the training
 
     if @training.save
+      subscribe_user_to_sport(current_user, @training.sport)
+
       redirect_to @training
     else
       render 'new'
@@ -85,5 +87,23 @@ class TrainingsController < ApplicationController
   private
   def training_params
     params.require(:training).permit(:isPublic, :title, :description, :sport)
+  end
+
+  def subscribe_user_to_sport(user, sport)
+    cc_user = 'andi'
+    cc_pass = 'test'
+    #ToDo insert real username
+    begin
+      digest = Base64.encode64(cc_user+':'+cc_pass)
+      result = RestClient.put 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/'+cc_user+'/'+sport, :Authorization => 'Basic '+digest
+      #"http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{cc_user}/#{sport}", :Authorization => 'Basic '+digest
+
+      doc = Nokogiri::XML(result)
+
+
+
+    rescue Exception => e
+      status=false
+    end
   end
 end

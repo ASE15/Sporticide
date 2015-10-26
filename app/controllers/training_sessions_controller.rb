@@ -56,4 +56,27 @@ class TrainingSessionsController < ApplicationController
   def session_params
     params.require(:training_session).permit(:datetime, :duration, :level, :length, :location)
   end
+
+  def create_cc_entry(user, sport)
+    cc_user = 'andi'
+    cc_pass = 'test'
+    #ToDo insert real username
+    begin
+      digest = Base64.encode64(cc_user+':'+cc_pass)
+      result = RestClient.post 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/'+cc_user+'/'+sport,
+                               :entrylocation => 'test',
+                               :entryduration => 'test',
+                               :entrydate => 'test',
+                               :comment => 'test',
+                               :publicvisible => 1,
+                               :Authorization => 'Basic '+digest
+      #ToDo add parameters
+      doc = Nokogiri::XML(result)
+
+
+
+    rescue Exception => e
+      status=false
+    end
+  end
 end
