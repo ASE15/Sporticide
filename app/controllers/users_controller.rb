@@ -7,9 +7,11 @@ class UsersController < ApplicationController
   def index
     if params[:start].nil?
       params[:start] = 0
+    end
+    if params[:size].nil?
       params[:size] = 20
     end
-    @users = User.find(:all) #, :params => {:start => params[:start], :size => params[:size]})
+    @users = User.find(:all , :params => {:start => params[:start], :size => params[:size]})
   end
 
   # GET /users/1

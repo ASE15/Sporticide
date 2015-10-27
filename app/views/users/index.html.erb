@@ -2,6 +2,10 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+<form>
+  <input type="integer" name="start" placeholder="start" class="form-control"> <input type="integer" name="size" placeholder="size" class="form-control">
+  <input type="submit" class="btn btn-small">
+</form></br>
 <table class="table table-bordered table-striped display" id="posts">
   <thead>
   <tr>
