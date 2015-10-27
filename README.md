@@ -29,3 +29,5 @@ The application can then be accessed with any browser on
 
 
 ##General
+Validations of inpot flields can be done using the validator.js
+Doc: http://1000hz.github.io/bootstrap-validator/
