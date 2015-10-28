@@ -27,7 +27,10 @@ Run the app
 The application can then be accessed with any browser on
 > http://localhost:3000/
 
-
 ##General
 Validations of inpot flields can be done using the validator.js
 Doc: http://1000hz.github.io/bootstrap-validator/
+
+### Facebook
+Facebook Login is currently configured to work on localhost:3000, so 
+it won't work on heroku currently.
