@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
 
   get 'mytrainings', to: 'trainings#mytrainings'
+  get 'auth/facebook/callback', to: 'sessions#create'
 
   resources :chats do
     resources :messages

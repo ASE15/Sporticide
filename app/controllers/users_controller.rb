@@ -32,13 +32,13 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     respond_to do |format|
-
       #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'
       #  @user.password = user_params[:password]
       #else
       #  @user.password = nil
       #end
+      puts(user_params)
       @user = User.new(user_params, true)
 
       begin
@@ -48,10 +48,10 @@ class UsersController < ApplicationController
       end
 
       if status
-        format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'User was successfully Created.' }
+        format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'User was successfully created.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit', alert: "Could not Create" }
+        format.html { render action: 'edit', alert: "Could not create user." }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
