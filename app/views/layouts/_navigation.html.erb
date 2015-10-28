@@ -11,8 +11,9 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <% if user_signed_in? %>
-            <li class="<%= 'active' if current_page?(root_path) %>"><a href="<%=root_path%>">Home</a></li>
+            <li class="<%= 'active' if current_page?(root_path) %>"><a href="<%=root_path%>"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li class="<%= 'active' if current_page?(trainings_path) %>"><a href="<%=trainings_path%>">Trainings</a></li>
+            <li class="<%= 'active' if current_page? (users_path)  %>"><a href="<%=	 users_path %>">Users</a></li>
             <li class="<%= 'active' if current_page?(friends_path) %>"><a href="<%=friends_path%>">Friends</a></li>
         <% end %>
       </ul>
