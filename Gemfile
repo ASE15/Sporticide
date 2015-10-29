@@ -45,11 +45,6 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
@@ -59,3 +54,5 @@ gem 'rails_12factor'
 #gem 'devise', '~> 3.4.1'
 gem 'activeresource'
 gem 'rest-client'
+
+gem 'bootstrap_form'
