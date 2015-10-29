@@ -63,7 +63,7 @@ class SessionsController < ApplicationController
          # rescue ActiveRecord::RecordNotFound => e
           LocalUser.new(username:  session[:user_id]).save
         end
-        redirect_to user_path(@user), :notice => "Logged in! #{LocalUser.find_by(username: session[:user_id])}bla!"
+        redirect_to user_path(@user), :notice => "Logged in!"
       end
     else
       flash.now.alert = "Wrong login!"
