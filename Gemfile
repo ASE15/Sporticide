@@ -51,8 +51,6 @@ gem 'bcrypt'
 gem 'tzinfo-data'
 gem 'rails_12factor'
 
-#gem 'devise', '~> 3.4.1'
-gem 'activeresource'
 gem 'rest-client'
 
 gem 'bootstrap_form'

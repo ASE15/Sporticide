@@ -6,5 +6,4 @@ class LocalUser < ActiveRecord::Base
                          :join_table => "friends",
                          :foreign_key => "user_a_id",
                          :association_foreign_key => "user_b_id")
-
 end

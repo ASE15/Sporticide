@@ -32,8 +32,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
+    @current_user ||= LocalUser.find_by(username: session[:user_id]) if session[:user_id]
+  #   unless LocalUser.find(1).nil?
+  #   flash[:error] = "LocalUser = #{LocalUser.find(1).username}"
+  # end
+    end
 
   helper_method :current_user
 
