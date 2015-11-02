@@ -59,6 +59,12 @@ class SessionsController < ApplicationController
     if @user && status
       if session[:user_id] = @user.username
         session[:passwd] = params[:passwd]
+        
+        if LocalUser.find_by(username: session[:user_id]).nil?
+          puts("User should exist. He was created by me! " + session[:user_id])
+          LocalUser.new(username:  session[:user_id]).save
+        end
+        
         redirect_to user_path(@user), :notice => "Logged in!"
       end
     else
