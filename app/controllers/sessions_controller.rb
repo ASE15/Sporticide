@@ -80,6 +80,11 @@ class SessionsController < ApplicationController
     if @user && status
       if session[:user_id] = @user.username
         session[:passwd] = params[:passwd]
+        # begin
+         if LocalUser.find_by(username: session[:user_id]).nil?
+         # rescue ActiveRecord::RecordNotFound => e
+          LocalUser.new(username:  session[:user_id]).save
+        end
         redirect_to user_path(@user), :notice => "Logged in!"
       end
     else
