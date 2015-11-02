@@ -35,13 +35,14 @@ class UsersController < ApplicationController
   def create
     respond_to do |format|
       if(session[:facebook_auth])
+        puts "Currently in facebook auth mode!"
 		identity = Identity.find_by(provider: session[:facebook_provider], uid: session[:facebook_uid])
 		
 		identity.nickname = user_params[:username]
 		identity.save!
 		
-		user_params[:email] = identity.email || user_params[:email]
-		user_params[:realname] = identity.name || user_params[:name]
+		params[:email] = identity.email || user_params[:email]
+		params[:realname] = identity.name || user_params[:name]
 		session[:facebook_auth] = nil
       end
     
@@ -51,6 +52,7 @@ class UsersController < ApplicationController
       #else
       #  @user.password = nil
       #end
+      puts(user_params)
       @user = User.new(user_params, true)
 
       begin
@@ -60,6 +62,14 @@ class UsersController < ApplicationController
       end
 
       if status
+        puts("Create local user with username " + user_params[:username])
+        LocalUser.new(username:  user_params[:username]).save!
+        local_user = LocalUser.find_by(username: user_params[:username])
+        
+        puts("Add password to local user! " + user_params[:password])
+        local_user.password = user_params[:password]
+        local_user.save!
+      
         format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'User was successfully created.' }
         format.json { head :no_content }
       else
