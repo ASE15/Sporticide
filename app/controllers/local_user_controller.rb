@@ -6,4 +6,9 @@ class LocalUserController < ApplicationController
   #   user = LocalUser.new()
   #   user.username = "test"
   # end
+  
+  def show
+     user = User.find(current_user.username)
+     redirect_to user_path(user) 
+  end
 end

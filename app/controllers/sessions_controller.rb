@@ -50,7 +50,7 @@ class SessionsController < ApplicationController
         session[:passwd] = params[:passwd]
         
         if LocalUser.find_by(username: session[:user_id]).nil?
-          LocalUser.new(username:  session[:user_id]).save
+          LocalUser.new(username:  session[:user_id]).save!
         end
         
         redirect_to user_path(@user), :notice => "Logged in!"
