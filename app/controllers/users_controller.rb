@@ -34,13 +34,23 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     respond_to do |format|
+      if(session[:facebook_auth])
+		identity = Identity.find_by(provider: session[:facebook_provider], uid: session[:facebook_uid])
+		
+		identity.nickname = user_params[:username]
+		identity.save!
+		
+		user_params[:email] = identity.email || user_params[:email]
+		user_params[:realname] = identity.name || user_params[:name]
+		session[:facebook_auth] = nil
+      end
+    
       #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'
       #  @user.password = user_params[:password]
       #else
       #  @user.password = nil
       #end
-      puts(user_params)
       @user = User.new(user_params, true)
 
       begin

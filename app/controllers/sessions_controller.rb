@@ -8,42 +8,63 @@ class SessionsController < ApplicationController
   def facebook
     if(env['omniauth.auth']) 
         puts "Hell has frozen over"
+        if(session[:facebook_auth])
+          puts params
+          puts "I'm currently in facebook authorization mode"
+        end
+        
+        puts(params[:passwd])
+        puts(params[:username])
         puts(env['omniauth.auth'].info.email)
 		puts(env['omniauth.auth'].info.name)
         
 		identity = Identity.find_for_oauth(env['omniauth.auth'])
-		base64 = Base64.strict_encode64(identity.name).chomp("=")
+		env['omniauth.auth'] = nil
+		
+		if(params[:username])
+			identity.nickname = params[:username]
+			identity.save!
+        end
+		
+		#base64 = Base64.strict_encode64(identity.name).chomp("=")
 		
 		begin 
-		    puts "Try to find user with " + identity.name
-		    puts "Base64 : " + base64
-		    
-			#@user = User.find(identity.name)
-			@user = User.find(base64)
+		    puts "Try to find user with " + identity.nickname
+			@user = User.find(identity.nickname)
+			params[:username]=identity.nickname
+			params[:passwd] = @user.password
+			puts(@user.password)
 		rescue
-		    puts "User did not exist. Create new user!"
+			session[:facebook_auth] = true
+			session[:facebook_uid] = identity.uid
+			session[:facebook_provider] = identity.provider
+			redirect_to('/users/new', :notice => "The first time you login with facebook, we need"\
+			 "some additional information of you. Please fill in the form and click on "\
+			 "\'Login with facebok\' again. You only have to do this once and then you can "\
+			 "use the \"Sign in with facebook\" button as usual.") and return
+			
+		    #puts "User did not exist. Create new user!"
 		    #{"username"=>"Housi", "password"=>"housi", "realname"=>"Housi", "email"=>"housi@test.ch", "publicvisible"=>"2"}
-			@user = User.new({"username" => base64, "email" => identity.email, 
-				"publicvisible" => 1, "realname" => identity.name, 
-				"password" => "blablabla"}, true)
+			#@user = User.new({"username" => base64, "email" => identity.email, 
+			#	"publicvisible" => 1, "realname" => identity.name, 
+			#	"password" => "blablabla"}, true)
 			
 			#@user = User.new({"username" => "housi", "email" => "housi@test.ch", 
 				#"publicvisible" => 1, "realname" => "housi", 
 				#"password" => "blablabla"}, true)
 				
-			@user.save!
+			#@user.save!
 		end
 	    
-	    puts(identity.name)
-		#params[:username] = identity.name
-		params[:username] = base64
-		params[:passwd] = "blablabla"
+	    #puts(identity.name)
+		#params[:username] = base64
+		#params[:passwd] = "blablabla"
     end
-  
+ 
     create  
   end
 
-  def create 
+  def create     
     @user = User.find(params[:username])   
 
     begin
