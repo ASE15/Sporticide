@@ -57,7 +57,6 @@ class UsersController < ApplicationController
       #else
       #  @user.password = nil
       #end
-      puts(user_params)
       @user = User.new(my_params, true)
 
       begin
