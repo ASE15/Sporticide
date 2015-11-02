@@ -4,10 +4,8 @@ class SessionsController < ApplicationController
   def new
 
   end
-
-  def create
-    user = nil
-    
+  
+  def facebook
     if(env['omniauth.auth']) 
         puts "Hell has frozen over"
         puts(env['omniauth.auth'].info.email)
@@ -40,11 +38,14 @@ class SessionsController < ApplicationController
 		#params[:username] = identity.name
 		params[:username] = base64
 		params[:passwd] = "blablabla"
-    else 
-      @user = User.find(params[:username])
     end
-    
-    puts "Where the hell is my digest?"
+  
+    create  
+  end
+
+  def create 
+    @user = User.find(params[:username])   
+
     begin
       digest = Base64.encode64(params[:username]+':'+params[:passwd])
       # checks if the user put in the form is a user on cybercoach
