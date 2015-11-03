@@ -9,8 +9,16 @@ class FriendsController < ApplicationController
   def create
       mynewfriend = LocalUser.find(params[:mynewfriend])
       mynewfriend.friends << current_user
-      @currentuser = LocalUser.find(current_user)
-      @currentuser.friends << mynewfriend
+      currentuser = LocalUser.find(current_user)
+      currentuser.friends << mynewfriend
       redirect_to friends_path
+  end
+
+  def destroy
+    myoldfriend = LocalUser.find(params[:myoldfriend])
+    myoldfriend.friends >> current_user
+    currentuser = LocalUser.find(current_user)
+    currentuser.friends >> current_user
+    redirect_to friends_path
   end
 end

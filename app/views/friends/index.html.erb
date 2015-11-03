@@ -3,13 +3,12 @@
 <% if @myfriends.nil? %>
     Haha. you have no friends!
 <% else %>
-    Yeah. you have friends!
-<% end %>
 <table class="table table-bordered table-striped display" id="posts">
   <thead>
   <tr>
     <th>ID</th>
     <th>Username</th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
   </tr>
 
 
@@ -19,7 +18,11 @@
       <tr>
         <td><%= friend.id %></td>
         <td><%= link_to friend.username, local_user_path(friend) %></td>
+        <td>
+          <%= button_to "Remove friend", friends_path(myoldfriend: friend), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %>
+        </td>
       </tr>
   <% end %>
   </tbody>
 </table>
+<% end %>
