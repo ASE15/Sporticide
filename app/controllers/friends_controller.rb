@@ -16,9 +16,9 @@ class FriendsController < ApplicationController
         redirect_to friends_path, :notice => 'Friend added.'
       else
         if (mynewfriend == currentuser)
-          redirect_to friends_path, :alert => 'You cant add yourself as a friend.'
+          redirect_to local_users_path, :alert => 'You cant add yourself as a friend.'
         else
-          redirect_to friends_path, :alert => 'This user is already your friend.'
+          redirect_to local_users_path, :alert => 'This user is already your friend.'
         end
       end
   end
