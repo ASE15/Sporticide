@@ -7,7 +7,7 @@ class CreateTrainingSessions < ActiveRecord::Migration
       t.integer :length
       t.string :location
 
-      t.references :log, index: true
+      t.references :training, index:true
 
       t.timestamps
     end

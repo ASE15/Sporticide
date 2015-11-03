@@ -5,7 +5,15 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :rating
       t.text :comment
 
+      #t.references :local_user, index: true
+
+      t.references :training_session, index: true
+
       t.timestamps
     end
+
+    add_reference :logs, :user, references: :local_users, index: true
+    add_foreign_key :logs, :local_users, column: :user_id
+
   end
 end

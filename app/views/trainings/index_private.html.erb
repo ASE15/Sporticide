@@ -11,7 +11,6 @@
     <th>Owner</th>
     <th></th>
   </tr>
-
 <% @trainings.each do |t| %>
     <tr>
       <td>
@@ -21,7 +20,7 @@
       </td>
       <td><%= t.title %></td>
       <td><%= t.sport %></td>
-      <td><%= t.owner.email %></td>
+      <td><%= t.owner.username %></td>
       <td>
         <%= link_to 'Show Training', training_path(t), class: "btn btn-xs btn-primary" %>
         <% if is_own_training?(t) %>
