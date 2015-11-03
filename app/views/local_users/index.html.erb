@@ -33,8 +33,7 @@
           <td><%= localuser.id %></td>
           <td><%= link_to localuser.username, local_user_path(localuser) %></td>
           <td>
-            <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                        edit_local_user_path(localuser), :class => 'btn btn-mini' %>
+            <%= button_to "Add as friend", friends_path(mynewfriend: localuser), method: :post, class: "btn btn-sm btn-success" %>
           </td>
         </tr>
     <% end %>

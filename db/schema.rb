@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.string   "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
     t.string   "firstname"
     t.string   "lastname"
     t.integer  "height"
@@ -78,7 +79,6 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.string   "address_nr"
     t.integer  "plz"
     t.string   "place"
-    t.string   "password"
   end
 
   create_table "logs", force: :cascade do |t|
