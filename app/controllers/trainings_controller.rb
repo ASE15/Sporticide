@@ -62,8 +62,12 @@ class TrainingsController < ApplicationController
     unless @training.users.exists?(current_user)
       #join
       @training.users << current_user
-      @training.save
-      redirect_to @training, :notice => 'You joined this training.'
+      if @training.save
+        subscribe_user_to_sport(current_user, @training.sport)
+        redirect_to @training, :notice => 'You joined this training.'
+      else
+        redirect_to @training, :error => 'There was a problem!'
+      end
     else
       #already joined
       redirect_to @training, :error => 'You have already joined this training.'
@@ -90,20 +94,22 @@ class TrainingsController < ApplicationController
   end
 
   def subscribe_user_to_sport(user, sport)
-    cc_user = 'andi'
-    cc_pass = 'test'
+    cc_user = session[:user_id]
+    cc_pass = session[:passwd]
+
     #ToDo insert real username
     begin
       digest = Base64.encode64(cc_user+':'+cc_pass)
-      result = RestClient.put 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/'+cc_user+'/'+sport, :Authorization => 'Basic '+digest
-      #"http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{cc_user}/#{sport}", :Authorization => 'Basic '+digest
+      url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{cc_user}/#{sport}"
+      doc = RestClient.put url, {:publicvisible => 2}, {:Authorization => "Basic #{digest}"}
 
-      doc = Nokogiri::XML(result)
+      Rails.logger.debug("answer: #{doc}")
 
-
+      #doc = Nokogiri::XML(result)
 
     rescue Exception => e
       status=false
+      Rails.logger.debug("error: #{e}")
     end
   end
 end
