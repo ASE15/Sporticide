@@ -33,8 +33,13 @@ class SessionsController < ApplicationController
     create  
   end
 
-  def create     
-    @user = User.find(params[:username])   
+  def create    
+    begin 
+		@user = User.find(params[:username])
+	rescue
+		redirect_to :back, :alert => "Please provide correct user name or password!"
+		return
+	end   
 
     begin
       digest = Base64.encode64(params[:username]+':'+params[:passwd])
@@ -56,8 +61,7 @@ class SessionsController < ApplicationController
         redirect_to user_path(@user), :notice => "Logged in!"
       end
     else
-      flash.now.alert = "Wrong login!"
-      render 'new'
+      redirect_to new_session_path, :alert => "Please provide correct user name or password!"
     end
   end
 
