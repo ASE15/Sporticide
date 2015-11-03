@@ -9,7 +9,7 @@ class User  < Api::Base
   #                        :association_foreign_key => "user_b_id")
 
 
-  has_many :logs
+  #has_many :logs
 
 
   self.prefix = '/CyberCoachServer/resources/'

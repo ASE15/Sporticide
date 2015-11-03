@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     unless user_signed_in?
       params[:errors] = "Not logged in!"
-      redirect_to root
+      redirect_to root_path
     end
   end
   helper_method :authenticate_user!

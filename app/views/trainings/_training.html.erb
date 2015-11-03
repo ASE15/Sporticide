@@ -25,13 +25,13 @@
 
 <p>
   <strong>Owner:</strong>
-  <%= training.owner.email %>
+  <%= training.owner.username %>
 </p>
 
 <strong>Member:</strong>
 <ul>
   <% training.users.each do |m| %>
-    <li><%= m.email %></li>
+    <li><%= m.username %></li>
   <% end %>
 </ul>
 

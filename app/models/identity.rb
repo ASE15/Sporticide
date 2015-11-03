@@ -10,7 +10,11 @@ class Identity < ActiveRecord::Base
     identity.refreshtoken = auth.credentials.refresh_token
     identity.name = auth.info.name
     identity.email = auth.info.email
-    identity.nickname = auth.info.nickname
+    
+    # We don't update the nickname of the identity because it is our
+    # connection to the CyberCoach service
+    identity.nickname = identity.nickname || auth.info.nickname
+    
     identity.image = auth.info.image
     identity.phone = auth.info.phone
     identity.urls = (auth.info.urls || "").to_json

@@ -4,6 +4,8 @@ class CreateComments < ActiveRecord::Migration
       t.text :text
       t.datetime :datetime
 
+      t.references :training, index:true
+
       t.timestamps
     end
   end

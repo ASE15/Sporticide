@@ -34,13 +34,30 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     respond_to do |format|
+       my_params = {:username => user_params[:username], :email => user_params[:email], 
+		:publicvisible => user_params[:publicvisible], :realname => user_params[:realname], 
+		:password => user_params[:password]}
+    
+	  identity = nil
+	  
+      if(session[:facebook_auth])
+		identity = Identity.find_by(provider: session[:facebook_provider], uid: session[:facebook_uid])
+		
+		identity.nickname = my_params[:username]
+		identity.save!
+		
+		my_params[:email] = identity.email || my_params[:email]
+		my_params[:realname] = identity.name || my_params[:name]
+		session[:facebook_auth] = nil
+      end
+    
       #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'
       #  @user.password = user_params[:password]
       #else
       #  @user.password = nil
       #end
-      @user = User.new(user_params, true)
+      @user = User.new(my_params, true)
 
       begin
         status = @user.save!
@@ -49,10 +66,16 @@ class UsersController < ApplicationController
       end
 
       if status
-        format.html { redirect_to :controller => 'sessions', :action => 'new',  notice: 'User was successfully created.' }
+        local_user = LocalUser.new(username:  user_params[:username])     
+        local_user.password = user_params[:password]
+        local_user.save!
+      
+        session[:user_id] = user_params[:username]
+        session[:passwd] = user_params[:password]
+        format.html { redirect_to user_path(@user), :notice => 'User was successfully created and successfully logged in.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit', alert: "Could not create user." }
+        format.html { render :action => 'new', :alert => "Could not create user." }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

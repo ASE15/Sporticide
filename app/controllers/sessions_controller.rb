@@ -4,51 +4,46 @@ class SessionsController < ApplicationController
   def new
 
   end
-
-  def create
-    user = nil
-    
-    if(env['omniauth.auth']) 
-        puts "Hell has frozen over"
-        puts(env['omniauth.auth'].info.email)
-		puts(env['omniauth.auth'].info.name)
-        
+  
+  def facebook
+    if(env['omniauth.auth'])         
 		identity = Identity.find_for_oauth(env['omniauth.auth'])
-		base64 = Base64.strict_encode64(identity.name).chomp("=")
+		
+		if(params[:username])
+			identity.nickname = params[:username]
+			identity.save!
+        end
 		
 		begin 
-		    puts "Try to find user with " + identity.name
-		    puts "Base64 : " + base64
-		    
-			#@user = User.find(identity.name)
-			@user = User.find(base64)
+			@user = User.find(identity.nickname)
+			local_user = LocalUser.find_by(username: identity.nickname)
+			params[:username]=identity.nickname
+			params[:passwd] = local_user.password
 		rescue
-		    puts "User did not exist. Create new user!"
-		    #{"username"=>"Housi", "password"=>"housi", "realname"=>"Housi", "email"=>"housi@test.ch", "publicvisible"=>"2"}
-			@user = User.new({"username" => base64, "email" => identity.email, 
-				"publicvisible" => 1, "realname" => identity.name, 
-				"password" => "blablabla"}, true)
-			
-			#@user = User.new({"username" => "housi", "email" => "housi@test.ch", 
-				#"publicvisible" => 1, "realname" => "housi", 
-				#"password" => "blablabla"}, true)
-				
-			@user.save!
+			session[:facebook_auth] = true
+			session[:facebook_uid] = identity.uid
+			session[:facebook_provider] = identity.provider
+			redirect_to('/users/new', :notice => "The first time you login with facebook, we need"\
+			 "some additional information of you. Please fill in the form and click on "\
+			 "\'Sign in\'. You only have to do this once and then you can "\
+			 "use the \"Sign in with facebook\" button as usual.") and return
 		end
-	    
-	    puts(identity.name)
-		#params[:username] = identity.name
-		params[:username] = base64
-		params[:passwd] = "blablabla"
-    else 
-      @user = User.find(params[:username])
     end
-    
-    puts "Where the hell is my digest?"
+ 
+    create  
+  end
+
+  def create    
+    begin 
+		@user = User.find(params[:username])
+	rescue
+		redirect_to :back, :alert => "Please provide correct user name or password!"
+		return
+	end   
+
     begin
       digest = Base64.encode64(params[:username]+':'+params[:passwd])
       # checks if the user put in the form is a user on cybercoach
-      puts "digest " + digest
       RestClient.get 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/authenticateduser/', :Authorization => 'Basic '+digest
       status = true
     rescue Exception => e
@@ -58,16 +53,15 @@ class SessionsController < ApplicationController
     if @user && status
       if session[:user_id] = @user.username
         session[:passwd] = params[:passwd]
-        # begin
-         if LocalUser.find_by(username: session[:user_id]).nil?
-         # rescue ActiveRecord::RecordNotFound => e
-          LocalUser.new(username:  session[:user_id]).save
+        
+        if LocalUser.find_by(username: session[:user_id]).nil?
+          LocalUser.new(username:  session[:user_id]).save!
         end
+        
         redirect_to user_path(@user), :notice => "Logged in!"
       end
     else
-      flash.now.alert = "Wrong login!"
-      render 'new'
+      redirect_to new_session_path, :alert => "Please provide correct user name or password!"
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101150530) do
+ActiveRecord::Schema.define(version: 20151102164316) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20151101150530) do
     t.string   "address_nr"
     t.integer  "plz"
     t.string   "place"
+    t.string   "password"
   end
 
   create_table "logs", force: :cascade do |t|

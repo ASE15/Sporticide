@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
 
   get 'mytrainings', to: 'trainings#mytrainings'
-  get 'auth/facebook/callback', to: 'sessions#create'
+  get 'auth/facebook/callback', to: 'sessions#facebook'
 
   resources :chats do
     resources :messages
@@ -24,10 +24,9 @@ Rails.application.routes.draw do
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :local_user
+  resources :local_users
   resource :profile, :controller => :profile
   get 'profile', to: 'profile#show'
-  #end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
