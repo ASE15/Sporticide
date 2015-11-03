@@ -12,48 +12,32 @@
     <% end %>
 
     <p>
-      <%= f.label :firstname %><br>
-      <%= f.text_field :firstname %>
+      <%= f.label :firstname %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= f.label :lastname %><br>
+      <%= f.text_field :firstname %>&nbsp&nbsp<%= f.text_field :lastname %>
     </p>
 
     <p>
-      <%= f.label :lastname %><br>
-      <%= f.text_field :lastname %>
-    </p>
-
-    <p>
-      <%= f.label :address %><br>
-      <%= f.text_field :address %>
-    </p>
-
-    <p>
-      <%= f.label :nr %><br>
-      <%= f.text_field :address_nr %>
-    </p>
-
-    <p>
-      <%= f.label :postcode %><br>
-      <%= f.number_field :plz %>
-    </p>
-
-    <p>
-      <%= f.label :place %><br>
-      <%= f.text_field :place %>
-    </p>
-
-    <p>
-      <%= f.label :age %><br>
-      <%= f.number_field :plz %>
-    </p>
-
-    <p>
-      <%= f.label :weight %><br>
-      <%= f.number_field :plz %>
+      <%= f.label :address %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= f.label :nr %><br>
+      <%= f.text_field :address %>&nbsp&nbsp    <%= f.text_field :address_nr %>
     </p>
 
 
     <p>
-      <%= f.submit %>
+      <%= f.label :postcode %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= f.label :place %><br>
+      <%= f.number_field :plz %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    <%= f.text_field :place %>
     </p>
+
+
+    <p>
+      <%= f.label 'Height(cm)' %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= f.label 'Weight (kg)' %><br>
+      <%= f.number_field :height %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<%= f.number_field(:weight, step: 0.01) %>
+    </p>
+
+    <div class="col-md-8">
+      <%= f.submit 'Save Changes', :class  => 'btn btn-primary' %>
+      <span></span>
+      <%= link_to 'Cancel', profile_path(@profile), class:"btn btn-default" %>
+    </div>
 
 <% end %>
+
