@@ -59,23 +59,31 @@ class LogsController < ApplicationController
   end
 
   def create_cc_entry(user, sport, session, log)
-    cc_user = 'andi'
-    cc_pass = 'test'
-    #ToDo insert real username
+    cc_user = session[:user_id]
+    cc_pass = session[:passwd]
+
     begin
       digest = Base64.encode64(cc_user+':'+cc_pass)
-      result = RestClient.post 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/'+cc_user+'/'+sport,
-                               :entrylocation => session.location,
-                               :entryduration => session.duration,
-                               :entrydate => session.datetime,
-                               :comment => log.comment,
-                               :publicvisible => 1,
-                               :Authorization => 'Basic '+digest
-      #ToDo add parameters
-      doc = Nokogiri::XML(result)
+      url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{cc_user}/#{sport}"
+      doc = RestClient.post url, {:entrylocation => session.location,
+                                  :entryduration => session.duration,
+                                  :entrydate => session.datetime,
+                                  :comment => log.comment,
+                                  :publicvisible => 1,
+                                  :coursetype => 'hard', #running, cycling
+                                  :courselength => 0, #running, cycling
+                                  :roundduration => 0, #boxing
+                                  :numberofrounds => 0, #running, boxing, cycling
+                                  :bicycletype => "BMX" #cycling
+                               }, {:Authorization => "Basic #{digest}"}
+
+      Rails.logger.debug("answer: #{doc}")
+
+        #doc = Nokogiri::XML(result)
 
     rescue Exception => e
       status=false
+      Rails.logger.debug("error: #{e}")
     end
   end
 end
