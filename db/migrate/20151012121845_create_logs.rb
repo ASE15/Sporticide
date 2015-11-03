@@ -5,7 +5,7 @@ class CreateLogs < ActiveRecord::Migration
       t.integer :rating
       t.text :comment
 
-      #t.references :local_user, index: true
+      #t.references :local_users, index: true
 
       t.references :training_session, index: true
 

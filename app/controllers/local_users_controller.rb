@@ -1,4 +1,4 @@
-class LocalUserController < ApplicationController
+class LocalUsersController < ApplicationController
   def index
      @local_users = LocalUser.all
   end
