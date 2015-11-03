@@ -6,4 +6,8 @@ class LocalUserController < ApplicationController
   #   user = LocalUser.new()
   #   user.username = "test"
   # end
+
+
+
+
 end

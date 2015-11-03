@@ -24,7 +24,11 @@ Rails.application.routes.draw do
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-resources :local_user
+  resources :local_user
+  resource :profile, :controller => :profile
+    #get 'profile', to: 'profile#show'
+  #end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,0 +1,28 @@
+<%= form_for @profile, url: profile_path do |f| %>
+    <% if @profile.errors.any? %>
+        <div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <h3><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h3>
+          <ul>
+            <% @profile.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+      <%= f.label :firstname %><br>
+      <%= f.text_field :firstname %>
+    </p>
+
+    <p>
+      <%= f.label :lastname %><br>
+      <%= f.text_field :lastname %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+
+<% end %>
