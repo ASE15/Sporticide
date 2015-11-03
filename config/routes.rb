@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :local_user
   resource :profile, :controller => :profile
-    #get 'profile', to: 'profile#show'
+  get 'profile', to: 'profile#show'
   #end
 
   # Example of regular route:

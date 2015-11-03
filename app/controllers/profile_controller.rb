@@ -1,8 +1,8 @@
 class ProfileController < ApplicationController
 
-  def index
-    @profile = current_user
-  end
+  # def index
+  #   @profile = current_user
+  # end
 
   def show
     @profile = current_user
