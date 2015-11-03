@@ -11,7 +11,7 @@ class FriendsController < ApplicationController
       currentuser = LocalUser.find(current_user)
       mynewfriend.friends.detect{|f| f.id == currentuser.id}
       if mynewfriend != currentuser && !(mynewfriend.friends.detect { |f| f.id == currentuser.id })
-        mynewfriend.friends << current_user
+        mynewfriend.friends << currentuser
         currentuser.friends << mynewfriend
         redirect_to friends_path, :notice => 'Friend added.'
       else
@@ -25,9 +25,17 @@ class FriendsController < ApplicationController
 
   def destroy
     myoldfriend = LocalUser.find(params[:myoldfriend])
-    myoldfriend.friends >> current_user
     currentuser = LocalUser.find(current_user)
-    currentuser.friends >> current_user
+    myoldfriend.friends.delete(current_user)
+    currentuser.friends.delete(myoldfriend)
+    redirect_to friends_path
+  end
+
+  def remove
+    myoldfriend = LocalUser.find(params[:myoldfriend])
+    currentuser = LocalUser.find(current_user)
+    myoldfriend.friends.delete(current_user)
+    currentuser.friends.delete(myoldfriend)
     redirect_to friends_path
   end
 end

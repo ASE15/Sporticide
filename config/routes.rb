@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     resources :messages
   end
 
-  resources :friends
+  resources :friends do
+    get 'remove', to: 'friends#remove'
+  end
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :local_users

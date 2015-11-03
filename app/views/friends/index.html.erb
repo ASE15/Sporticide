@@ -19,7 +19,7 @@
         <td><%= friend.id %></td>
         <td><%= link_to friend.username, local_user_path(friend) %></td>
         <td>
-          <%= link_to "Remove friend", friend_path(myoldfriend: friend), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-danger" %>
+          <%= link_to "Remove friend", friend_remove_path(myoldfriend: friend), class: "btn btn-sm btn-danger" %>
         </td>
       </tr>
   <% end %>
