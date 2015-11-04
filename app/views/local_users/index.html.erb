@@ -31,7 +31,9 @@
           <td><%= localuser.id %></td>
           <td><%= link_to localuser.username, local_user_path(localuser) %></td>
           <td>
+            <% if localuser != current_user && !(localuser.friends.detect { |f| f.id == current_user.id }) %>
             <%= link_to "Add as friend", friends_path(mynewfriend: localuser), method: :post, class: "btn btn-sm btn-success" %>
+            <% end %>
           </td>
         </tr>
     <% end %>
