@@ -5,14 +5,35 @@ class SessionsController < ApplicationController
 
   end
   
+  #
+  # Twitter sessions do only exist for very short
+  # time. As soon as the message was send the
+  # session is immediately destroyed
+  #
+  # Requires
+  #  session[:session_back] : the path to redirect after auth
+  #
+  # Sets
+  #  session[:twitter_uid] : uid of twitter user
+  #
+  def twitter
+	identity = Identity.find_for_oauth(env['omniauth.auth'])
+	identity.save!
+
+	session[:twitter_uid] = identity.uid
+	
+	back = session[:session_back]
+	session[:session_back] = nil
+	
+	redirect_to back
+  end
+  
   def facebook
     # Create or get an identity for oauth     
 	identity = Identity.find_for_oauth(env['omniauth.auth'])
 	identity.save!
 	session[:provider] = identity.provider
 	session[:uid] = identity.uid
-	puts "NICKNAME"
-	puts identity.nickname
 	
 	# Find user with identity nickname. If the
 	# identity.nickname does not exist or the

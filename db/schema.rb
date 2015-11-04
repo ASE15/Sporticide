@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102164316) do
+ActiveRecord::Schema.define(version: 20151104141837) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.string   "urls"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "secret"
   end
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.string   "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
     t.string   "firstname"
     t.string   "lastname"
     t.integer  "height"
@@ -78,7 +80,6 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.string   "address_nr"
     t.integer  "plz"
     t.string   "place"
-    t.string   "password"
   end
 
   create_table "logs", force: :cascade do |t|
