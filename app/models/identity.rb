@@ -8,6 +8,7 @@ class Identity < ActiveRecord::Base
     identity = create(uid: auth.uid, provider: auth.provider) if identity.nil?
     identity.accesstoken = auth.credentials.token
     identity.refreshtoken = auth.credentials.refresh_token
+    identity.secret = auth.credentials.secret
     identity.name = auth.info.name
     identity.email = auth.info.email
     
@@ -18,8 +19,8 @@ class Identity < ActiveRecord::Base
     identity.image = auth.info.image
     identity.phone = auth.info.phone
     identity.urls = (auth.info.urls || "").to_json
-    identity.save
-    identity
+    
+    return identity
   end
   
   def self.find_for_facebook(auth)
@@ -33,7 +34,7 @@ class Identity < ActiveRecord::Base
     identity.image = auth["info"]["image"]
     identity.phone = auth["info"]["phone"]
     identity.urls = (auth["info"]["urls"] || "").to_json
-    identity.save
-    identity
+    
+    return identity
   end
 end

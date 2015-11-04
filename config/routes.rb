@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'twitter/tweet'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'mytrainings', to: 'trainings#mytrainings'
   get 'auth/facebook/callback', to: 'sessions#facebook'
+  get 'auth/twitter/callback', to: 'sessions#twitter'
 
   resources :chats do
     resources :messages
