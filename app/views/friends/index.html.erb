@@ -1,1 +1,38 @@
-<h1>Friends</h1>
+<h1>My Friends</h1>
+<form class="form-inline" data-toggle="validator" role="form">
+  <div class="form-group">
+    <input type="number" name="start" placeholder="start" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="number" name="size" min="1" placeholder="size" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="submit" class="btn btn-small">
+  </div>
+</form></br>
+<% if @myfriends.nil? %>
+    Haha. you have no friends!
+<% else %>
+<table class="table table-striped table-hover table-condensed table-responsive">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+
+
+  </thead>
+  <tbody>
+  <% @myfriends.each do |friend| %>
+      <tr>
+        <td><%= friend.id %></td>
+        <td><%= link_to friend.username, local_user_path(friend) %></td>
+        <td>
+          <%= link_to "Remove friend", friend_path(friend),method: "delete", data: { confirm: 'Are you sure?' },  class: "btn btn-xs btn-danger" %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>
