@@ -17,4 +17,6 @@ class LocalUsersController < ApplicationController
      user = User.find(current_user.username)
      redirect_to user_path(user)
   end
+
+
 end
