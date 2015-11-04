@@ -18,8 +18,8 @@ class Identity < ActiveRecord::Base
     identity.image = auth.info.image
     identity.phone = auth.info.phone
     identity.urls = (auth.info.urls || "").to_json
-    identity.save
-    identity
+    
+    return identity
   end
   
   def self.find_for_facebook(auth)
@@ -33,7 +33,7 @@ class Identity < ActiveRecord::Base
     identity.image = auth["info"]["image"]
     identity.phone = auth["info"]["phone"]
     identity.urls = (auth["info"]["urls"] || "").to_json
-    identity.save
-    identity
+    
+    return identity
   end
 end
