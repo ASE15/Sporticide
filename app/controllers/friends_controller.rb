@@ -14,14 +14,13 @@ class FriendsController < ApplicationController
 
   def create
       mynewfriend = LocalUser.find(params[:mynewfriend])
-      currentuser = LocalUser.find(current_user)
-      mynewfriend.friends.detect{|f| f.id == currentuser.id}
-      if mynewfriend != currentuser && !(mynewfriend.friends.detect { |f| f.id == currentuser.id })
-        mynewfriend.friends << currentuser
-        currentuser.friends << mynewfriend
+      mynewfriend.friends.detect{|f| f.id == current_user.id}
+      if mynewfriend != current_user && !(mynewfriend.friends.detect { |f| f.id == current_user.id })
+        mynewfriend.friends << current_user
+        current_user.friends << mynewfriend
         redirect_to friends_path, :notice => 'Friend added.'
       else
-        if (mynewfriend == currentuser)
+        if (mynewfriend == current_user)
           redirect_to local_users_path, :alert => 'You cant add yourself as a friend.'
         else
           redirect_to local_users_path, :alert => 'This user is already your friend.'
