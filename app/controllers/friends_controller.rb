@@ -3,7 +3,13 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @myfriends = current_user.friends
+    if params[:start].nil?
+      params[:start] = 0
+    end
+    if params[:size].nil?
+      params[:size] = 20
+    end
+    @myfriends = current_user.friends.where(:id => params[:start]..params[:size])
   end
 
   def create
@@ -27,6 +33,6 @@ class FriendsController < ApplicationController
     myoldfriend = LocalUser.find(params[:id])
     myoldfriend.friends.delete(current_user)
     current_user.friends.delete(myoldfriend)
-    redirect_to friends_path
+    redirect_to friends_path, :notice => 'Friend removed.'
   end
 end
