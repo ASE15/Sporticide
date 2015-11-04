@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102164316) do
+ActiveRecord::Schema.define(version: 20151104161133) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151102164316) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "training_session_id"
+    t.integer  "cc_entry_id"
   end
 
   add_index "logs", ["training_session_id"], name: "index_logs_on_training_session_id"

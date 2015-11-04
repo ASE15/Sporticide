@@ -1,4 +1,5 @@
 class LogsController < ApplicationController
+  include LogsHelper
 
   before_action :authenticate_user!
   before_filter :is_member_of_training!, :only => [:new, :create, :update, :edit, :destroy]
@@ -27,8 +28,13 @@ class LogsController < ApplicationController
     else
       @log = @session.logs.create(log_params)
       @log.user = current_user
+
+      create_cc_entry(session[:user_id], session[:passwd], @session.training.sport, @session, @log)
+      id = get_last_cc_entry(session[:user_id], session[:passwd], @session.training.sport)
+
+      @log.cc_entry_id = id
+
       if @log.save
-        create_cc_entry(current_user, @session.training.sport, @session, @log)
 
         redirect_to @session.training, :notice => 'Log created.'
       else
@@ -56,34 +62,5 @@ class LogsController < ApplicationController
   private
   def log_params
     params.require(:log).permit(:intensity, :rating, :comment)
-  end
-
-  def create_cc_entry(user, sport, session, log)
-    cc_user = session[:user_id]
-    cc_pass = session[:passwd]
-
-    begin
-      digest = Base64.encode64(cc_user+':'+cc_pass)
-      url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{cc_user}/#{sport}"
-      doc = RestClient.post url, {:entrylocation => session.location,
-                                  :entryduration => session.duration,
-                                  :entrydate => session.datetime,
-                                  :comment => log.comment,
-                                  :publicvisible => 1,
-                                  :coursetype => 'hard', #running, cycling
-                                  :courselength => 0, #running, cycling
-                                  :roundduration => 0, #boxing
-                                  :numberofrounds => 0, #running, boxing, cycling
-                                  :bicycletype => "BMX" #cycling
-                               }, {:Authorization => "Basic #{digest}"}
-
-      Rails.logger.debug("answer: #{doc}")
-
-        #doc = Nokogiri::XML(result)
-
-    rescue Exception => e
-      status=false
-      Rails.logger.debug("error: #{e}")
-    end
   end
 end
