@@ -24,18 +24,18 @@ class FriendsController < ApplicationController
   end
 
   def destroy
-    myoldfriend = LocalUser.find(params[:myoldfriend])
-    currentuser = LocalUser.find(current_user)
+    myoldfriend = LocalUser.find(params[:id])
+    # currentuser = LocalUser.find(current_user)
     myoldfriend.friends.delete(current_user)
-    currentuser.friends.delete(myoldfriend)
+    current_user.friends.delete(myoldfriend)
     redirect_to friends_path
   end
 
-  def remove
-    myoldfriend = LocalUser.find(params[:myoldfriend])
-    currentuser = LocalUser.find(current_user)
-    myoldfriend.friends.delete(current_user)
-    currentuser.friends.delete(myoldfriend)
-    redirect_to friends_path
-  end
+  # def remove
+  #   myoldfriend = LocalUser.find(params[:id])
+  #   currentuser = LocalUser.find(current_user)
+  #   myoldfriend.friends.delete(current_user)
+  #   currentuser.friends.delete(myoldfriend)
+  #   redirect_to friends_path
+  # end
 end
