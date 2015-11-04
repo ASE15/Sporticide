@@ -1,4 +1,4 @@
-<%= form_for([@training, @session], url: training_trainingsessions_path(@training)) do |f| %>
+<%= form_for([@training, @session], url: @session.id.nil? ? training_trainingsessions_path(@training) : training_trainingsession_path(@training, @session)) do |f| %>
     <% if @training.errors.any? %>
         <div class="alert alert-danger">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -24,13 +24,13 @@
             <%= f.datetime_select(:datetime, {:ampm => false, class:"form-control"}) %>
         </div>
 
-      <% levels = [
-              ['very easy'],
-              ['easy'],
-              ['middle'],
-              ['hard'],
-              ['very hard']
-      ]
+      <% levels = options_for_select([
+              ['very easy', 1],
+              ['easy', 2],
+              ['middle', 3],
+              ['hard', 4],
+              ['very hard',5]
+      ])
       %>
       <div class="form-group">
         <%= f.label :level %>
