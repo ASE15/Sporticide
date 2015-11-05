@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'twitter/tweet'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
 
   get 'mytrainings', to: 'trainings#mytrainings'
   get 'auth/facebook/callback', to: 'sessions#facebook'
+  get 'auth/twitter/callback', to: 'sessions#twitter'
 
   resources :chats do
     resources :messages
@@ -24,8 +27,10 @@ Rails.application.routes.draw do
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :local_user
-  
+  resources :local_users
+  resource :profile, :controller => :profile
+  get 'profile', to: 'profile#show'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

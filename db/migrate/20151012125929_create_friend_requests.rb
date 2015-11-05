@@ -9,7 +9,7 @@ class CreateFriendRequests < ActiveRecord::Migration
     add_reference :friend_requests, :user, references: :local_users, index: true
     add_foreign_key :friend_requests, :local_users, column: :user_id
 
-    add_reference :friend_requests, :friend, references: :users, index: true
-    add_foreign_key :friend_requests, :users, column: :friend_id
+    add_reference :friend_requests, :friend, references: :local_users, index: true
+    add_foreign_key :friend_requests, :local_users, column: :friend_id
   end
 end

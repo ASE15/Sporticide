@@ -1,0 +1,43 @@
+<%- model_class = LocalUser -%>
+<h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+<form class="form-inline" data-toggle="validator" role="form">
+  <div class="form-group">
+    <input type="number" name="start" placeholder="start" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="number" name="size" min="1" placeholder="size" class="form-control">
+  </div>
+  <div class="form-group">
+    <input type="submit" class="btn btn-small">
+  </div>
+</form></br>
+
+<% if @local_users.nil? %>
+    No Users
+<% else %>
+  <table class="table table-striped table-hover table-condensed table-responsive">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th><%= t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+
+
+    </thead>
+    <tbody>
+    <% @local_users.each do |localuser| %>
+        <tr>
+          <td><%= localuser.id %></td>
+          <td><%= link_to localuser.username, local_user_path(localuser) %></td>
+          <td>
+            <% if localuser != current_user && !(localuser.friends.detect { |f| f.id == current_user.id }) %>
+            <%= link_to "Add as friend", friends_path(mynewfriend: localuser), method: :post, class: "btn btn-xs btn-success" %>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+</table>
