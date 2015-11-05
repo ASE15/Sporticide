@@ -1,5 +1,5 @@
 class LocalUser < ActiveRecord::Base
-  validates :plz, length: { in: 4..4 }
+  validates :plz, :length => { :is => 4 }, allow_nil: true
   has_many :trainings, foreign_key: "owner_id"
   #has_and_belongs_to_many :trainings
   has_and_belongs_to_many(:trainings,
