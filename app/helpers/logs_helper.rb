@@ -43,7 +43,11 @@ module LogsHelper
   end
 
   def delete_cc_entry(user, passwd, sport, entryid)
-    #ToDo implement it
+    begin
+      digest = Base64.encode64(user+':'+passwd)
+      url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{user}/#{sport}/#{entryid}"
+      doc = RestClient.delete url, :Authorization => "Basic #{digest}"
+    end
   end
 
   def get_last_cc_entry(user, passwd, sport)

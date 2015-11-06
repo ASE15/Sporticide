@@ -55,6 +55,7 @@ class LogsController < ApplicationController
   def destroy
     @log = Log.find(params[:id])
     @training = @log.training_session.training
+    delete_cc_entry(session[:user_id], session[:passwd], @training.sport, @log.cc_entry_id)
     @log.destroy
     redirect_to @training, :notice => 'You have deleted your log.'
   end
