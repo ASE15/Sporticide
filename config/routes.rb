@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   resources :local_users
   resource :profile, :controller => :profile
-  get 'profile', to: 'profile#show'
+  #get 'profile', to: 'profile#show' #not necessary anymore
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
