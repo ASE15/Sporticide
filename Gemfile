@@ -39,6 +39,10 @@ gem 'figaro', "~> 1.1.1"
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+# Sending tweets
+gem 'twitter', '~> 5.3.1'
+gem 'omniauth-twitter'
+
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
@@ -54,5 +58,4 @@ gem 'rails_12factor'
 gem 'rest-client', '~> 1.8'
 
 gem 'bootstrap_form'
-
 gem 'nokogiri', '~> 1.6.6.2'

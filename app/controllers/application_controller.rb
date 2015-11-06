@@ -36,7 +36,11 @@ class ApplicationController < ActionController::Base
   #   unless LocalUser.find(1).nil?
   #   flash[:error] = "LocalUser = #{LocalUser.find(1).username}"
   # end
-    end
+  end
+  
+  def current_identity
+	@current_identity ||= Identity.find_by(uid: session[:uid], provider: session[:provider]) if session[:uid] && session[:provider]
+  end
 
   helper_method :current_user
 

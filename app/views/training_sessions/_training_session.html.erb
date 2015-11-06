@@ -38,4 +38,8 @@
   <%= link_to 'Add log', new_training_trainingsession_log_path(training_session.training, training_session), class: 'btn btn-default' %>
 <% end %>
 
+<a class="btn btn-info" href=
+<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
+>Tweet</a>
+
 </blockquote>

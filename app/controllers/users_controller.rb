@@ -23,6 +23,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    
+    if(session[:user])
+		@user.email = session[:user]["email"]
+		@user.realname = session[:user]["realname"]
+		@user.publicvisible = session[:user]["publicvisible"]
+	end
   end
 
   # GET /users/1/edit
@@ -36,20 +42,7 @@ class UsersController < ApplicationController
     respond_to do |format|
        my_params = {:username => user_params[:username], :email => user_params[:email], 
 		:publicvisible => user_params[:publicvisible], :realname => user_params[:realname], 
-		:password => user_params[:password]}
-    
-	  identity = nil
-	  
-      if(session[:facebook_auth])
-		identity = Identity.find_by(provider: session[:facebook_provider], uid: session[:facebook_uid])
-		
-		identity.nickname = my_params[:username]
-		identity.save!
-		
-		my_params[:email] = identity.email || my_params[:email]
-		my_params[:realname] = identity.name || my_params[:name]
-		session[:facebook_auth] = nil
-      end
+		:password => user_params[:password]} 
     
       #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'
@@ -66,6 +59,13 @@ class UsersController < ApplicationController
       end
 
       if status
+        if(session[:provider])
+			identity = session[:identity]
+			identity = Identity.find_by(provider: session[:provider], uid: session[:uid])
+			identity.nickname = my_params[:username]
+			identity.save!
+		end
+		
         local_user = LocalUser.new(username:  user_params[:username])     
         local_user.password = user_params[:password]
         local_user.save!
@@ -75,7 +75,8 @@ class UsersController < ApplicationController
         format.html { redirect_to user_path(@user), :notice => 'User was successfully created and successfully logged in.' }
         format.json { head :no_content }
       else
-        format.html { render :action => 'new', :alert => "Could not create user." }
+        session[:user] = my_params
+        format.html { redirect_to new_user_path, :alert => "Could not create user. Your user name already exists." }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
