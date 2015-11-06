@@ -190,7 +190,7 @@ DEPENDENCIES
   figaro (~> 1.1.1)
   jbuilder (~> 2.0)
   jquery-rails
-  nokogiri
+  nokogiri (~> 1.6.6.2)
   omniauth
   omniauth-facebook
   pg
