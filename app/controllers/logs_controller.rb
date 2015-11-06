@@ -49,7 +49,17 @@ class LogsController < ApplicationController
   end
 
   def update
+    @log = Log.find(params[:id])
+    tsession = @log.training_session
+    training = @log.training_session.training
+    sport = training.sport
 
+    if @log.update(log_params)
+      update_cc_entry(session[:user_id], session[:passwd], sport, tsession, @log)
+      redirect_to training
+    else
+      render 'edit'
+    end
   end
 
   def destroy

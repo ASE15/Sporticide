@@ -3,7 +3,7 @@ module LogsHelper
     log.user == current_user
   end
 
-  def create_cc_entry(user, passwd, sport, tsession, log)
+  def build_xml(sport, tsession, log)
     type = sport
     e = 'entry'+type
 
@@ -12,7 +12,7 @@ module LogsHelper
         xml.send(:'entrylocation', tsession.location)
         xml.send(:'entryduration', tsession.duration)
         xml.send(:'entrydate', tsession.datetime.to_datetime)
-        xml.send(:'commentt', 'Test')
+        xml.send(:'commentt', log.comment)
         xml.send(:'publicvisible', 2)
         if type == 'running' or type == 'cycling'
           xml.send(:'coursetype', tsession.level)
@@ -26,11 +26,32 @@ module LogsHelper
 
     r = builder.to_xml
     r.gsub! 'commentt', 'comment'
+    return r
+  end
+
+  def update_cc_entry(user, passwd, sport, tsession, log)
+    payload = build_xml(sport, tsession, log)
+
+    begin
+      digest = Base64.encode64(user+':'+passwd)
+      url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{user}/#{sport}/#{log.cc_entry_id}"
+      doc = RestClient.put url, payload, :content_type => :xml, :Authorization => "Basic #{digest}"
+
+      Rails.logger.debug("answer: #{doc}")
+
+    rescue Exception => e
+      status=false
+      Rails.logger.debug("error: #{e}")
+    end
+  end
+
+  def create_cc_entry(user, passwd, sport, tsession, log)
+    payload = build_xml(sport, tsession, log)
 
     begin
       digest = Base64.encode64(user+':'+passwd)
       url = "http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/users/#{user}/#{sport}"
-      doc = RestClient.post url, r, :content_type => :xml, :Authorization => "Basic #{digest}"
+      doc = RestClient.post url, payload, :content_type => :xml, :Authorization => "Basic #{digest}"
 
       Rails.logger.debug("answer: #{doc}")
 
