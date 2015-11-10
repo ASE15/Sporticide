@@ -50,7 +50,7 @@
       </div>
 
 
-      <div class="form-group" id="recurrence_date" <% if @session.recurrence == "never" or @session.recurrence == "" %>style="display:none;"<% end %>>
+      <div class="form-group" id="recurrence_date" <% if @session.recurrence == "never" or @session.recurrence.nil? %>style="display:none;"<% end %>>
         <%= f.label 'End date for recurrence' %>
         <%= f.datetime_select(:enddate, {:ampm => false, class:"form-control"}) %>
       </div>
