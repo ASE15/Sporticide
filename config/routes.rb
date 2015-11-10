@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :trainings do
     get 'join', to: 'trainings#join'
     get 'leave', to: 'trainings#leave'
+    get 'invite', to: 'trainings#invite'
     resources :trainingsessions, controller:'training_sessions' do
       resources :logs
     end
