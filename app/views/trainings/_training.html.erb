@@ -42,3 +42,15 @@
 <% else %>
     <%= link_to 'Join this training', training_join_path(training), class:'btn btn-default' %>
 <% end %>
+
+<% if training.owner == current_user && !(current_user.friends.nil?) %>
+    <div class="dropdown">
+      <button class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">Invite a friend to training <span class="caret"></span></button>
+        <ul class ="dropdown-menu">
+            <% current_user.friends.each do |friend| %>
+                <li> <%= link_to friend.username, training_invite_path(friend) %></li>
+            <% end %>
+    </ul>
+    </div>
+<% end %>
+
