@@ -48,7 +48,7 @@
       <button class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">Invite a friend to training <span class="caret"></span></button>
         <ul class ="dropdown-menu">
             <% current_user.friends.each do |friend| %>
-                <li> <%= link_to friend.username, training_invite_path(friend) %></li>
+                <li> <%= link_to friend.username, training_invite_path(training, :par1 => friend) %></li>
             <% end %>
     </ul>
     </div>
