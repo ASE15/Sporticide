@@ -1,12 +1,12 @@
-function set_map(location){
+function set_map(location, id){
     var mapOptions = {
-        zoom: 10,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    var map = new google.maps.Map(document.getElementById("map-canvas"),
+    var map = new google.maps.Map(document.getElementById("map-canvas-"+id),
         mapOptions);
 
-        address = location
+        address = location;
 
     var geocoder = new google.maps.Geocoder();
 

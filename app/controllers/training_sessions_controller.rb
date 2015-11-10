@@ -45,7 +45,7 @@ class TrainingSessionsController < ApplicationController
 
   def destroy
     @training = Training.find(params[:training_id])
-    @session = Session.find(params[:id])
+    @session = TrainingSession.find(params[:id])
 
     @session.destroy
 

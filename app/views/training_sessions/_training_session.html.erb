@@ -1,6 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBc3fYs8wV7YwDbzxEmyVuunE3aMVLIE&sensor=false"> </script>
-<script src="gmaps.js"></script>
-<script>$(document).ready(function(){set_map('<%= training_session.location %>');})</script>
+<script>$(document).ready(function(){set_map('<%= training_session.location %>', <%= training_session.id %>);})</script>
 <blockquote>
 <p>
   <strong>Date:</strong>
@@ -25,7 +23,7 @@
 <p>
   <strong>Location:</strong>
   <%= training_session.location %>
-  <div id="map-canvas" style="width:300px;height:200px"/>
+  <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"/>
 </p>
 
 <p>
