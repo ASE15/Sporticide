@@ -11,9 +11,15 @@
 // about supported directives.
 //
 //
+
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require validator
 //= require turbolinks
 //= require bootstrap
+//= require gmaps-auto-complete
 //= require_tree .
+
+
+

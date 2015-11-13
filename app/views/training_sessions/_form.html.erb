@@ -1,3 +1,7 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="gmaps.js"></script>
+<script>$(document).ready(function(){initialize();})</script>
+
 <%= form_for([@training, @session], url: @session.id.nil? ? training_trainingsessions_path(@training) : training_trainingsession_path(@training, @session)) do |f| %>
     <% if @training.errors.any? %>
         <div class="alert alert-danger">
@@ -44,7 +48,7 @@
 
       <div class="form-group">
           <%= f.label :location %>
-          <%= f.text_field(:location, {class:"form-control"}) %><br>
+        <%=f.text_field :location ,:id => 'searchTextField'%><br>
       </div>
 
     <p>
