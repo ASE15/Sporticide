@@ -18,7 +18,6 @@
 //= require validator
 //= require turbolinks
 //= require bootstrap
-//= require gmaps-auto-complete
 //= require_tree .
 
 

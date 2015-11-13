@@ -59,7 +59,3 @@ gem 'rest-client', '~> 1.8'
 
 gem 'bootstrap_form'
 gem 'nokogiri', '~> 1.6.6.2'
-
-gem 'gmaps-autocomplete-rails'
-
-gem 'jquery-ui-rails'
