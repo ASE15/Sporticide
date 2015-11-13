@@ -66,25 +66,44 @@ class TrainingsController < ApplicationController
         subscribe_user_to_sport(current_user, @training.sport)
         redirect_to @training, :notice => 'You joined this training.'
       else
-        redirect_to @training, :error => 'There was a problem!'
+        redirect_to @training, :alert => 'There was a problem!'
       end
     else
       #already joined
-      redirect_to @training, :error => 'You have already joined this training.'
+      redirect_to @training, :alert => 'You have already joined this training.'
     end
   end
 
   def leave
     @training = Training.find(params[:training_id])
     if @training.owner == current_user
-      redirect_to @training, :error => 'You cant leave the training because you are the owner!'
+      redirect_to @training, :alert => 'You cant leave the training because you are the owner!'
     else
       if @training.users.exists?(current_user)
         @training.users.delete(current_user)
         redirect_to @training, :notice => 'You have left this training.'
       else
-        redirect_to @training, :error => 'You are not member of this training.'
+        redirect_to @training, :alert => 'You are not member of this training.'
       end
+    end
+  end
+
+  def invite
+    @training = Training.find(params[:training_id])
+    @friend = LocalUser.find(params[:par1])
+    #
+    unless @training.users.exists?(@friend)
+      #join
+      @training.users << @friend
+      if @training.save
+        subscribe_user_to_sport(@friend, @training.sport)
+        redirect_to @training, :notice => 'Your friend was successfully added to the training.'
+      else
+        redirect_to @training, :alert => 'There was a problem!'
+      end
+    else
+      #already joined
+      redirect_to @training, :alert => 'Your friend already joined the training!'
     end
   end
 

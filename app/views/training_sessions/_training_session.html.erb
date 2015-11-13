@@ -5,6 +5,22 @@
   <strong>Date:</strong>
   <%= training_session.datetime %>
 </p>
+<% if not training_session.recurrence == "never" %>
+  <p>
+    <strong>End date:</strong>
+    <%= training_session.enddate %>
+  </p>
+  <p>
+    <strong>All dates:</strong>
+    <% training_session.get_recurrence_dates.each_with_index do |val, index| %>
+      <%= val %><br />
+    <% end %>
+  </p>
+<% end %>
+<p>
+  <strong>Recurrence:</strong>
+  <%= training_session.recurrence %>
+</p>
 
 <p>
   <strong>Duration (Min:sec):</strong>

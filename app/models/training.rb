@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-  belongs_to :owner, class_name: 'LocalUser', :dependent => :destroy
+  belongs_to :owner, class_name: 'LocalUser'
   has_many :training_sessions, :inverse_of => :training, :dependent => :destroy
   has_many :comments, :inverse_of => :training, :dependent => :destroy
 

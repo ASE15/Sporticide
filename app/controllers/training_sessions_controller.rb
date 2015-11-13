@@ -19,8 +19,9 @@ class TrainingSessionsController < ApplicationController
   def create
     @training = Training.find(params[:training_id])
     @session = @training.training_sessions.create(session_params)
+
     if @training.save
-      redirect_to @training
+      redirect_to @training, :notice => "Training session created"
     else
       render 'new'
     end
@@ -37,7 +38,7 @@ class TrainingSessionsController < ApplicationController
     @session = TrainingSession.find(params[:id])
 
     if @session.update(session_params)
-      redirect_to @training
+      redirect_to @training, :notice => "Training session updated"
     else
       render 'edit'
     end
@@ -46,14 +47,12 @@ class TrainingSessionsController < ApplicationController
   def destroy
     @training = Training.find(params[:training_id])
     @session = TrainingSession.find(params[:id])
-
     @session.destroy
-
     redirect_to @training
   end
 
   private
   def session_params
-    params.require(:training_session).permit(:datetime, :duration, :level, :length, :location)
+    params.require(:training_session).permit(:datetime, :duration, :level, :length, :location, :recurrence, :enddate)
   end
 end
