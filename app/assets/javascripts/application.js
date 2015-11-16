@@ -15,5 +15,7 @@
 //= require jquery_ujs
 //= require validator
 //= require turbolinks
+//= require jquery-2.1.1.min
+//= require jquery.flatWeatherPlugin
 //= require bootstrap
 //= require_tree .

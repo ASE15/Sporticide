@@ -1,0 +1,21 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    //Setup the plugin, see readme for more examples
+    var weather = $("weather").flatWeatherPlugin({
+      location: "Bern", //city and region *required
+      country: "ch",         //country *required
+      //optional:
+      api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
+      apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
+      //view : "full", //default: full (partial, full, simple, today or forecast)
+      displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
+      //forecast: 5, //default: 5 (0 -5) how many days you want forecast
+      //render: true, //default: true (true/false) if you want plugin to generate markup
+      //loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
+      //units : "metric"// or "imperial" default: "auto"
+    });
+
+  });
+</script>
+<div id="weather"></div>
