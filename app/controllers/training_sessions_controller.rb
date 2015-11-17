@@ -22,6 +22,10 @@ class TrainingSessionsController < ApplicationController
 
     if @training.save
       redirect_to @training, :notice => "Training session created"
+      @members = @training.members
+      @members.each do |m|
+        TrainingMailer.new_training(m).deliever
+      end
     else
       render 'new'
     end
