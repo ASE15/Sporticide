@@ -14,9 +14,9 @@
 ActiveRecord::Schema.define(version: 20151110122703) do
 
   create_table "chats", force: :cascade do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "partner_id"
   end
 
@@ -26,17 +26,17 @@ ActiveRecord::Schema.define(version: 20151110122703) do
   create_table "comments", force: :cascade do |t|
     t.text     "text"
     t.datetime "datetime"
-    t.integer  "training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
   end
 
   add_index "comments", ["training_id"], name: "index_comments_on_training_id"
 
   create_table "friend_requests", force: :cascade do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "friend_id"
   end
 
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.string   "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
     t.string   "firstname"
     t.string   "lastname"
     t.integer  "height"
@@ -79,7 +80,6 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.string   "address_nr"
     t.integer  "plz"
     t.string   "place"
-    t.string   "password"
     t.date     "date"
   end
 
@@ -87,10 +87,10 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.integer  "intensity"
     t.integer  "rating"
     t.text     "comment"
-    t.integer  "training_session_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "training_session_id"
     t.integer  "cc_entry_id"
   end
 
@@ -101,11 +101,12 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.datetime "datetime"
     t.boolean  "isRead"
     t.text     "text"
-    t.integer  "chat_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sender_id"
     t.integer  "receiver_id"
+    t.integer  "chat_id"
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
@@ -118,9 +119,9 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.integer  "level"
     t.integer  "length"
     t.string   "location"
-    t.integer  "training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
     t.string   "recurrence"
     t.datetime "enddate"
   end
@@ -131,10 +132,10 @@ ActiveRecord::Schema.define(version: 20151110122703) do
     t.boolean  "isPublic"
     t.string   "title"
     t.text     "description"
-    t.string   "sport"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.string   "sport"
   end
 
   add_index "trainings", ["owner_id"], name: "index_trainings_on_owner_id"

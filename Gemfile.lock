@@ -185,6 +185,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    transprt (0.1.0)
     turbolinks (2.5.3)
       coffee-rails
     twitter (5.3.1)
@@ -232,6 +233,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   sqlite3
+  transprt
   turbolinks
   twitter (~> 5.3.1)
   tzinfo-data

@@ -29,11 +29,18 @@ class TwitterController < ApplicationController
     rescue Twitter::Error::Forbidden => e
 	   error = "You already tweeted about this training!"
     end
-    
+	
+	redirect = nil
+	if(:back) 
+	  redirect = :back
+	else
+	  redirect = root_path
+	end
+
 	  if(error)
-		redirect_to :back, alert: error
+		redirect_to redirect, alert: error
 	  else
-		redirect_to :back, notice: "You successfully tweeted about this auction!"
+		redirect_to redirect, notice: "You successfully tweeted about this auction!"
 	  end
   end
   
