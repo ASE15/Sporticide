@@ -2,8 +2,8 @@
   $(document).ready(function() {
 
     //Setup the plugin, see readme for more examples
-    var weather = $("weather").flatWeatherPlugin({
-      location: "Bern", //city and region *required
+    var example1 = $("#example-1").flatWeatherPlugin({
+      location: "<%=training_session.location %>", //city and region *required
       country: "ch",         //country *required
       //optional:
       api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
@@ -11,11 +11,19 @@
       //view : "full", //default: full (partial, full, simple, today or forecast)
       displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
       //forecast: 5, //default: 5 (0 -5) how many days you want forecast
-      //render: true, //default: true (true/false) if you want plugin to generate markup
-      //loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
+      render: true, //default: true (true/false) if you want plugin to generate markup
+      loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
       //units : "metric"// or "imperial" default: "auto"
     });
 
   });
 </script>
-<div id="weather"></div>
+<style>
+  #example-1 {
+    width: 350px;
+    background: #1abc9c;
+  }
+
+
+</style>
+<div id="example-1"></div>
