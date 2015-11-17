@@ -1,5 +1,5 @@
 class LocalUser < ActiveRecord::Base
-  validates :plz, length: { in: 4..4 }
+  validates :plz, :length => { :is => 4 }, allow_nil: true
   has_many :trainings, foreign_key: "owner_id"
   #has_and_belongs_to_many :trainings
   has_and_belongs_to_many(:trainings,
@@ -18,9 +18,12 @@ class LocalUser < ActiveRecord::Base
   has_many :logs
 
   def age_at(date, dob)
-    day_diff = date.day - dob.day
-    month_diff = date.month - dob.month - (day_diff < 0 ? 1 : 0)
-    date.year - dob.year - (month_diff < 0 ? 1 : 0)
+    if not date.nil? and not dob.nil?
+      day_diff = date.day - dob.day
+      month_diff = date.month - dob.month - (day_diff < 0 ? 1 : 0)
+      date.year - dob.year - (month_diff < 0 ? 1 : 0)
+    else
+      'N/A'
+    end
   end
-
 end

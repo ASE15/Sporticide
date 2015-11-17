@@ -16,7 +16,7 @@ group :production do
 end
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
-# Use Uglifier as compressor for JavaScript assets
+# Use Uglifier as compressor for JavaScript assets-
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -55,6 +55,7 @@ gem 'bcrypt'
 gem 'tzinfo-data'
 gem 'rails_12factor'
 
-gem 'rest-client'
+gem 'rest-client', '~> 1.8'
 
 gem 'bootstrap_form'
+gem 'nokogiri', '~> 1.6.6.2'

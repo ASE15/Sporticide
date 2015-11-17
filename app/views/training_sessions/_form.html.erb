@@ -1,10 +1,24 @@
-<%= form_for([@training, @session], url: training_trainingsessions_path(@training)) do |f| %>
-    <% if @training.errors.any? %>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=initialize"></script>
+<script>$(document).ready(function(){initialize();})</script>
+<script>
+  $(document).ready(function() {
+     $("#training_session_recurrence").change(function() {
+         if($(this).val() == "never") {
+             $("#recurrence_date").fadeOut();
+         } else {
+             $("#recurrence_date").fadeIn();
+         }
+     });
+  });
+</script>
+
+<%= form_for([@training, @session], url: @session.id.nil? ? training_trainingsessions_path(@training) : training_trainingsession_path(@training, @session)) do |f| %>
+    <% if @session.errors.any? %>
         <div class="alert alert-danger">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <h3><%= pluralize(@training.errors.count, "error") %> prohibited this training from being saved:</h3>
+          <h3><%= pluralize(@session.errors.count, "error") %> prohibited this training from being saved:</h3>
           <ul>
-            <% @training.errors.full_messages.each do |msg| %>
+            <% @session.errors.full_messages.each do |msg| %>
                 <li><%= msg %></li>
             <% end %>
           </ul>
@@ -24,13 +38,33 @@
             <%= f.datetime_select(:datetime, {:ampm => false, class:"form-control"}) %>
         </div>
 
-      <% levels = [
-              ['very easy'],
-              ['easy'],
-              ['middle'],
-              ['hard'],
-              ['very hard']
+      <% recs = [
+              ['never'],
+              ['daily'],
+              ['weekly'],
+              ['monthly']
       ]
+      %>
+
+      <div class="form-group">
+        <%= f.label 'Recurrence' %><br />
+        <%= f.select(:recurrence, recs, {class:"form-control"}) %>
+      </div>
+
+
+      <div class="form-group" id="recurrence_date" <% if @session.recurrence == "never" or @session.recurrence.nil? %>style="display:none;"<% end %>>
+        <%= f.label 'End date for recurrence' %>
+        <%= f.datetime_select(:enddate, {:ampm => false, class:"form-control"}) %>
+      </div>
+
+
+      <% levels = options_for_select([
+              ['very easy', 1],
+              ['easy', 2],
+              ['middle', 3],
+              ['hard', 4],
+              ['very hard',5]
+      ])
       %>
       <div class="form-group">
         <%= f.label :level %>
@@ -44,7 +78,7 @@
 
       <div class="form-group">
           <%= f.label :location %>
-          <%= f.text_field(:location, {class:"form-control"}) %><br>
+        <%=f.text_field :location ,:id => 'searchTextField'%><br>
       </div>
 
     <p>

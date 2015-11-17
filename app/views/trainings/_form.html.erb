@@ -34,9 +34,9 @@
       <%= f.label 'Public or private training?' %><br />
 
       <%= label :isPublic, "Public"%>
-      <%= f.radio_button :isPublic, false , :checked => true , :value => true %>
+      <%= f.radio_button :isPublic, true , :checked => true , :value => "1" %>
       <%= label :isPublic, "Private"%>
-      <%= f.radio_button :isPublic, true, :value => false%>
+      <%= f.radio_button :isPublic, false, :value => "0" %>
 
 
     </div>

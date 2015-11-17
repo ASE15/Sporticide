@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :trainings do
     get 'join', to: 'trainings#join'
     get 'leave', to: 'trainings#leave'
+    get 'invite', to: 'trainings#invite'
     resources :trainingsessions, controller:'training_sessions' do
       resources :logs
     end
@@ -27,9 +28,10 @@ Rails.application.routes.draw do
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+
   resources :local_users
   resource :profile, :controller => :profile
-  get 'profile', to: 'profile#show'
+  #get 'profile', to: 'profile#show' #not necessary anymore
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
