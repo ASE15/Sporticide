@@ -21,11 +21,15 @@ class TrainingSessionsController < ApplicationController
     @session = @training.training_sessions.create(session_params)
 
     if @training.save
-      redirect_to @training, :notice => "Training session created"
-      @members = @training.members
+      @members = @training.users
       @members.each do |m|
-        TrainingMailer.new_training(m).deliever
+        puts "username email ---------------------------" + m.username
+        m_user = User.find(m.username)
+
+        puts "username email ---------------------------" + m_user.email
+        TrainingMailer.new_training(@training, m_user).deliver_now
       end
+      redirect_to @training, :notice => "Training session created"
     else
       render 'new'
     end

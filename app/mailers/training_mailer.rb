@@ -5,7 +5,8 @@ class TrainingMailer < ApplicationMailer
   #
   #   en.training_mailer.new_training.subject
   #
-  def new_training(member)
+  def new_training(training,member)
+    @training = training
     mail to: member.email, subject: "new training created"
   end
 
