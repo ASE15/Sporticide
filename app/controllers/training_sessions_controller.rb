@@ -26,6 +26,10 @@ class TrainingSessionsController < ApplicationController
         m_user = User.find(m.username)
         TrainingMailer.new_training(@training, @session, m_user).deliver_now
       end
+      @system_log = @session.system_logs.build
+      @system_log.training_session_id = @session.id
+      @system_log.log = "New training session for " + @training.title + "created!"
+      @system_log.save
       redirect_to @training, :notice => "Training session created"
     else
       render 'new'
@@ -48,6 +52,10 @@ class TrainingSessionsController < ApplicationController
         m_user = User.find(m.username)
         TrainingMailer.edited_training(@training, @session, m_user).deliver_now
       end
+      @system_log = @session.system_logs.build
+      @system_log.training_session_id = @session.id
+      @system_log.log = "A training session for " + @training.title + "updated!"
+      @system_log.save
       redirect_to @training, :notice => "Training session updated"
     else
       render 'edit'
@@ -63,6 +71,10 @@ class TrainingSessionsController < ApplicationController
       m_user = User.find(m.username)
       TrainingMailer.destroyed_training(@training, @session, m_user).deliver_now
     end
+    @system_log = @session.system_logs.build
+    @system_log.training_session_id = @session.id
+    @system_log.log = "A training session for " + @training.title + "deleted!"
+    @system_log.save
     redirect_to @training
   end
 

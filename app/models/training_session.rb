@@ -53,6 +53,7 @@ class TrainingSession < ActiveRecord::Base
 
   belongs_to :training
   has_many :logs, :inverse_of => :training_session, :dependent => :destroy
+  has_many :system_logs, :inverse_of => :training_session, :dependent => :destroy
 
   #validates :enddate, :if => :is_valid_enddate?
   validates_with TrainingSessionValidator, :on => :update
