@@ -82,6 +82,8 @@ class TrainingSession < ActiveRecord::Base
         steps = timespan / 1.weeks
       when "monthly"
         steps = timespan / 1.months
+      else
+	steps = 1
     end
     return steps.floor
   end
