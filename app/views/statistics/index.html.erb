@@ -1,14 +1,86 @@
 <h1>Statistics</h1>
+<% firstfriend = @myfriends[0].username %>
+<ul class="nav nav-pills">
+  <li class="active"><a data-toggle="pill" href="#tab-chart1">Overall Number of Trainings</a></li>
+  <li><a data-toggle="pill" href="#tab-chart2">Overall Training Time</a></li>
+  <li><a data-toggle="pill" href="#tab-chart3">Overall Training Distance</a></li>
+  <li><a data-toggle="pill" href="#tab-chart4">Overall Training Level</a></li>
+</ul>
 
-<div id="chart"></div>
+<div class="tab-content">
+  <div id="tab-chart1" class="tab-pane fade in active">
+    <p><div id="chart1"></div></p>
+  </div>
+  <div id="tab-chart2" class="tab-pane fade">
+    <p><div id="chart2"></div></p>
+  </div>
+  <div id="tab-chart3" class="tab-pane fade">
+    <p><div id="chart3"></div></p>
+  </div>
+  <div id="tab-chart4" class="tab-pane fade">
+    <p><div id="chart4"></div></p>
+  </div>
+</div>
+<% time_difference = 0 %>
+<% lukas = 0 %>
 <script>
     var chart = c3.generate({
-        bindto: '#chart',
+        bindto: '#chart1',
         data: {
             columns: [
-                ['data1', 30, 200, 100, 400, 150, 250],
-                ['data2', 50, 20, 10, 40, 15, 25]
+                <% @myfriends.each do |friend| %>
+
+                    <% durations = Array.new %>
+                    <% durations[0] = durations[1] = durations[2] = durations[3] = 0 %>
+                    <% session_counter = 0 %>
+                    <%friend.trainings.each do |t| %>
+                        <% t.training_sessions.each do |s| %>
+                            <% time_difference = Time.now - s.datetime %>
+                            <% time_difference = (time_difference/(3600*24)).round(0) %>
+                            <% case time_difference %>
+                                <% when 0 .. 6 %>
+                                    <% durations[0] = durations[0] + s.duration %>
+                                <% when 7 .. 14 %>
+                                    <% durations[1] = durations[1] + s.duration %>
+                                <% when 14 .. 21 %>
+                                    <% durations[2] = durations[2] + s.duration %>
+                                <% when 21 .. 28 %>
+                                    <% durations[3] = durations[3] + s.duration %>
+                            <% end %>
+                        <% end %>
+                        <% session_counter += 1 %>
+                    <% end %>
+
+
+                <% if (firstfriend != friend.username) %>
+                        ,
+                <% end %>
+                ['<%= friend.username %>', <%= durations[0] %>, <%= durations[1] %>, <%= durations[2] %>, <%= durations[3] %>]
+                <% end %>
+
             ]
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ['last week', '2 weeks ago', '3 weeks ago', '4 weeks ago'],
+                label: { // ADD
+                    position: 'outer-middle'
+                }
+            },
+            y: {
+                show: true,
+                label: { // ADD
+                    text: 'overall training time',
+                    position: 'outer-middle'
+                }
+            }
         }
     });
 </script>
+
+<%= lukas %><br>
+<%= Time.now %><br>
+<%= @myfriends[0].trainings[0].training_sessions[0].datetime %>
+<% time_difference = Time.now - @myfriends[0].trainings[0].training_sessions[0].datetime %>
+<%= (time_difference/(3600*24)).round(0) %>
