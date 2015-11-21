@@ -1,5 +1,20 @@
 
-<p> A new training was created where you are a member:</p>
+<p> A new training session was created where you are a member:</p>
 <p>
-  <%= @training.sport %>,
+  Sports: <%= @training.sport %><br>
+  Title : <%= @training.title %><br>
+  Description: <%= @training.description %>
 </p>
+
+<p> Details of the training session are the following:</p>
+
+<p>
+Datetime: <%= @session.datetime %><br>
+Duration: <%= @session.duration %><br>
+Level: <%= @session.level %><br>
+Length: <%= @session.length %><br>
+Location: <%= @session.location %><br>
+Recurrence: <%= @session.recurrence %><br>
+Enddate: <%= @session.enddate %>
+</p>
+

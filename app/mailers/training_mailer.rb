@@ -5,9 +5,10 @@ class TrainingMailer < ApplicationMailer
   #
   #   en.training_mailer.new_training.subject
   #
-  def new_training(training,member)
+  def new_training(training,session,member)
     @training = training
-    mail to: member.email, subject: "new training created"
+    @session = session
+    mail to: member.email, subject: "A new training session was created"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -15,10 +16,11 @@ class TrainingMailer < ApplicationMailer
   #
   #   en.training_mailer.edited_training.subject
   #
-  def edited_training(training)
+  def edited_training(training, session, member)
     @training = training
+    @session = session
 
-    mail to: "to@example.org", subject: ""
+    mail to: member.email, subject: "A training session was updated"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -26,9 +28,10 @@ class TrainingMailer < ApplicationMailer
   #
   #   en.training_mailer.destroyed_training.subject
   #
-  def destroyed_training(training)
+  def destroyed_training(training, session, member)
     @training = training
+    @session = session
 
-    mail to: "to@example.org", subject: ""
+    mail to: member.email, subject: "A training session was removed "
   end
 end

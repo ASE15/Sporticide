@@ -23,11 +23,8 @@ class TrainingSessionsController < ApplicationController
     if @training.save
       @members = @training.users
       @members.each do |m|
-        puts "username email ---------------------------" + m.username
         m_user = User.find(m.username)
-
-        puts "username email ---------------------------" + m_user.email
-        TrainingMailer.new_training(@training, m_user).deliver_now
+        TrainingMailer.new_training(@training, @session, m_user).deliver_now
       end
       redirect_to @training, :notice => "Training session created"
     else
@@ -46,6 +43,11 @@ class TrainingSessionsController < ApplicationController
     @session = TrainingSession.find(params[:id])
 
     if @session.update(session_params)
+      @members = @training.users
+      @members.each do |m|
+        m_user = User.find(m.username)
+        TrainingMailer.edited_training(@training, @session, m_user).deliver_now
+      end
       redirect_to @training, :notice => "Training session updated"
     else
       render 'edit'
@@ -56,6 +58,11 @@ class TrainingSessionsController < ApplicationController
     @training = Training.find(params[:training_id])
     @session = TrainingSession.find(params[:id])
     @session.destroy
+    @members = @training.users
+    @members.each do |m|
+      m_user = User.find(m.username)
+      TrainingMailer.destroyed_training(@training, @session, m_user).deliver_now
+    end
     redirect_to @training
   end
 
