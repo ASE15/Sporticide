@@ -96,7 +96,7 @@ class TrainingSession < ActiveRecord::Base
       when "monthly"
         steps = timespan / 1.months
       else
-	steps = 1
+        steps = 1
     end
     return steps.floor
   end

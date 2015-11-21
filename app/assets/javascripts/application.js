@@ -12,10 +12,12 @@
 //
 //
 
-//= require jquery
+//= require jquery-2.1.4
 //= require jquery_ujs
 //= require validator
 //= require turbolinks
+//= require jquery.flatWeatherPlugin
+//= require jquery.turbolinks
 //= require bootstrap
 //= require_tree .
 
