@@ -1,0 +1,13 @@
+<p>
+  <strong>Transportation:</strong>
+  <% connection = training_session.get_connection_to('Genf') %>
+  <%if(! connection.nil?)%>
+    <p>Departure: <%=connection["from"]["departure"]%></p>
+    <p>Arrival: <%=connection["to"]["arrival"]%></p>
+    <p>Traveling time: <%= time = (connection["to"]["arrivalTimestamp"] - connection["from"]["departureTimestamp"]) / 60 %> Minutes</p>
+  <%else%>
+    Could not find a connection!
+  <%end%>
+</p>
+
+
