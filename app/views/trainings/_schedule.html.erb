@@ -1,6 +1,6 @@
 <p>
-  <strong>Transportation:</strong>
-  <% connection = training_session.get_connection_to('Genf') %>
+  <strong>Transportation (<%=current_user.place%>):</strong>
+  <% connection = training_session.get_connection_to(current_user.place) %>
   <%if(! connection.nil?)%>
     <p>Departure: <%=connection["from"]["departure"]%></p>
     <p>Arrival: <%=connection["to"]["arrival"]%></p>
