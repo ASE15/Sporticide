@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110122703) do
+ActiveRecord::Schema.define(version: 20151121170214) do
 
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(version: 20151110122703) do
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
   add_index "messages", ["receiver_id"], name: "index_messages_on_receiver_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
+
+  create_table "system_logs", force: :cascade do |t|
+    t.integer  "training_session_id"
+    t.string   "log"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
 
   create_table "training_sessions", force: :cascade do |t|
     t.datetime "datetime"
