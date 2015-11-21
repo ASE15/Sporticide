@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :messages
   end
 
+  resources :statistics
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
