@@ -23,7 +23,7 @@ class TrainingSessionsController < ApplicationController
     if @training.save
       @system_log = @session.system_logs.build
       @system_log.training_session_id = @session.id
-      @system_log.log = "New training session for " + @training.title + "created!"
+      @system_log.log = "New training session for " + @training.title + " created!"
       @system_log.save
       @members = @training.users
       @members.each do |m|
@@ -55,7 +55,7 @@ class TrainingSessionsController < ApplicationController
     if @session.update(session_params)
       @system_log = @session.system_logs.build
       @system_log.training_session_id = @session.id
-      @system_log.log = "A training session for " + @training.title + "updated!"
+      @system_log.log = "A training session for " + @training.title + " updated!"
       @system_log.save
       @members = @training.users
       @members.each do |m|
@@ -79,7 +79,7 @@ class TrainingSessionsController < ApplicationController
     @session.destroy
     @system_log = @session.system_logs.build
     @system_log.training_session_id = @session.id
-    @system_log.log = "A training session for " + @training.title + "deleted!"
+    @system_log.log = "A training session for " + @training.title + " deleted!"
     @system_log.save
     @members = @training.users
     @members.each do |m|
