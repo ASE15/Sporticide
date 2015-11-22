@@ -1,6 +1,7 @@
 class LocalUser < ActiveRecord::Base
   validates :plz, :length => { :is => 4 }, allow_nil: true
   has_many :trainings, foreign_key: "owner_id"
+  has_many :training_notifiers, :inverse_of => :local_user, :dependent => :destroy
   #has_and_belongs_to_many :trainings
   has_and_belongs_to_many(:trainings,
                           :class_name => "Training",
