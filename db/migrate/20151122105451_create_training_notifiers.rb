@@ -1,9 +1,9 @@
 class CreateTrainingNotifiers < ActiveRecord::Migration
   def change
     create_table :training_notifiers do |t|
-      t.isRead :boolean
-      t.system_log_id :integer
-      t.local_user_id :integer
+      t.boolean :isRead
+      t.integer :system_log_id
+      t.integer :local_user_id
 
       t.timestamps null: false
     end

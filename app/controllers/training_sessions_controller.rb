@@ -29,11 +29,11 @@ class TrainingSessionsController < ApplicationController
       @members.each do |m|
         m_user = User.find(m.username)
         TrainingMailer.new_training(@training, @session, m_user).deliver_now
-        # @training_notifier = @system_log.training_notifiers.build
-        # @training_notifier.local_user_id = m.id
-        # @training_notifier.system_log_id = @system_log.id
-        # @training_notifier.isRead = false
-        # @training_notifier.save
+        @training_notifier = @system_log.training_notifiers.build
+        @training_notifier.local_user_id = m.id
+        @training_notifier.system_log_id = @system_log.id
+        @training_notifier.isRead = false
+        @training_notifier.save
 
       end
       redirect_to @training, :notice => "Training session created"
@@ -61,11 +61,11 @@ class TrainingSessionsController < ApplicationController
       @members.each do |m|
         m_user = User.find(m.username)
         TrainingMailer.edited_training(@training, @session, m_user).deliver_now
-        # @training_notifier = @system_log.training_notifiers.build
-        # @training_notifier.local_user_id = m.id
-        # @training_notifier.system_log_id = @system_log.id
-        # @training_notifier.isRead = false
-        # @training_notifier.save
+        @training_notifier = @system_log.training_notifiers.build
+        @training_notifier.local_user_id = m.id
+        @training_notifier.system_log_id = @system_log.id
+        @training_notifier.isRead = false
+        @training_notifier.save
       end
       redirect_to @training, :notice => "Training session updated"
     else
@@ -85,11 +85,11 @@ class TrainingSessionsController < ApplicationController
     @members.each do |m|
       m_user = User.find(m.username)
       TrainingMailer.destroyed_training(@training, @session, m_user).deliver_now
-      # @training_notifier = @system_log.training_notifiers.build
-      # @training_notifier.local_user_id = m.id
-      # @training_notifier.system_log_id = @system_log.id
-      # @training_notifier.isRead = false
-      # @training_notifier.save
+      @training_notifier = @system_log.training_notifiers.build
+      @training_notifier.local_user_id = m.id
+      @training_notifier.system_log_id = @system_log.id
+      @training_notifier.isRead = false
+      @training_notifier.save
     end
     redirect_to @training
   end

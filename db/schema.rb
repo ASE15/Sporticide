@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151121170214) do
+ActiveRecord::Schema.define(version: 20151122105451) do
 
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at"
@@ -117,6 +117,14 @@ ActiveRecord::Schema.define(version: 20151121170214) do
     t.string   "log"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+  end
+
+  create_table "training_notifiers", force: :cascade do |t|
+    t.boolean  "isRead"
+    t.integer  "system_log_id"
+    t.integer  "local_user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "training_sessions", force: :cascade do |t|
