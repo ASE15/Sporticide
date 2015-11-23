@@ -1,6 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  #Loading files to precompile
+  config.assets.precompile += ['jquery-ui.min.js']
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
