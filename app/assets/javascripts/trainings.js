@@ -68,7 +68,13 @@ jQuery(function(){
     var start_date = new Date($(line).find(".start-entry").attr("data-date"));
     var selected_end_date = $("#end-date-input").datepicker("getDate");
     var selected_start_date = $("#start-date-input").datepicker("getDate");
-    start_date.setMinutes(start_date.getMinutes()+selected_start_date.getTimezoneOffset());
+    
+    if(selected_start_date === null && selected_end_date === null) {
+      return false;
+    }
+    
+    var range = selected_start_date != null ? selected_start_date.getTimezoneOffset() : selected_end_date.getTimezoneOffset();
+    start_date.setMinutes(start_date.getMinutes()+range);
     
     var shouldShow = true
     if(selected_start_date && !isNaN(selected_start_date.getTime())) {
