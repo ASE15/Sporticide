@@ -1,0 +1,20 @@
+<div class="search-bar">
+  <%= render "labeled_dropdown", label: "Sports", selector_class: "training-type", selector_options: ["all", "running", "cycling", "boxing"] %>
+  <div>
+    <div>From:</div> 
+    <div class="btn-group">
+      <input id="start-date-input" type="text" class="form-control date-input">
+      <span id="start-date-clear" class="glyphicon glyphicon-remove-circle date-clear"></span>
+    </div>
+  </div>
+  <div>
+    <div>To:</div> 
+    <div class="btn-group">
+      <input id="end-date-input" type="text" class="form-control date-input">
+      <span id="end-date-clear" class="glyphicon glyphicon-remove-circle date-clear"></span>
+    </div>
+  </div>
+
+  <%= render "labeled_dropdown", label: "Repetition", selector_class: "recurrence", selector_options: ["all", "never", "daily", "weekly", "monthly"] %>
+  <%= render "labeled_dropdown", label: "Location", selector_class: "location", selector_options: Training.get_all_locations.unshift("all") %>
+</div>

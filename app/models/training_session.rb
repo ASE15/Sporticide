@@ -1,3 +1,5 @@
+require 'transprt'
+
 class TrainingSessionValidator < ActiveModel::Validator
   def validate(record)
 
@@ -56,6 +58,17 @@ class TrainingSession < ActiveRecord::Base
 
   #validates :enddate, :if => :is_valid_enddate?
   validates_with TrainingSessionValidator, :on => :update
+
+  def get_connection_to(from)
+    puts datetime.strftime("%Y-%m-%d")
+    begin
+      connection = Transprt.connections :from => from, :to => location, :isArrivalTime => 1, :date => datetime.strftime("%Y-%m-%d"), :time => datetime.strftime("%H-%M")
+    rescue Exception => e
+      puts e
+    end
+
+    return connection.nil? ? nil : connection[0]
+  end
 
   def user_already_logged?(user)
     count = 0

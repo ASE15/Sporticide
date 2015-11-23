@@ -14,6 +14,7 @@
 
 //= require jquery-2.1.4
 //= require jquery_ujs
+//= require jquery-ui.min
 //= require validator
 //= require turbolinks
 //= require jquery.flatWeatherPlugin
