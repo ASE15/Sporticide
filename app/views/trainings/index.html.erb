@@ -1,22 +1,16 @@
 <h1>Trainings</h1>
 
-
-
 <%= link_to 'New Training', new_training_path, class: "btn btn-primary" %>
 <br /><br />
 
-Sport: <select class="training-type">
-  <option value="all">All</option>
-  <option value="running">Running</option>
-  <option value="cycling">Cycling</option>
-  <option value="boxing">Boxing</option>
-</select> 
+<%= render "search_bar", trainings: @trainings %>
 <br />
 
 <table class="table table-striped table-hover table-condensed table-responsive"><br>
   <tr class="table-header">
     <th>Title</th>
     <th>Sport</th>
+    <th>Locations</th>
     <th>Owner</th>
     <th></th>
   </tr>
@@ -24,7 +18,8 @@ Sport: <select class="training-type">
   <% @trainings.each do |t| %>
       <tr class="table-row">
         <td><%= t.title %></td>
-        <td class="sport"><%= t.sport %></td>
+        <td class="sport-entry"><%= t.sport %></td>
+        <td class="location-entry"><%= t.get_locations.to_s.tr('"[]', '')%></td>
         <td><%= t.owner.username %></td>
         <td>
             <%= link_to 'Show Training', training_path(t), class: "btn btn-xs btn-primary" %>

@@ -1,0 +1,22 @@
+<div class="search-bar">
+  <%= render "labeled_dropdown", label: "Sports", selector_class: "training-type", selector_options: ["all", "running", "cycling", "boxing"] %>
+  <div>
+    <div>Start:</div> 
+    <div>
+      <select class="start-date">
+        <option value="date">22.11.1985</option>
+      </select> 
+    </div>
+  </div>
+  <div>
+    <div>End:</div> 
+    <div>
+      <select class="end-date">
+        <option value="date">22.11.1985</option>
+      </select> 
+    </div>
+  </div>
+
+  <%= render "labeled_dropdown", label: "Repetition", selector_class: "repetition", selector_options: ["all", "once", "weekly", "monthly"] %>
+  <%= render "labeled_dropdown", label: "Location", selector_class: "location", selector_options: Training.get_all_locations.unshift("all") %>
+</div>
