@@ -6,6 +6,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+#Loading files to precompile
+config.assets.precompile += ['jquery-ui.min.js', 'trainings.js']
+
 #
 # Hot fix for omniauth-facebook
 #
