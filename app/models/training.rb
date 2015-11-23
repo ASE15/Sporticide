@@ -58,6 +58,8 @@ class Training < ActiveRecord::Base
         first_time = session.datetime
       end
     end
+    
+    
     return first_time
   end
   
