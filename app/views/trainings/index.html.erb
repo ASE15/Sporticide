@@ -11,6 +11,9 @@
     <th>Title</th>
     <th>Sport</th>
     <th>Locations</th>
+    <th>Recurrence</th>
+    <th>Start</th>
+    <!--<th>End</th>-->
     <th>Owner</th>
     <th></th>
   </tr>
@@ -18,8 +21,11 @@
   <% @trainings.each do |t| %>
       <tr class="table-row">
         <td><%= t.title %></td>
-        <td class="sport-entry"><%= t.sport %></td>
+        <td class="sport-entry"><%= t.sport.capitalize %></td>
         <td class="location-entry"><%= t.get_locations.to_s.tr('"[]', '')%></td>
+        <td class="recurrence-entry"><%= t.get_recurrences.to_s.tr('"[]', '')%></td>
+        <td class="start-entry" data-date="<%= t.get_first_time.strftime("%Y-%m-%d")%>"><%= t.get_first_time%></td>
+        <!--<td class="end-entry" data-date="<%= t.get_first_time.iso8601%>"><%= t.get_last_time%></td>-->
         <td><%= t.owner.username %></td>
         <td>
             <%= link_to 'Show Training', training_path(t), class: "btn btn-xs btn-primary" %>

@@ -40,4 +40,34 @@ class Training < ActiveRecord::Base
     
     return locations
   end
+  
+  def get_recurrences()
+    repetitions = []
+    training_sessions.each do |session|
+      if not session.recurrence.nil? and not session.recurrence.empty? and not repetitions.include?(session.recurrence)
+        repetitions.push(session.recurrence)
+      end
+    end
+    return repetitions
+  end
+  
+  def get_first_time()
+    first_time = nil
+    training_sessions.each do |session|
+      if not session.datetime.nil? and (first_time.nil? or session.datetime < first_time)
+        first_time = session.datetime
+      end
+    end
+    return first_time
+  end
+  
+  def get_last_time()
+    last_time = nil
+    training_sessions.each do |session|
+      if not session.enddate.nil? and (last_time.nil? or session.enddate < last_time)
+        last_time = session.enddate
+      end
+    end
+    return last_time
+  end
 end
