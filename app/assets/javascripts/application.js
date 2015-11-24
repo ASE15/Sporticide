@@ -20,7 +20,7 @@
 //= require jquery.flatWeatherPlugin
 //= require jquery.turbolinks
 //= require bootstrap
-//= require training
+//= require trainings
 //= require_tree .
 
 
