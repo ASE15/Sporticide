@@ -15,10 +15,10 @@
 //= require jquery-2.1.4
 //= require jquery_ujs
 //= require jquery-ui.min
+//= require jquery.turbolinks
 //= require validator
 //= require turbolinks
 //= require jquery.flatWeatherPlugin
-//= require jquery.turbolinks
 //= require bootstrap
 //= require trainings
 //= require_tree .
