@@ -14,9 +14,9 @@
 ActiveRecord::Schema.define(version: 20151125090907) do
 
   create_table "chats", force: :cascade do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "partner_id"
     t.boolean  "userRead"
     t.boolean  "partnerRead"
@@ -28,17 +28,17 @@ ActiveRecord::Schema.define(version: 20151125090907) do
   create_table "comments", force: :cascade do |t|
     t.text     "text"
     t.datetime "datetime"
-    t.integer  "training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
   end
 
   add_index "comments", ["training_id"], name: "index_comments_on_training_id"
 
   create_table "friend_requests", force: :cascade do |t|
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "friend_id"
   end
 
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.string   "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
     t.string   "firstname"
     t.string   "lastname"
     t.integer  "height"
@@ -81,7 +82,6 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.string   "address_nr"
     t.integer  "plz"
     t.string   "place"
-    t.string   "password"
     t.date     "date"
   end
 
@@ -89,10 +89,10 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.integer  "intensity"
     t.integer  "rating"
     t.text     "comment"
-    t.integer  "training_session_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "training_session_id"
     t.integer  "cc_entry_id"
   end
 
@@ -103,9 +103,9 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.datetime "datetime"
     t.text     "text"
     t.integer  "user_id"
-    t.integer  "chat_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "chat_id"
   end
 
   add_index "messages", ["chat_id"], name: "index_messages_on_chat_id"
@@ -116,9 +116,9 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.integer  "level"
     t.integer  "length"
     t.string   "location"
-    t.integer  "training_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "training_id"
     t.string   "recurrence"
     t.datetime "enddate"
   end
@@ -129,10 +129,10 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.boolean  "isPublic"
     t.string   "title"
     t.text     "description"
-    t.string   "sport"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.string   "sport"
   end
 
   add_index "trainings", ["owner_id"], name: "index_trainings_on_owner_id"
@@ -141,6 +141,24 @@ ActiveRecord::Schema.define(version: 20151125090907) do
     t.integer "user_id",     null: false
     t.integer "training_id", null: false
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "weathers", force: :cascade do |t|
     t.datetime "created_at", null: false
