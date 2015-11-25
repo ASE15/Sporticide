@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   get 'auth/facebook/callback', to: 'sessions#facebook'
   get 'auth/twitter/callback', to: 'sessions#twitter'
 
-  resources :chats do
-    resources :messages
+  resources :chats, only: [:new, :create, :destroy, :show, :update, :edit] do
+    resources :messages, only: [:create, :new, :show]
   end
 
   resources :friends

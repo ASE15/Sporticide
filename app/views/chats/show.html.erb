@@ -1,0 +1,12 @@
+ID: <%= @chat.id %><br />
+Partner: <%= @chat.partner.username %>
+
+
+Messages:<br />
+
+<% @chat.messages.each do |m| %>
+    <%= render m %>
+<% end %>
+
+
+<%= render 'messages/form' %>

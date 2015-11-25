@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110122703) do
+ActiveRecord::Schema.define(version: 20151125090907) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "user_id"
