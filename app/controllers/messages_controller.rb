@@ -13,10 +13,8 @@ class MessagesController < ApplicationController
     @chat = Chat.find(params[:chat_id])
     @message = @chat.messages.build(message_params)
     @message.datetime = Time.now
-    @message.sender = current_user
-    @message.receiver = @chat.partner
-    @message.isRead = false
-    @chat.isRead = false
+    @message.user = current_user
+    @chat.unread_partner_of(current_user)
     if @chat.save
       redirect_to @chat, :notice => "Message added"
     else

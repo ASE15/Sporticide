@@ -1,1 +1,21 @@
 <h1>Chats</h1>
+
+<table class="table table-striped table-hover table-condensed table-responsive"><br>
+  <tr>
+    <th>Partner</th>
+    <th>LastMessage</th>
+    <th>isRead?</th>
+    <th></th>
+  </tr>
+
+  <% @chats.each do |c| %>
+      <tr>
+        <td><%= c.partner.username %></td>
+        <td><%= (c.get_last_message.nil?) ? 'no' : c.get_last_message.datetime %></td>
+        <td><%= c.unread?(current_user) ? 'unread' : 'read' %></td>
+        <td>
+          <%= link_to 'Show Chat', chat_path(c), class: "btn btn-xs btn-primary" %>
+        </td>
+      </tr>
+  <% end %>
+</table>

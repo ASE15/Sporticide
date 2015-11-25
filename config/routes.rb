@@ -21,7 +21,9 @@ Rails.application.routes.draw do
   get 'auth/facebook/callback', to: 'sessions#facebook'
   get 'auth/twitter/callback', to: 'sessions#twitter'
 
-  resources :chats, only: [:new, :create, :destroy, :show, :update, :edit] do
+  post 'chats/:partner_id', to: 'chats#create', as: 'chat_create'
+
+  resources :chats, only: [:index, :destroy, :show, :update, :edit] do
     resources :messages, only: [:create, :new, :show]
   end
 
