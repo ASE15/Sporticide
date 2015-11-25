@@ -4,7 +4,7 @@ class CreateMessages < ActiveRecord::Migration
       t.datetime :datetime
       t.boolean :isRead
       t.text :text
-      #t.references :user
+      t.references :user
 
       t.references :chat, index:true
 
