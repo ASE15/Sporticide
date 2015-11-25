@@ -2,16 +2,12 @@
 
 <table class="table table-striped table-hover table-condensed table-responsive"><br>
   <tr>
-    <th>Training Title</th>
-    <th>Sport</th>
     <th>Notification</th>
     <th>Created</th>
   </tr>
 
   <% @notifications.each do |t| %>
       <tr>
-        <td></td>
-        <td></td>
         <td><%= t.system_log.log %></td>
         <td><%= t.created_at %></td>
 
