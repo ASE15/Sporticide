@@ -38,15 +38,52 @@
 </p>
 
 <p>
+  <%= render "schedule", training_session: training_session %>
+</p>
+
+<p>
   <strong>Location:</strong>
   <strong><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </strong>
   <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"></div>
 </p>
+  <p>
+    <script type="text/javascript">
+      $(document).ready(function() {
 
+        //Setup the plugin, see readme for more examples
+        var weather<%= training_session.id %> = $("#weather-<%= training_session.id %>").flatWeatherPlugin({
+          location: "<%= training_session.location %>", //city and region *required
+          country: "ch",         //country *required
+          //optional:
+          api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
+          apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
+          view : "forecast", //default: full (partial, full, simple, today or forecast)
+          displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
+          //forecast: 5, //default: 5 (0 -5) how many days you want forecast
+          render: true, //default: true (true/false) if you want plugin to generate markup
+          loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
+          //units : "metric"// or "imperial" default: "auto"
+        });
+
+      });
+    </script>
+    <style>
+      #weather-<%= training_session.id %> {
+        width: 350px;
+        background: #FFFFFF
+      }
+
+
+    </style>
+  <div id="weather-<%= training_session.id %>"></div>
+
+
+  </p>
 <p>
   <strong>Logs:</strong>
   <%= render training_session.logs %>
 </p>
+
 
 <% if is_own_training? training_session.training %>
     <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>

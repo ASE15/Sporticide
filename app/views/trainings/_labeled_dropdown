@@ -1,0 +1,10 @@
+<div class="dropdown-container">
+  <div class="dropdown-label"><%= label %>:</div> 
+  <div class="dropdown-selector">
+    <select class="form-control <%= selector_class %>">
+      <% selector_options.each do |option| %>
+        <option value="<%= option %>"><%= option.capitalize %></option>
+      <% end %>
+    </select> 
+  </div>
+</div>
