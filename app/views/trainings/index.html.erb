@@ -1,4 +1,9 @@
-<h1>Trainings</h1>
+<% content_for :title do %>
+    <h1>
+      Trainings
+      <small>Overview</small>
+    </h1>
+<% end %>
 
 <%= link_to 'New Training', new_training_path, class: "btn btn-primary" %>
 <br /><br />

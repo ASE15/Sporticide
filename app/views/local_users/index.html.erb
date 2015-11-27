@@ -1,5 +1,12 @@
 <%- model_class = LocalUser -%>
-<h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+
+<% content_for :title do %>
+    <h1>
+      <%= t '.title', :default => model_class.model_name.human.pluralize.titleize %>
+      <small>Sporticide users</small>
+    </h1>
+<% end %>
+
 <form class="form-inline" data-toggle="validator" role="form">
   <div class="form-group">
     <input type="number" name="start" placeholder="start" class="form-control">

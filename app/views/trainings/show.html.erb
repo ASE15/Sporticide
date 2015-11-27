@@ -1,7 +1,12 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBc3fYs8wV7YwDbzxEmyVuunE3aMVLIE&libraries=places"> </script>
 
 
-<h1>Overview Training</h1>
+<% content_for :title do %>
+    <h1>
+      Training "<%= @training.title %>"
+      <small>Overview</small>
+    </h1>
+<% end %>
 
 <% if is_own_training? @training %>
     <%= button_to('Destroy', training_path(@training),
