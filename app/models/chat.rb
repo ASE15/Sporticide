@@ -3,11 +3,11 @@ class Chat < ActiveRecord::Base
   belongs_to :partner, class_name: 'LocalUser'
   has_many :messages, :inverse_of => :chat, :dependent => :destroy
 
-  scope :involving, -> (user) do
+  scope :involving, ->(user) do
     where("chats.user_id =? OR chats.partner_id =?",user.id,user.id)
   end
 
-  scope :between, -> (sender_id,recipient_id) do
+  scope :between, ->(sender_id,recipient_id) do
     where("(chats.user_id = ? AND chats.partner_id =?) OR (chats.user_id = ? AND chats.partner_id =?)", sender_id,recipient_id, recipient_id, sender_id)
   end
 
