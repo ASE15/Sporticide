@@ -10,13 +10,27 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+ * require_tree .
  *= require_self
+ * stub bootstrap
+ * stub bootstrap-theme
+ * stub bootstrap-theme.min
+ * stub adminlte
+ * stub skins/
+ *= require bootstrap.min
+ *= require c3
+ *= require flatWeatherPlugin
+ *= require trainings
  */
+//@import "c3";
+//@import "flatWeatherPlugin";
+//@import "trainings";
 @import "jquery-ui.min";
 
+/*
 body {
     padding-top: 65px;
 }
+*/
 
 

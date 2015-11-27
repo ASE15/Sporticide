@@ -23,7 +23,11 @@
 //= require trainings
 // do not add/alter scripts below this line! Add script between the two comment lines!
 //= require turbolinks
-//= require_tree .
+//= require c3.min
+//= require d3.min
+//= require gmaps
+//= require validator
+// require_tree .
 
 
 
