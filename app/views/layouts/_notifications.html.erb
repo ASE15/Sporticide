@@ -1,5 +1,9 @@
 <% if user_signed_in? %>
-<% count = current_user.training_notifiers.count %>
+<%
+   list = current_user.training_notifiers
+   count = list.count
+   list = list.sort_by{|e| -e[:id]}
+%>
 
 <li class="dropdown messages-menu">
   <!-- Menu toggle button -->
@@ -13,7 +17,7 @@
       <!-- Inner Menu: contains the notifications -->
       <ul class="menu">
 
-        <% current_user.training_notifiers.each do |t| %>
+        <% list.each do |t| %>
             <li>
               <%= render t %>
             </li>
