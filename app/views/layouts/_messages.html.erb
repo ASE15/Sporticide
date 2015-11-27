@@ -1,0 +1,45 @@
+<%
+   chats = Chat.involving(current_user)
+   unread_count = 0
+   chats.each do |c|
+     if c.unread?(current_user)
+       unread_count += 1
+     end
+    end
+%>
+
+<li class="dropdown messages-menu">
+  <!-- Menu toggle button -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-envelope-o"></i>
+    <% if unread_count > 0 %><span class="label label-success"><%= unread_count %></span><% end %>
+  </a>
+  <ul class="dropdown-menu">
+    <li class="header">You have <%= unread_count %> message<%= unread_count > 1 ? 's' : '' %></li>
+    <li>
+      <!-- inner menu: contains the messages -->
+      <ul class="menu">
+        <% chats.each do |c| %>
+        <% if c.messages.count > 0 and c.unread?(current_user) %>
+        <li><!-- start message -->
+          <a href="<%= chat_path(c) %>">
+            <div class="pull-left">
+              <!-- User Image -->
+              <%= image_tag "user0.png", :class => "img-circle", :alt => "User Image" %>
+            </div>
+            <!-- Message title and timestamp -->
+            <h4>
+              <%= c.get_partner(current_user).get_name %>
+              <small><i class="fa fa-clock-o"></i> <%= c.get_last_message.datetime.strftime("%d %b, %H:%M") %></small>
+            </h4>
+            <!-- The message -->
+            <p><%= c.get_last_message.text %></p>
+          </a>
+        </li><!-- end message -->
+        <% end %>
+        <% end %>
+      </ul><!-- /.menu -->
+    </li>
+    <li class="footer"><%= link_to "See All Messages", chats_path %></li>
+  </ul>
+</li><!-- /.messages-menu -->
