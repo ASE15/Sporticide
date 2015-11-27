@@ -3,7 +3,7 @@ class ChatsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @chats = Chat.involving(current_user)
+    @chats = Chat.sort_desc ( Chat.involving(current_user) )
   end
 
   def create
