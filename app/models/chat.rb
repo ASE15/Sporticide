@@ -49,4 +49,8 @@ class Chat < ActiveRecord::Base
       self.userRead = false
     end
   end
+
+  def self.sort_desc(chats)
+    chats.sort {|a, b| a.get_last_message[:datetime] <=> b.get_last_message[:datetime]}.reverse
+  end
 end

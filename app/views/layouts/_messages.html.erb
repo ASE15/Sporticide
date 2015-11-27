@@ -3,11 +3,15 @@
 <%
    chats = Chat.involving(current_user)
    unread_count = 0
+   chats_new = Array.new
    chats.each do |c|
      if c.unread?(current_user)
        unread_count += 1
+       chats_new << c
      end
     end
+
+   chats = Chat.sort_desc(chats_new)
 %>
 
 <li class="dropdown messages-menu">
