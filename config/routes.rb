@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'statistics/index'
+
   get 'twitter/tweet'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -21,11 +23,17 @@ Rails.application.routes.draw do
   get 'auth/facebook/callback', to: 'sessions#facebook'
   get 'auth/twitter/callback', to: 'sessions#twitter'
 
-  resources :chats do
-    resources :messages
+  post 'chats/:partner_id', to: 'chats#create', as: 'chat_create'
+
+  resources :chats, only: [:index, :destroy, :show, :update, :edit] do
+    resources :messages, only: [:create, :new, :show]
   end
 
+
   resources :training_notifiers
+
+  resources :statistics
+
   resources :friends
   resources :users
   resources :sessions, only: [:new, :create, :destroy]

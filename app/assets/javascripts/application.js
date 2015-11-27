@@ -13,12 +13,16 @@
 //
 
 //= require jquery-2.1.4
-//= require jquery_ujs
-//= require validator
-//= require turbolinks
-//= require jquery.flatWeatherPlugin
 //= require jquery.turbolinks
+// do not add/alter scripts above this line!
+//= require jquery_ujs
+//= require jquery-ui.min
+
+//= require jquery.flatWeatherPlugin
 //= require bootstrap
+//= require trainings
+// do not add/alter scripts below this line! Add script between the two comment lines!
+//= require turbolinks
 //= require_tree .
 
 

@@ -30,6 +30,7 @@
         <td><%= link_to friend.username, local_user_path(friend) %></td>
         <td>
           <%= link_to "Remove friend", friend_path(friend),method: "delete", data: { confirm: 'Are you sure?' },  class: "btn btn-xs btn-danger" %>
+          <%= link_to "Start Chat", chat_create_path(friend), method: "post", class: "btn btn-xs btn-info" %>
         </td>
       </tr>
   <% end %>

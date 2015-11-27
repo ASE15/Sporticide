@@ -1,4 +1,4 @@
-class CreateMembersTrainingsJoin < ActiveRecord::Migration
+class CreateTrainingsUsersJoin < ActiveRecord::Migration
   def self.up
     create_table 'trainings_users', :force => true, :id => false  do |t|
       t.column 'user_id', :integer, :null => false
