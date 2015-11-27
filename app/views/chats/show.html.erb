@@ -1,19 +1,40 @@
 <% content_for :title do %>
     <h1>
       Chat
-      <small>with <%= @chat.partner.username %></small>
+      <small>with <%= @chat.get_partner(current_user).get_name %></small>
     </h1>
 <% end %>
 
-ID: <%= @chat.id %><br />
-Partner: <%= @chat.partner.username %>
+<div class="row">
+<div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+<div class="box box-primary direct-chat direct-chat-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Chat with <%= @chat.get_partner(current_user).get_name %></h3>
 
+    <div class="box-tools pull-right">
+      <span data-toggle="tooltip" title="<%= @chat.messages.count %> Messages" class="badge bg-light-blue"><%= @chat.messages.count %></span>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <!-- Conversations are loaded here -->
+    <div class="direct-chat-messages">
 
-Messages:<br />
+      <% @chat.messages.each do |m| %>
+          <%= render m %>
+      <% end %>
 
-<% @chat.messages.each do |m| %>
-    <%= render m %>
-<% end %>
+    </div>
+    <!--/.direct-chat-messages-->
 
-
-<%= render 'messages/form' %>
+    <!-- /.direct-chat-pane -->
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer">
+    <%= render 'messages/form' %>
+  </div>
+  <!-- /.box-footer-->
+</div>
+<!--/.direct-chat -->
+</div>
+</div>

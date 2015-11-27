@@ -7,11 +7,7 @@
     <%= image_tag "avatar5.png", :class => "user-image", :alt => "User Image" %>
     <!-- hidden-xs hides the username on small devices so only the image appears. -->
     <span class="hidden-xs">
-      <% if current_user.firstname.empty? and current_user.lastname.empty? %>
-            <%= current_user.username %>
-        <% else %>
-            <%= current_user.firstname %> <%= current_user.lastname %>
-        <% end %>
+      <%= current_user.get_name %>
     </span>
   </a>
   <ul class="dropdown-menu">
@@ -20,11 +16,7 @@
       <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
       <%= image_tag "avatar5.png", :class => "img-circle", :alt => "User Image" %>
       <p>
-        <% if current_user.firstname.empty? and current_user.lastname.empty? %>
-            <%= current_user.username %>
-        <% else %>
-            <%= current_user.firstname %> <%= current_user.lastname %>
-        <% end %>
+        <%= current_user.get_name %>
         <small>Member since <%= current_user.created_at.strftime("%b. %Y") %></small>
       </p>
     </li>
