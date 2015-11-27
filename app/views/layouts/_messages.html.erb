@@ -21,7 +21,7 @@
     <% if unread_count > 0 %><span class="label label-success"><%= unread_count %></span><% end %>
   </a>
   <ul class="dropdown-menu">
-    <li class="header">You have <%= unread_count %> message<%= unread_count > 1 ? 's' : '' %></li>
+    <li class="header">You have <%= unread_count %> message<%= (unread_count > 1 or unread_count == 0) ? 's' : '' %></li>
     <li>
       <!-- inner menu: contains the messages -->
       <ul class="menu">
