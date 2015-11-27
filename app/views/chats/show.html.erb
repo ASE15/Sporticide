@@ -1,3 +1,16 @@
+<style>
+    .direct-chat-messages {
+        height: 350px !important;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        var objDiv = document.getElementById("chat_div");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    });
+</script>
+
 <% content_for :title do %>
     <h1>
       Chat
@@ -18,7 +31,7 @@
   <!-- /.box-header -->
   <div class="box-body">
     <!-- Conversations are loaded here -->
-    <div class="direct-chat-messages">
+    <div id="chat_div" class="direct-chat-messages">
 
       <% @chat.messages.each do |m| %>
           <%= render m %>
