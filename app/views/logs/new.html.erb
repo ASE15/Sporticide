@@ -1,4 +1,9 @@
-<h1>New Log<small class="small-title">Type in data about your Log</small></h1>
+<% content_for :title do %>
+    <h1>
+      New Session Log
+      <small>Type in data about your session log</small>
+    </h1>
+<% end %>
 
 <%= render 'form' %>
 
