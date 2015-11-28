@@ -18,8 +18,10 @@
             <li class="<%= 'active' if current_page?(friends_path) %>"><a href="<%=friends_path%>">Friends</a></li>
             <li class="<%= 'active' if current_page?(training_notifiers_path) %>"><a href="<%=training_notifiers_path%>">Notifications</a></li>
             <li class="<%= 'active' if current_page?(statistics_path) %>"><a href="<%=statistics_path%>">Statistics</a></li>
+            <li class="<%= 'active' if current_page?(calendar_path) %>"><a href="<%=statistics_path%>">Statistics</a></li>
 
-        <% end %>
+
+      <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>

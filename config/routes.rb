@@ -1,3 +1,5 @@
+require 'FullcalendarEngine'
+
 Rails.application.routes.draw do
 
   get 'statistics/index'
@@ -40,6 +42,8 @@ Rails.application.routes.draw do
 
   resources :local_users
   resource :profile, :controller => :profile
+
+  mount FullcalendarEngine::Engine => "/calendar"
   #get 'profile', to: 'profile#show' #not necessary anymore
 
   # Example of regular route:

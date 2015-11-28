@@ -12,6 +12,7 @@
 //
 //
 
+//= require fullcalendar_engine/application
 //= require jquery-2.1.4
 //= require jquery.turbolinks
 // do not add/alter scripts above this line!
@@ -24,6 +25,7 @@
 // do not add/alter scripts below this line! Add script between the two comment lines!
 //= require turbolinks
 //= require_tree .
+
 
 
 

@@ -63,3 +63,6 @@ gem 'nokogiri', '~> 1.6.6.2'
 
 # Transporation API
 gem 'transprt'
+
+# FullCalendar
+gem 'fullcalendar_engine'

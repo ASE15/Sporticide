@@ -12,7 +12,8 @@
  *
  *= require_tree .
  *= require_self
- */
+  *= require fullcalendar_engine/application
+*/
 @import "jquery-ui.min";
 
 body {
