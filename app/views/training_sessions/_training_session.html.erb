@@ -99,6 +99,6 @@
 >Tweet</a>
 
 <a class="btn btn-info" href=
-"<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_trainingsession_path(training_session.training, training_session)+"&redirect_uri="+url_for(:only_path => false)%>">
+"<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>">
 Facebook</a>
 </blockquote>
