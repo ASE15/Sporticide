@@ -95,7 +95,7 @@
 <% end %>
 
 <a class="btn btn-info" href=
-"<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop+training_trainingsession_path(training_session.training, training_session)%>"
+"<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>"
 >Tweet</a>
 
 <a class="btn btn-info" href=
