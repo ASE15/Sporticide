@@ -95,7 +95,10 @@
 <% end %>
 
 <a class="btn btn-info" href=
-<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
+"<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop+training_trainingsession_path(training_session.training, training_session)%>"
 >Tweet</a>
 
+<a class="btn btn-info" href=
+"<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_trainingsession_path(training_session.training, training_session)+"&redirect_uri="+url_for(:only_path => false)%>">
+Facebook</a>
 </blockquote>
