@@ -1,5 +1,16 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&callback=initialize"></script>
-<script>$(document).ready(function(){initialize();})</script>
+<script>
+    function initialize() {
+        var input = document.getElementById('searchTextField');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+    }
+    $(document).ready(function(){
+        //google.maps.event.addDomListener(window, 'load', initialize);
+        //initialize();
+        google.maps.event.addDomListener(window, 'load', initialize);
+    });
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBc3fYs8wV7YwDbzxEmyVuunE3aMVLIE&callback=initialize&libraries=places"></script>
 <script>
   $(document).ready(function() {
      $("#training_session_recurrence").change(function() {
