@@ -63,3 +63,5 @@ gem 'nokogiri', '~> 1.6.6.2'
 
 # Transporation API
 gem 'transprt'
+
+gem 'fullcalendar-rails'

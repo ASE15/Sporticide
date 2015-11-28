@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
   resources :training_notifiers
 
+  resources :calendar
   resources :statistics
 
   resources :friends

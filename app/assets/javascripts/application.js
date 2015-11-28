@@ -23,6 +23,7 @@
 //= require trainings
 // do not add/alter scripts below this line! Add script between the two comment lines!
 //= require turbolinks
+//= require fullcalendar
 //= require_tree .
 
 
