@@ -36,11 +36,12 @@ Facebook Login is currently configured to work on localhost:3000, so
 it won't work on heroku currently.
 
 ### Templates
-To set the big and small title in the new templtae, include following code in a specific template:
+To set the big and small title in the new template, include following code in a specific template:
 
-> <% content_for :title do %>
->     <h1>
->       Title
->       <small>small title</small>
->     </h1>
-> <% end %>
+```<% content_for :title do %>
+   <h1>
+      Title
+      <small>small title</small>
+  </h1>
+<% end %>
+```
