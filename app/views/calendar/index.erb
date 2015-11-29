@@ -11,16 +11,19 @@ $(document).ready(function() {
 
     <% @trainings.each do |t| %>
         <%t.training_sessions.each do |s| %>
-        var d = {};
-
-        d['title']= '<%=t.title%>';
-        d['start']= '<%=s.datetime.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
-
-        dict.push(d);
-//        dict.push({
-//            title  : 'event1',
-//            start  : '2015-11-28'
-//        })
+            var d = {};
+                <% if s.recurrence == 'never' %>
+                    d['title']= '<%=t.title%>';
+                    d['start']= '<%=s.datetime.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+                    dict.push(d);
+                <% else%>
+                    <%s.get_recurrence_dates.each do |r| %>
+                        d['title']= '<%=t.title%>';
+                        d['start']= '<%=r.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+                        dict.push(d);
+                        var d = {};
+                    <% end %>
+                <% end %>
         <% end %>
     <% end %>
     $('#calendar').fullCalendar({
