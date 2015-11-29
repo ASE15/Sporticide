@@ -7,19 +7,43 @@
 
 <script>
 $(document).ready(function() {
+    var dict = [];
 
+    <% @trainings.each do |t| %>
+        <%t.training_sessions.each do |s| %>
+        var d = {};
+
+        d['title']= '<%=t.title%>';
+        d['start']= '<%=s.datetime.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+
+        dict.push(d);
+//        dict.push({
+//            title  : 'event1',
+//            start  : '2015-11-28'
+//        })
+        <% end %>
+    <% end %>
+    $('#calendar').fullCalendar({
+
+            events:dict
+
+
+
+
+    });
 // page is now ready, initialize the calendar...
 
-    $('#calendar').fullCalendar({
-        events: [
-            {
-                title  : 'event1',
-                start  : '2015-11-28'
-            }
-
-
-        ]
-    });
+//    $('#calendar').fullCalendar({
+//        events: [
+//            {
+//                title  : 'event1',
+//                start  : '2015-11-28'
+//            }
+//
+//
+//        ]
+//    });
 
 });
 </script>
+
