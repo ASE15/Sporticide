@@ -1,101 +1,290 @@
 <script>;$(document).ready(function(){set_map('<%= training_session.location %>', <%= training_session.id %>);});
 </script>
-<blockquote>
-<p>
-  <strong>Date:</strong>
-  <%= training_session.datetime %>
-</p>
-<% if not training_session.recurrence == "never" %>
-  <p>
-    <strong>End date:</strong>
-    <%= training_session.enddate %>
-  </p>
-  <p>
-    <strong>All dates:</strong>
-    <% training_session.get_recurrence_dates.each_with_index do |val, index| %>
-      <%= val %><br />
-    <% end %>
-  </p>
-<% end %>
-<p>
-  <strong>Recurrence:</strong>
-  <%= training_session.recurrence %>
-</p>
-
-<p>
-  <strong>Duration (Min:sec):</strong>
-  <%= training_session.duration %>
-</p>
-
-<p>
-  <strong>Level:</strong>
-  <%= training_session.level %>
-</p>
-
-<p>
-  <strong>Length (km):</strong>
-  <%= training_session.length %>
-</p>
-
-<p>
-  <%= render "schedule", training_session: training_session %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <strong><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </strong>
-  <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"></div>
-</p>
-  <p>
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        //Setup the plugin, see readme for more examples
-        var weather<%= training_session.id %> = $("#weather-<%= training_session.id %>").flatWeatherPlugin({
-          location: "<%= training_session.location %>", //city and region *required
-          country: "ch",         //country *required
-          //optional:
-          api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
-          apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
-          view : "forecast", //default: full (partial, full, simple, today or forecast)
-          displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
-          //forecast: 5, //default: 5 (0 -5) how many days you want forecast
-          render: true, //default: true (true/false) if you want plugin to generate markup
-          loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
-          //units : "metric"// or "imperial" default: "auto"
-        });
-
-      });
-    </script>
-    <style>
-      #weather-<%= training_session.id %> {
-        width: 350px;
-        background: #FFFFFF
-      }
 
 
-    </style>
-  <div id="weather-<%= training_session.id %>"></div>
+
+<h3 style="margin-top:0px !important;">Training #<%= i %></h3>
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#activity_<%= i %>" data-toggle="tab">Overview</a></li>
+    <li><a href="#map_<%= i %>" data-toggle="tab">Map</a></li>
+    <li><a href="#weather_<%= i %>" data-toggle="tab">Weather</a></li>
+    <li><a href="#transportation_<%= i %>" data-toggle="tab">Transportation</a></li>
+    <li><a href="#timeline_<%= i %>" data-toggle="tab">Timeline</a></li>
+    <li><a href="#settings_<%= i %>" data-toggle="tab">Settings</a></li>
+    <li><a href="#comments_<%= i %>" data-toggle="tab">Feedback</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" id="comments_<%= i %>">
 
 
-  </p>
-<p>
-  <strong>Logs:</strong>
-  <%= render training_session.logs %>
-</p>
+      <% if training_session.training.users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
+          <%= link_to 'Add log', new_training_trainingsession_log_path(training_session.training, training_session), class: 'btn btn-default' %>
+          <%= render partial: 'logs/form2', locals:{hash: "#comments_#{i}", session: training_session, log: training_session.logs.build} %>
+      <% end %>
+
+      <p>
+        <strong>Logs:</strong>
+        <%= render training_session.logs %>
+      </p>
+
+    </div>
+
+      <div class="tab-pane" id="map_<%= i %>">
+        <p>
+          <strong>Location:</strong>
+          <strong><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </strong>
+        <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"></div>
+        </p>
+      </div>
+
+      <div class="tab-pane" id="transportation_<%= i %>">
+        <p>
+          <%= render "schedule", training_session: training_session %>
+        </p>
+      </div>
 
 
-<% if is_own_training? training_session.training %>
-    <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>
-    <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
-                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
-<%end%>
-<% if training_session.training.users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
-  <%= link_to 'Add log', new_training_trainingsession_log_path(training_session.training, training_session), class: 'btn btn-default' %>
-<% end %>
+      <div class="tab-pane" id="weather_<%= i %>">
+        <p>
+          <script type="text/javascript">
+              $(document).ready(function() {
 
-<a class="btn btn-info" href=
-<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
->Tweet</a>
+                  //Setup the plugin, see readme for more examples
+                  var weather<%= training_session.id %> = $("#weather-<%= training_session.id %>").flatWeatherPlugin({
+                      location: "<%= training_session.location %>", //city and region *required
+                      country: "ch",         //country *required
+                      //optional:
+                      api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
+                      apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
+                      view : "forecast", //default: full (partial, full, simple, today or forecast)
+                      displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
+                      //forecast: 5, //default: 5 (0 -5) how many days you want forecast
+                      render: true, //default: true (true/false) if you want plugin to generate markup
+                      loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
+                      //units : "metric"// or "imperial" default: "auto"
+                  });
 
-</blockquote>
+              });
+          </script>
+          <style>
+              #weather-<%= training_session.id %> {
+                  width: 350px;
+                  background: #FFFFFF
+              }
+
+
+          </style>
+        <div id="weather-<%= training_session.id %>"></div>
+
+
+        </p>
+      </div>
+
+    <div class="active tab-pane" id="activity_<%= i %>">
+
+      <p>
+        <strong>Date:</strong>
+        <%= training_session.datetime %>
+      </p>
+      <% if not training_session.recurrence == "never" %>
+          <p>
+            <strong>End date:</strong>
+            <%= training_session.enddate %>
+          </p>
+          <p>
+            <strong>All dates:</strong>
+            <% training_session.get_recurrence_dates.each_with_index do |val, index| %>
+                <%= val %><br />
+            <% end %>
+          </p>
+      <% end %>
+      <p>
+        <strong>Recurrence:</strong>
+        <%= training_session.recurrence %>
+      </p>
+
+      <p>
+        <strong>Duration (Min:sec):</strong>
+        <%= training_session.duration %>
+      </p>
+
+      <p>
+        <strong>Level:</strong>
+        <%= training_session.level %>
+      </p>
+
+      <p>
+        <strong>Length (km):</strong>
+        <%= training_session.length %>
+      </p>
+
+
+
+
+      <% if is_own_training? training_session.training %>
+          <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>
+          <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
+                      method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
+      <%end%>
+
+      <a class="btn btn-info" href=
+        <%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
+      >Tweet</a>
+
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="timeline_<%= i %>">
+      <!-- The timeline -->
+      <ul class="timeline timeline-inverse">
+        <!-- timeline time label -->
+        <li class="time-label">
+                        <span class="bg-red">
+                          10 Feb. 2014
+                        </span>
+        </li>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <li>
+          <i class="fa fa-envelope bg-blue"></i>
+
+          <div class="timeline-item">
+            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+
+            <div class="timeline-body">
+              Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+              weebly ning heekya handango imeem plugg dopplr jibjab, movity
+              jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+              quora plaxo ideeli hulu weebly balihoo...
+            </div>
+            <div class="timeline-footer">
+              <a class="btn btn-primary btn-xs">Read more</a>
+              <a class="btn btn-danger btn-xs">Delete</a>
+            </div>
+          </div>
+        </li>
+        <!-- END timeline item -->
+        <!-- timeline item -->
+        <li>
+          <i class="fa fa-user bg-aqua"></i>
+
+          <div class="timeline-item">
+            <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+            <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+            </h3>
+          </div>
+        </li>
+        <!-- END timeline item -->
+        <!-- timeline item -->
+        <li>
+          <i class="fa fa-comments bg-yellow"></i>
+
+          <div class="timeline-item">
+            <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+
+            <div class="timeline-body">
+              Take me to your leader!
+              Switzerland is small and neutral!
+              We are more like Germany, ambitious and misunderstood!
+            </div>
+            <div class="timeline-footer">
+              <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+            </div>
+          </div>
+        </li>
+        <!-- END timeline item -->
+        <!-- timeline time label -->
+        <li class="time-label">
+                        <span class="bg-green">
+                          3 Jan. 2014
+                        </span>
+        </li>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <li>
+          <i class="fa fa-camera bg-purple"></i>
+
+          <div class="timeline-item">
+            <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+
+            <div class="timeline-body">
+              <img src="http://placehold.it/150x100" alt="..." class="margin">
+              <img src="http://placehold.it/150x100" alt="..." class="margin">
+              <img src="http://placehold.it/150x100" alt="..." class="margin">
+              <img src="http://placehold.it/150x100" alt="..." class="margin">
+            </div>
+          </div>
+        </li>
+        <!-- END timeline item -->
+        <li>
+          <i class="fa fa-clock-o bg-gray"></i>
+        </li>
+      </ul>
+    </div>
+    <!-- /.tab-pane -->
+
+    <div class="tab-pane" id="settings_<%= i %>">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputName" placeholder="Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputName" placeholder="Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+
+          <div class="col-sm-10">
+            <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-danger">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+  <!-- /.tab-content -->
+</div>
+<!-- /.nav-tabs-custom -->

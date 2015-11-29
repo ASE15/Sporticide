@@ -1,59 +1,107 @@
-<p>
-  <strong>Title:</strong>
-  <%= training.title %>
-</p>
+<div class="box box-primary">
+  <div class="box-body box-profile">
+    <%= image_tag training.sport + ".png", :class => "profile-user-img img-responsive img-circle", :alt => "Sport picture" %>
 
-<p>
-  <strong>Sport:</strong>
-  <%= training.sport %>
-</p>
 
-<p>
-  <strong>is Public?:</strong>
-  <%= training.isPublic %>
-</p>
+    <h3 class="profile-username text-center"><%= training.title %></h3>
 
-<p>
-  <strong>Description:</strong>
-  <%= training.description %>
-</p>
+    <p class="text-muted text-center"><%= training.sport %></p>
 
-<p>
-  <strong>Created:</strong>
-  <%= training.created_at %>
-</p>
+    <ul class="list-group list-group-unbordered">
+      <li class="list-group-item">
+        <b>Owner</b> <a href="#" class="pull-right"><%= training.owner.get_name %></a>
+      </li>
+      <li class="list-group-item">
+        <b>Members</b> <span class="pull-right"><%= training.users.count %></span>
+      </li>
+      <li class="list-group-item">
+        <b>Trainings</b> <span class="pull-right"><%= training.training_sessions.count %></span>
+      </li>
+      <li class="list-group-item">
+        <b>Social</b> <a class="btn btn-info pull-right btn-xs" href=
+        <%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_path(training)%>
+      >Tweet</a>
+      </li>
+      <% if is_own_training? @training %>
+      <li class="list-group-item">
+        <b>Options</b>
+            <%= link_to('Destroy', training_path(@training),
+                          method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs pull-right'  ) %><span style="float:right;">&nbsp;&nbsp;</span>
+            <%= link_to 'Edit', edit_training_path(@training), class: "btn btn-info btn-xs pull-right" , :method => :get%><span style="float:right;">&nbsp;&nbsp;</span>
+      </li>
+      <%end%>
+    </ul>
 
-<p>
-  <strong>Owner:</strong>
-  <%= training.owner.username %>
-</p>
-
-<strong>Member:</strong>
-<ul>
-  <% training.users.each do |m| %>
-    <li><%= m.username %></li>
-  <% end %>
-</ul>
-
-<% if training.users.exists?(current_user) %>
-    <% if not training.owner == current_user %>
-        <%= link_to 'Leave this training', training_leave_path(training), class: 'btn btn-danger' %>
+    <% if training.users.exists?(current_user) %>
+        <% if not training.owner == current_user %>
+            <a href="<%= training_leave_path(training) %>" class="btn btn-danger btn-block"><b>Leave this training</b></a><br />
+        <% end %>
+    <% else %>
+        <a href="<%= training_join_path(training) %>" class="btn btn-primary btn-block"><b>Join this training</b></a><br />
     <% end %>
-<% else %>
-    <%= link_to 'Join this training', training_join_path(training), class:'btn btn-default' %>
-<% end %>
-<a class="btn btn-info" href=
-<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_path(training)%>
->Tweet</a>
 
-<% if training.owner == current_user && !(current_user.friends.nil?) %>
-    <div class="dropdown">
-      <button class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">Invite a friend to training <span class="caret"></span></button>
-        <ul class ="dropdown-menu">
+
+    <% if training.owner == current_user && !(current_user.friends.nil?) %>
+        <div class="dropdown">
+          <button class="btn btn-block btn-success dropdown-toggle" data-toggle="dropdown">Invite a friend to training <span class="caret"></span></button>
+          <ul class ="dropdown-menu">
             <% current_user.friends.each do |friend| %>
                 <li> <%= link_to friend.username, training_invite_path(training, :par1 => friend) %></li>
             <% end %>
-    </ul>
-    </div>
-<% end %>
+          </ul>
+        </div>
+    <% end %>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
 
+<!-- About training Box -->
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">About this training</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <strong><i class="fa fa-clock-o margin-r-5"></i> Creation date</strong>
+
+    <p class="text-muted"><%= training.created_at.strftime("%d %b %Y, %H:%M") %></p>
+
+    <hr style="border-color: #ddd;">
+
+    <strong><i class="fa fa-eye margin-r-5"></i> Visibility</strong>
+
+    <p>
+      <% if training.isPublic %>
+          <span class="label label-success">Public</span>
+      <% else %>
+        <span class="label label-danger">Only for invited people</span>
+      <% end %>
+    </p>
+
+    <hr style="border-color: #ddd;">
+
+    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+    <p><%= training.description %></p>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
+<!-- members box -->
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Members</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+    <ul class="list-group list-group-unbordered">
+      <% training.users.each do |m| %>
+          <li class="list-group-item"><a href="#"><%= m.get_name %></a></li>
+      <% end %>
+    </ul>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->
