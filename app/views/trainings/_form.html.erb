@@ -1,3 +1,14 @@
+<script>
+    $(document).ready(function(){
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
+
+
 <%= form_for @training do |f| %>
     <% if @training.errors.any? %>
         <div class="alert alert-danger">
@@ -11,11 +22,13 @@
         </div>
     <% end %>
 
-    <div class="row col-md-6">
+    <div class="form-horizontal">
 
     <div class="form-group">
-      <%= f.label :title %>
-      <%= f.text_field :title, class: "form-control" %>
+      <%= f.label :title, {class:"control-label col-sm-4 label-left"} %>
+      <div class="col-sm-4">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
     </div>
 
     <% sports = [
@@ -26,29 +39,35 @@
     ]
     %>
     <div class="form-group">
-      <%= f.label :sport %>
-      <%= f.select(:sport, sports, {class: "form-control"}) %>
+      <%= f.label :sport, {class:"control-label col-sm-4 label-left"} %>
+      <div class="col-sm-4">
+        <%= f.select(:sport, sports, {}, {class: "form-control"}) %>
+      </div>
     </div>
 
     <div class="form-group">
-      <%= f.label 'Public or private training?' %><br />
-
+      <%= f.label 'Public or private training?', {class:"control-label col-sm-4 label-left"} %>
+      <div class="col-sm-4" style="margin-top:7px;">
       <%= label :isPublic, "Public"%>
       <%= f.radio_button :isPublic, true , :checked => true , :value => "1" %>
       <%= label :isPublic, "Private"%>
       <%= f.radio_button :isPublic, false, :value => "0" %>
+          </div>
 
 
     </div>
 
     <div class="form-group">
-      <%= f.label :description %><br>
-      <%= f.text_area(:description, size: '60x12') %>
+      <%= f.label :description, {class:"control-label col-sm-4 label-left"} %><br>
+      <div class="col-sm-4">
+        <%= f.text_area(:description, {size: '60x12', class:"form-control"}) %>
+      </div>
     </div>
 
-    <p>
-      <%= f.submit({class:"btn btn-success"}) %>
-    </p>
+    <div class="form-group">
+      <div class="col-sm-3">
+        <%= f.submit({class:"btn btn-success"}) %>
+      </div>
     </div>
-
+</div>
 <% end %>
