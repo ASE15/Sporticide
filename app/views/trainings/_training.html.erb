@@ -18,9 +18,9 @@
         <b>Trainings</b> <span class="pull-right"><%= training.training_sessions.count %></span>
       </li>
       <li class="list-group-item">
-        <b>Social</b> <a class="btn btn-info pull-right btn-xs" href=
+        <b>Social</b> <a class="btn btn-info pull-right btn-xs btn-social btn-twitter" href=
         <%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_path(training)%>
-      >Tweet</a>
+      ><i class="fa fa-twitter"></i>Tweet</a>
       </li>
       <% if is_own_training? @training %>
       <li class="list-group-item">
@@ -31,6 +31,10 @@
       </li>
       <%end%>
     </ul>
+
+    <% if training.owner == current_user %>
+        <a href="<%= new_training_trainingsession_path(@training) %>" class="btn bg-orange btn-block">New training session</a><br />
+    <% end %>
 
     <% if training.users.exists?(current_user) %>
         <% if not training.owner == current_user %>

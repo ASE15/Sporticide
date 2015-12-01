@@ -3,13 +3,12 @@
 
 <% content_for :title do %>
     <h1>
-      Training <i><%= @training.title %></i>
-      <small>Overview</small>
+      <%= @training.title %>
     </h1>
 <% end %>
 
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-4">
 
     <!-- Profile Image -->
     <%= render @training %>
@@ -94,7 +93,7 @@
 
   </div>
   <!-- /.col -->
-  <div class="col-md-9">
+  <div class="col-md-8">
 
     <% training_i = @training.training_sessions.count %>
     <% @training.training_sessions.reverse.each do |s| %>
@@ -106,7 +105,7 @@
       <ul class="nav nav-tabs">
         <li><a href="#activity" data-toggle="tab">Overview</a></li>
         <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+        <!--<li><a href="#settings" data-toggle="tab">Settings</a></li>-->
         <li class="active"><a href="#comments" data-toggle="tab">Feedbacks</a></li>
       </ul>
       <div class="tab-content">
@@ -324,6 +323,7 @@
         </div>
         <!-- /.tab-pane -->
 
+        <!--
         <div class="tab-pane" id="settings">
           <form class="form-horizontal">
             <div class="form-group">
@@ -377,8 +377,9 @@
             </div>
           </form>
         </div>
-        <!-- /.tab-pane -->
-      </div>
+        <!-- /.tab-pane --<
+      </div>-->
+
       <!-- /.tab-content -->
     </div>
     <!-- /.nav-tabs-custom -->
@@ -387,13 +388,4 @@
   <!-- /.col -->
 </div>
 <!-- /.row -->
-
-
-<br /><br />
-<h2>Trainings</h2>
-
-
-
-
-<br /><br />
-<%= link_to 'New session', new_training_trainingsession_path(@training), class:'btn btn-info' %>
+</div>

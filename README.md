@@ -45,3 +45,9 @@ To set the big and small title in the new template, include following code in a 
   </h1>
 <% end %>
 ```
+
+### User name
+If you want to display the users full name if available, you the method
+> user_model.get_name
+
+This prints either the uername, if no first & last name is available, other else it begins with returning the first name and perhaps concatenated with the last.
