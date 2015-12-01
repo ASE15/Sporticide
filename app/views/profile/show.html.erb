@@ -41,7 +41,7 @@
 
 
         <% if current_user == @profile %>
-            <%= link_to 'Edit your profile', edit_profile_path(@profile), class: "btn btn-info btn-block" %><br />
+            <%= link_to 'Edit your profile', edit_profile_path, class: "btn btn-info btn-block" %><br />
         <% elsif current_user.friends.include?(@profile) %>
             <a href="#" class="btn btn-danger btn-block"><b>Remove friend</b></a><br />
         <% else %>

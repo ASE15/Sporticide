@@ -5,27 +5,11 @@
     </h1>
 <% end %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-xs-12 col-sm-8">
-              <h2><%= current_user.username %></h2>
-
-
-            </div><!--/col-->
-            <!--<div class="col-xs-12 col-sm-4 text-center">-->
-              <!--<img src="http://api.randomuser.me/portraits/men/49.jpg" class="center-block img-circle img-responsive">-->
-
-            <!--</div>&lt;!&ndash;/col&ndash;&gt;-->
-          </div><!--/row-->
-        </div><!--/panel-body-->
-        <%= render 'form' %>
-      </div><!--/panel-->
-    </div>
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title"><%= current_user.username %></h3>
+  </div>
+  <div class="box-body">
+    <%= render 'form' %>
   </div>
 </div>
-
