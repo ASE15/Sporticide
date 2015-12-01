@@ -10,8 +10,8 @@
   </p>
   <div class="attachment">
     <b>Date:</b> <%= log.created_at.strftime("%d %b %Y, %H:%M") %><br />
-    <b>Rating:</b> <%= log.rating %><br />
-    <b>Intensity:</b> <%= log.intensity %><br />
+    <b>Rating:</b> <%= log.get_rating %><br />
+    <b>Intensity:</b> <%= log.get_intensity %>
 
     <div class="pull-right">
       <% if is_own_log? log %>

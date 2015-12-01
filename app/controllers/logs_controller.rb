@@ -5,10 +5,12 @@ class LogsController < ApplicationController
   before_filter :is_member_of_training!, :only => [:new, :create, :update, :edit, :destroy]
   before_filter :owns_log!, :only => [:update, :edit, :destroy]
 
+=begin
   def index
     @session = TrainingSession.find(params[:trainingsession_id])
     @logs = @session.logs
   end
+=end
 
   def new
     @session = TrainingSession.find(params[:trainingsession_id])
