@@ -38,8 +38,6 @@ class TrainingSessionValidator < ActiveModel::Validator
         checkdate = DateTime.now + 1.months
     end
 
-    puts "checkdate #{checkdate}"
-
     if record.enddate < checkdate
       record.errors[:enddate] << "The first next date is after the end date."
     end
@@ -111,7 +109,14 @@ class TrainingSession < ActiveRecord::Base
     results.push(self.datetime)
     steps = get_recurrence_steps
     for i in 1..steps
-      d = self.datetime + i.days
+      case self.recurrence
+        when "daily"
+          d = self.datetime + i.days
+        when "weekly"
+          d = self.datetime + i.weeks
+        when "monthly"
+          d = self.dateimte + i.months
+      end
       results.push(d)
     end
     return results
