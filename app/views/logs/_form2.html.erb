@@ -1,9 +1,3 @@
-<style>
-  .label-left {
-      text-align:left !important;
-  }
-</style>
-
 <div class="box-footer">
   <%= form_for([session, log], url: log.id.nil? ? training_trainingsession_logs_path(session.training, session) : training_trainingsession_log_path(session.training, session, log))  do |f| %>
       <% if session.errors.any? %>
