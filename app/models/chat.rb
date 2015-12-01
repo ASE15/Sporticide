@@ -53,4 +53,8 @@ class Chat < ActiveRecord::Base
   def self.sort_desc(chats)
     chats.sort {|a, b| a.get_last_message[:datetime] <=> b.get_last_message[:datetime]}.reverse
   end
+
+  def involved?(user)
+    self.user == user or self.partner == user
+  end
 end

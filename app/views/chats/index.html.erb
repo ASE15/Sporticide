@@ -23,7 +23,7 @@
               <span class="label label-danger">new</span>
               <% end %>
         </td>
-        <td><%= c.partner.username %></td>
+        <td><%= c.get_partner(current_user).get_name %></td>
         <td><%= (c.get_last_message.nil?) ? 'no' : c.get_last_message.datetime.strftime("%d %b %Y, %H:%M") %></td>
 
         <td>
