@@ -1,0 +1,96 @@
+<style>
+  .external-event {
+      cursor: default;
+      text-shadow: none;
+  }
+  .externa-event:hover {
+      box-shadow:none;
+  }
+</style>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="box box-solid">
+      <div class="box-header with-border">
+        <h4 class="box-title">Legend</h4>
+      </div>
+      <div class="box-body">
+        <!-- the events -->
+        <div id="external-events">
+          <div class="external-event bg-green">Lunch</div>
+          <div class="external-event bg-yellow">Go home</div>
+          <div class="external-event bg-aqua">Do homework</div>
+          <div class="external-event bg-light-blue">Work on UI design</div>
+          <div class="external-event bg-red">Sleep tight</div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+    </div>
+  </div>
+  <!-- /.col -->
+  <div class="col-md-9">
+    <div class="box box-primary">
+      <div class="box-body no-padding">
+        <!-- THE CALENDAR -->
+        <div id="calendar"></div>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /. box -->
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+
+
+<script>
+$(document).ready(function() {
+    var dict = [];
+
+    <% @trainings.each do |t| %>
+        <%t.training_sessions.each do |s| %>
+            var d = {};
+                <% if s.recurrence == 'never' %>
+                    d['title']= '<%=t.title%>';
+                    d['start']= '<%=s.datetime.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+                    dict.push(d);
+                <% else%>
+                    <%s.get_recurrence_dates.each do |r| %>
+                        d['title']= '<%=t.title%>';
+                        d['start']= '<%=r.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+                        dict.push(d);
+                        var d = {};
+                    <% end %>
+                <% end %>
+        <% end %>
+    <% end %>
+    $('#calendar').fullCalendar({
+
+            events:dict
+
+
+
+
+    });
+// page is now ready, initialize the calendar...
+
+//    $('#calendar').fullCalendar({
+//        events: [
+//            {
+//                title  : 'event1',
+//                start  : '2015-11-28'
+//            }
+//
+//
+//        ]
+//    });
+
+});
+</script>
+
+</div>
+</div>

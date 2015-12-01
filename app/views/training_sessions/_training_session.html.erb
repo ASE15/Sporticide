@@ -1,8 +1,6 @@
 <script>;$(document).ready(function(){set_map('<%= training_session.location %>', <%= training_session.id %>);});
 </script>
 
-
-
 <h3 style="margin-top:0px !important;">Training session #<%= i %></h3>
 <div class="nav-tabs-custom">
   <ul class="nav nav-tabs">
@@ -126,6 +124,9 @@
         <%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
       ><i class="fa fa-twitter"></i>Tweet</a>
 
+      <a class="btn btn-info btn-social btn-facebook" href=
+              "<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>">
+        Facebook</a>
     </div>
   </div>
   <!-- /.tab-content -->
