@@ -8,6 +8,11 @@ class ProfileController < ApplicationController
     @profile = current_user
   end
 
+  def profile
+    @profile = LocalUser.find_by(username: params[:username])
+    render 'show'
+  end
+
   def edit
     @profile = current_user
   end

@@ -40,7 +40,8 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :local_users
-  resource :profile, :controller => :profile
+  resource :profile, :controller => :profile, only: [:show, :edit, :update]
+  get 'profile/:username', to: 'profile#profile', as: 'user_profile'
   #get 'profile', to: 'profile#show' #not necessary anymore
 
   # Example of regular route:

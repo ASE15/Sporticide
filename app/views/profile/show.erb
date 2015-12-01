@@ -13,12 +13,12 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-12 col-sm-8">
-              <h2><%= current_user.username %></h2>
-              <p><strong>Realname: </strong> <%= current_user.firstname %> <%= current_user.lastname %> </p>
-              <p><strong>Address: </strong> <%= current_user.address %> <%= current_user.address_nr %> <%= current_user.plz %> <%= current_user.place %> </p>
-              <p><strong>Age: </strong> <%= current_user.age_at(Date.today,current_user.date)%> years </p>
-              <p><strong>Height: </strong> <%= current_user.height %> cm </p>
-              <p><strong>Weight: </strong> <%= current_user.weight %> kg </p>
+              <h2><%= @profile.username %></h2>
+              <p><strong>Realname: </strong> <%= @profile.firstname %> <%= @profile.lastname %> </p>
+              <p><strong>Address: </strong> <%= @profile.address %> <%= @profile.address_nr %> <%= @profile.plz %> <%= @profile.place %> </p>
+              <p><strong>Age: </strong> <%= @profile.age_at(Date.today,@profile.date)%> years </p>
+              <p><strong>Height: </strong> <%= @profile.height %> cm </p>
+              <p><strong>Weight: </strong> <%= @profile.weight %> kg </p>
 
 
             </div><!--/col-->
@@ -26,9 +26,11 @@
               <!--<img src="http://api.randomuser.me/portraits/men/49.jpg" alt="" class="center-block img-circle img-responsive">-->
             <!--</div>&lt;!&ndash;/col&ndash;&gt;-->
 
+            <% if @profile == current_user %>
             <div class="col-md-8">
               <%= link_to 'Edit', edit_profile_path(@profile), class: "btn btn-info pull-left"%>
             </div><!--/col-->
+            <% end %>
 
           </div><!--/row-->
         </div><!--/panel-body-->
