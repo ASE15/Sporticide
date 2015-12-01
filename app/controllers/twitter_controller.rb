@@ -1,6 +1,8 @@
 require 'uri'
 
 class TwitterController < ApplicationController
+
+  before_action :authenticate_user!
   #
   # Problem! The authentification key could be old!
   #
