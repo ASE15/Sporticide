@@ -1,6 +1,5 @@
 <% if(!current_user.place.nil? && !current_user.place.empty?) %>
   <script>
-    $(document).ready(function() {
       $.ajax("/transportation/connection?from=<%= URI.encode(current_user.place)%>&to=<%=URI.encode(training_session.location)%>&dateToArrival=<%=training_session.datetime.strftime("%Y-%m-%d")%>&timeAtArrival=<%=training_session.datetime.strftime("%H-%M")%>")
         .done(function(data) {
           var schedule = $('#schedule-<%=training_session.id%>');
@@ -15,7 +14,8 @@
             var arrival = $("<tr><th>Arrival</th><td>" + data.to.station.name + " at " + data.to.arrival + "</td></tr>");
             var time = $("<tr><th>Traveling time</th><td>" + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes</td></tr>");
             var link = $("<tr><th>SBB</th><td>To get a more precise schedule visit <a href='http://fahrplan.sbb.ch/bin/query.exe/dn'>SBB homepage</a></td></tr>");
-            table.insertAfter(".schedule-loader-img");
+            var img = schedule.find(".schedule-loader-img")
+            table.insertAfter(img);
             table.append(departure);
             table.append(arrival);
             table.append(time);
@@ -23,7 +23,6 @@
             schedule.find('.schedule-loader-img').remove();
           }
         });
-      });
   </script>
 <% end %>
 
