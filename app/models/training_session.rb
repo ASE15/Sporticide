@@ -61,7 +61,6 @@ class TrainingSession < ActiveRecord::Base
   validates_with TrainingSessionValidator, :on => :update
 
   def get_connection_to(from)
-    puts datetime.strftime("%Y-%m-%d")
     begin
       connection = Transprt.connections :from => from, :to => location, :isArrivalTime => 1, :date => datetime.strftime("%Y-%m-%d"), :time => datetime.strftime("%H-%M")
     rescue Exception => e
