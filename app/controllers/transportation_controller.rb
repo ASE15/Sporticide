@@ -14,19 +14,17 @@ class TransportationController < ApplicationController
       to = get_location(to_geocoordinates)[0]
     rescue RestClient::Exception => e
       puts e
+      return nil
     end
-    
-    puts(from);
-    puts(to);
     
     begin
       connection = Transprt.connections :from => URI.escape(from["name"]), :to => URI.escape(to["name"]), :isArrivalTime => 1, :date => dateAtArrival, :time => timeAtArrival
     rescue Exception => e
       puts e
+      return nil
     end
     
     if(!connection.nil? && !connection[0].nil?)
-      puts connection
       connection = connection[0]
       connection["from"]["departure"] = DateTime.parse(connection["from"]["departure"]).strftime("%d %b %Y, %H:%M");
       connection["to"]["arrival"] = DateTime.parse(connection["to"]["arrival"]).strftime("%d %b %Y, %H:%M");
@@ -39,7 +37,6 @@ class TransportationController < ApplicationController
 end
 
 def get_geocoordinates(address) 
- puts(address)
  return JSON.parse(RestClient.get "https://maps.googleapis.com/maps/api/geocode/json?address="+URI.escape(address))
 end
 
