@@ -1,0 +1,92 @@
+<%= form_for @profile, url: profile_path do |f| %>
+    <% if @profile.errors.any? %>
+        <div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <h3><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h3>
+          <ul>
+            <% @profile.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+        <%= f.label :firstname %><br />
+        <%= f.text_field :firstname, {class:"form-control"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+        <%= f.label :lastname %><br />
+        <%= f.text_field :lastname, {class:"form-control"} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label :address %><br />
+          <%= f.text_field :address, {class:"form-control"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+        <%= f.label 'Nr.' %><br />
+        <%= f.text_field :address_nr, {class:"form-control"} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label :postcode %><br />
+          <%= f.number_field :plz, {class:"form-control"} %>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label :place %><br />
+          <%= f.text_field :place,{class:"form-control"} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label 'Height(cm)' %><br />
+        <%= f.number_field :height, {class:"form-control"} %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label 'Weight (kg)' %><br />
+          <%= f.number_field(:weight, {step: 0.01, class:"form-control"}) %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <%= f.label 'Date of Birth' %><br />
+          <%= f.date_select :date, {:order => [:day, :month, :year],:prompt => true, :start_year => 1900, :end_year => Time.now.year}, {:class => ""} %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:15px;">
+      <div class="col-sm-3">
+        <%= f.submit 'Save changes', :class  => 'btn btn-primary' %>
+        <%= link_to 'Cancel', profile_path(@profile), class:"btn btn-default" %>
+      </div>
+    </div>
+
+
+<% end %>
+

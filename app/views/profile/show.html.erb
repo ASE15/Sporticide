@@ -1,0 +1,238 @@
+<% content_for :title do %>
+    <h1>
+      Profile of <%= @profile.get_name %>
+      <small>Overview <% if current_user == @profile %><span class="label label-danger">Your profile</span><% end %></small>
+    </h1>
+<% end %>
+
+
+<%
+   own_trainings = Training.where(owner: @profile)
+%>
+
+<div class="row">
+  <div class="col-md-3">
+
+    <!-- Profile Image -->
+    <div class="box box-primary">
+      <div class="box-body box-profile">
+        <% if current_user == @profile %>
+            <%= image_tag "user1.png", :class => "profile-user-img img-responsive img-circle", :alt => "user profile picture" %>
+        <% else %>
+            <%= image_tag "user0.png", :class => "profile-user-img img-responsive img-circle", :alt => "user profile picture" %>
+        <% end %>
+
+        <h3 class="profile-username text-center"><%= @profile.get_name %> <% if not @profile.firstname.nil? and not @profile.firstname.empty? %><small style="margin-left:3px;">(<%= @profile.username %>)</small><% end %></h3>
+
+        <p class="text-muted text-center">Member since <%= @profile.created_at.strftime("%b. %Y") %></p>
+
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item">
+            <b>Friends</b> <span class="pull-right"><%= @profile.friends.count %></span>
+          </li>
+          <li class="list-group-item">
+            <b>Own trainings</b> <span class="pull-right"><%= own_trainings.count %></span>
+          </li>
+          <li class="list-group-item">
+            <b>Attending trainings</b> <span class="pull-right"><%= @profile.trainings.count %></span>
+          </li>
+        </ul>
+
+
+
+        <% if current_user == @profile %>
+            <%= link_to 'Edit your profile', edit_profile_path, class: "btn btn-info btn-block" %><br />
+        <% elsif current_user.friends.include?(@profile) %>
+            <a href="#" class="btn btn-danger btn-block"><b>Remove friend</b></a><br />
+        <% else %>
+            <a href="#" class="btn btn-success btn-block"><b>Add friend</b></a><br />
+        <% end %>
+
+        <% if current_user.friends.include?(@profile) %>
+            <a href="#" class="btn btn-primary btn-block"><b>Chat</b></a>
+        <% end %>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <!-- About Me Box -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">About Me</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <strong><i class="fa fa-smile-o margin-r-5"></i> Age:</strong>
+
+        <p class="text-muted">
+          <%= @profile.age_at(Date.today,@profile.date) %>
+        </p>
+
+        <hr>
+
+        <strong><i class="fa fa-user margin-r-5"></i> Height:</strong>
+
+        <p class="text-muted"><%= @profile.height %> cm</p>
+
+        <hr>
+
+        <strong><i class="fa fa-heart margin-r-5"></i> Weight:</strong>
+
+        <p class="text-muted"><%= @profile.weight %> kg</p>
+
+        <hr>
+
+        <strong><i class="fa fa-motorcycle margin-r-5"></i> Sports</strong>
+
+        <%
+           sports = Array.new
+           @profile.trainings.each do |t|
+             sports << t.sport
+           end
+           sports = sports.uniq
+        %>
+
+        <p>
+        <% sports.each do |s| %>
+          <% if s == 'soccer' %>
+            <span class="label label-danger">soccer</span>
+          <% end %>
+          <% if s == 'cycling' %>
+            <span class="label label-success">cycling</span>
+          <% end %>
+          <% if s == 'boxing' %>
+            <span class="label label-primary">boxing</span>
+          <% end %>
+          <% if s == 'running' %>
+            <span class="label label-warning">running</span>
+          <% end %>
+        <% end %>
+        </p>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+  </div>
+  <!-- /.col -->
+  <div class="col-md-9">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#activity" data-toggle="tab">Trainings</a></li>
+        <% if current_user != @profile %>
+            <li><a href="#training" data-toggle="tab">Common trainings</a></li>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane" id="training">
+
+          <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Sport</th>
+              <th>Locations</th>
+              <th>Recurrence</th>
+              <th>Start</th>
+              <th>Owner</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @profile.trainings.each do |t| %>
+            <% if t.users.include?(current_user) %>
+                <tr class="table-row">
+                  <td><%= t.title %></td>
+                  <td class="sport-entry"><%= t.sport.capitalize %></td>
+                  <td class="location-entry"><%= t.get_locations.to_s.tr('"[]', '')%></td>
+                  <td class="recurrence-entry"><%= t.get_recurrences.to_s.tr('"[]', '')%></td>
+                  <td class="start-entry" data-date="<%=t.get_first_time.strftime("%Y-%m-%d") unless(t.get_first_time.nil?)%>"><%= t.get_first_time%></td>
+                  <td><%= t.owner.username %></td>
+                  <td>
+                    <%= link_to 'Show Training', training_path(t), class: "btn btn-xs btn-primary" %>
+                  </td>
+                </tr>
+            <% end %>
+            <% end %>
+            </tbody>
+          </table>
+
+        </div>
+
+        <div class="active tab-pane" id="activity">
+
+          <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+            <thead>
+            <tr>
+              <th>Title</th>
+              <th>Sport</th>
+              <th>Locations</th>
+              <th>Recurrence</th>
+              <th>Start</th>
+              <th>Owner</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @profile.trainings.each do |t| %>
+                <tr class="table-row">
+                  <td><%= t.title %></td>
+                  <td class="sport-entry"><%= t.sport.capitalize %></td>
+                  <td class="location-entry"><%= t.get_locations.to_s.tr('"[]', '')%></td>
+                  <td class="recurrence-entry"><%= t.get_recurrences.to_s.tr('"[]', '')%></td>
+                  <td class="start-entry" data-date="<%=t.get_first_time.strftime("%Y-%m-%d") unless(t.get_first_time.nil?)%>"><%= t.get_first_time%></td>
+                  <td><%= t.owner.username %></td>
+                  <td>
+                    <%= link_to 'Show Training', training_path(t), class: "btn btn-xs btn-primary" %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.nav-tabs-custom -->
+
+
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Friends</h3>
+        <div class="box-tools pull-right">
+          <span class="badge bg-light-blue"><%= @profile.friends.count %></span>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body no-padding">
+        <ul class="users-list clearfix">
+          <% @profile.friends.each do |f| %>
+              <li><a href="<%= user_profile_path(f) %>">
+                <% if current_user == f %>
+                    <%= image_tag "user1.png", :alt => "User Image" %>
+                <% else %>
+                    <%= image_tag "user0.png", :alt => "User Image" %></a>
+                <% end %>
+                </a>
+                <a href="<%= user_profile_path(f) %>" class="users-list-name"><%= f.get_name %></a>
+            <span class="users-list-date">
+              <% if current_user != @profile and current_user.friends.include?(f) %>common friend <% end %>
+              <% if current_user != @profile and current_user == f %>You<% end %>
+            </span>
+              </li>
+          <% end %>
+        </ul>
+        <!-- /.users-list -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer text-center">
+        <a class="uppercase" href="<%= local_users_path %>">View All Sporticide users</a>
+      </div>
+      <!-- /.box-footer -->
+    </div>
+
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->

@@ -10,12 +10,16 @@
         }
         else {
           console.log(data);
-          var departure = $("<div>Departure: " + data.from.departure + " from " + data.from.station.name + "</div>" );
-          var arrival = $("<div>Arrival: " + data.to.arrival + " to " + data.to.station.name + "</div>");
-          var time = $("<div>Traveling time: " + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes </div>");
-          time.insertAfter(".schedule-loader-img");
-          arrival.insertAfter(".schedule-loader-img");
-          departure.insertAfter(".schedule-loader-img");
+          var table = $("<table class='table'></table>");
+          var departure = $("<tr><th>Departure</th><td>" +  data.from.station.name + " at " + data.from.departure + "</td></tr>" );
+          var arrival = $("<tr><th>Arrival</th><td>" + data.to.station.name + " at " + data.to.arrival + "</td></tr>");
+          var time = $("<tr><th>Traveling time</th><td>" + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes</td></tr>");
+          var link = $("<tr><th>SBB</th><td>To get a more precise schedule visit <a href='http://fahrplan.sbb.ch/bin/query.exe/dn'>SBB homepage</a></td></tr>");
+          table.insertAfter(".schedule-loader-img");
+          table.append(departure);
+          table.append(arrival);
+          table.append(time);
+          table.append(link);
           schedule.find('.schedule-loader-img').remove();
         }
       });
@@ -23,10 +27,8 @@
 <% end %>
 
 <div id="schedule-<%=training_session.id%>">
-  <strong>Transportation:</strong>
   <% if(!current_user.place.nil? && !current_user.place.empty?) %>
     <img class="schedule-loader-img" src="/assets/ajax-loader.gif" alt="loading...">
-    <div class="schedule-link">To get a more precise schedule visit <a href="http://fahrplan.sbb.ch/bin/query.exe/dn">the SBB homepage</a>.</div>
   <% else %>
     <div> Cannot find a connection to this training session. To enable this feature you have to define an address in your profile. </div>
   <% end %>

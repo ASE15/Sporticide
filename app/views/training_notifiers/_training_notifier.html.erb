@@ -1,0 +1,13 @@
+  <a href="<%= training_path(training_notifier.system_log.training_session.training) %>">
+    <div class="pull-left">
+      <!-- User Image -->
+      <i class="fa fa-users text-aqua" style="margin: 8px 0 0 0 !important;"></i>
+    </div>
+    <!-- Message title and timestamp -->
+    <h4 style="margin: 0 0 0 25px !important;">
+      <%= training_notifier.system_log.training_session.training.title %>
+      <small><i class="fa fa-clock-o"></i> <%= training_notifier.created_at.strftime("%d %b, %H:%M") %></small>
+    </h4>
+    <!-- The message -->
+    <p style="margin: 0 0 0 25px !important;"><%= training_notifier.system_log.log %></p>
+  </a>

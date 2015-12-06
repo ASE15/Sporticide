@@ -1,4 +1,7 @@
 class LocalUsersController < ApplicationController
+
+  before_action :authenticate_user!
+
   def index
     if params[:start].nil?
       params[:start] = 0

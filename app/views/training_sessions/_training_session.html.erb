@@ -1,102 +1,135 @@
 <script>;$(document).ready(function(){set_map('<%= training_session.location %>', <%= training_session.id %>);});
 </script>
-<blockquote>
-<p>
-  <strong>Date:</strong>
-  <%= training_session.datetime %>
-</p>
-<% if not training_session.recurrence == "never" %>
-  <p>
-    <strong>End date:</strong>
-    <%= training_session.enddate %>
-  </p>
-  <p>
-    <strong>All dates:</strong>
-    <% training_session.get_recurrence_dates.each_with_index do |val, index| %>
-      <%= val %><br />
-    <% end %>
-  </p>
-<% end %>
-<p>
-  <strong>Recurrence:</strong>
-  <%= training_session.recurrence %>
-</p>
 
-<p>
-  <strong>Duration (Min:sec):</strong>
-  <%= training_session.duration %>
-</p>
+<h3 style="margin-top:0px !important;">Training session #<%= i %></h3>
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#activity_<%= i %>" data-toggle="tab">Overview</a></li>
+    <li><a href="#map_<%= i %>" data-toggle="tab">Map</a></li>
+    <li><a href="#weather_<%= i %>" data-toggle="tab">Weather</a></li>
+    <li><a href="#transportation_<%= i %>" data-toggle="tab">Transportation</a></li>
+    <li><a href="#comments_<%= i %>" data-toggle="tab">Feedback</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane" id="comments_<%= i %>">
+        <div id="chat-box" class="box-body chat" style="width: auto;">
+          <!-- chat item -->
+          <%= render training_session.logs %>
+        </div>
+        <!-- /.chat -->
+          <% if training_session.training.users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
+              <%= render partial: 'logs/form2', locals:{hash: "#comments_#{i}", session: training_session, log: training_session.logs.build} %>
+          <% end %>
 
-<p>
-  <strong>Level:</strong>
-  <%= training_session.level %>
-</p>
+    </div>
 
-<p>
-  <strong>Length (km):</strong>
-  <%= training_session.length %>
-</p>
+      <div class="tab-pane" id="map_<%= i %>">
+        <p>
+          <strong>Location:</strong>
+          <strong><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </strong>
+        <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"></div>
+        </p>
+      </div>
 
-<%= render "schedule", training_session: training_session %>
-
-<p>
-  <strong>Location:</strong>
-  <strong><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </strong>
-  <div id="map-canvas-<%= training_session.id %>" style="width:300px;height:200px"></div>
-</p>
-  <p>
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        //Setup the plugin, see readme for more examples
-        var weather<%= training_session.id %> = $("#weather-<%= training_session.id %>").flatWeatherPlugin({
-          location: "<%= training_session.location %>", //city and region *required
-          country: "ch",         //country *required
-          //optional:
-          api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
-          apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
-          view : "forecast", //default: full (partial, full, simple, today or forecast)
-          displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
-          //forecast: 5, //default: 5 (0 -5) how many days you want forecast
-          render: true, //default: true (true/false) if you want plugin to generate markup
-          loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
-          //units : "metric"// or "imperial" default: "auto"
-        });
-
-      });
-    </script>
-    <style>
-      #weather-<%= training_session.id %> {
-        width: 350px;
-        background: #FFFFFF
-      }
+      <div class="tab-pane" id="transportation_<%= i %>">
+          <%= render "schedule", training_session: training_session %>
+      </div>
 
 
-    </style>
-  <div id="weather-<%= training_session.id %>"></div>
 
 
-  </p>
-<p>
-  <strong>Logs:</strong>
-  <%= render training_session.logs %>
-</p>
+
+      <div class="tab-pane" id="weather_<%= i %>">
+        <p>
+          <script type="text/javascript">
+              $(document).ready(function() {
+
+                  //Setup the plugin, see readme for more examples
+                  var weather<%= training_session.id %> = $("#weather-<%= training_session.id %>").flatWeatherPlugin({
+                      location: "<%= training_session.location %>", //city and region *required
+                      country: "ch",         //country *required
+                      //optional:
+                      api: "openweathermap", //default: openweathermap (openweathermap or yahoo)
+                      apikey: "d9fd966d663802cdac2ece9164d5eae5",   //optional api key for openweather
+                      view : "forecast", //default: full (partial, full, simple, today or forecast)
+                      displayCityNameOnly : true, //default: false (true/false) if you want to display only city name
+                      //forecast: 5, //default: 5 (0 -5) how many days you want forecast
+                      render: true, //default: true (true/false) if you want plugin to generate markup
+                      loadingAnimation: true //default: true (true/false) if you want plugin to show loading animation
+                      //units : "metric"// or "imperial" default: "auto"
+                  });
+
+              });
+          </script>
+          <style>
+              #weather-<%= training_session.id %> {
+                  width: 350px;
+                  background: #FFFFFF
+              }
 
 
-<% if is_own_training? training_session.training %>
-    <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>
-    <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
-                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
-<%end%>
-<% if training_session.training.users.exists?(current_user) and not training_session.user_already_logged?(current_user) %>
-  <%= link_to 'Add log', new_training_trainingsession_log_path(training_session.training, training_session), class: 'btn btn-default' %>
-<% end %>
+          </style>
+        <div id="weather-<%= training_session.id %>"></div>
 
-<a class="btn btn-info" href=
-"<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>"
->Tweet</a>
 
-<a class="btn btn-info" href=
-"<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>">
-Facebook</a>
-</blockquote>
+        </p>
+      </div>
+
+    <div class="active tab-pane" id="activity_<%= i %>">
+      <table class="table">
+        <tr>
+          <th>Date</th>
+          <td><%= training_session.datetime.strftime("%d %b %Y, %H:%M") %></td>
+        </tr>
+        <tr>
+            <th>Recurrence</th>
+            <td><%= training_session.recurrence %></td>
+        </tr>
+        <tr>
+          <th>Duration (Min:Sec)</th>
+          <td><%= training_session.duration %></td>
+        </tr>
+        <tr>
+          <th>Length (km)</th>
+        <td><%= training_session.length %></td>
+        </tr>
+        <tr>
+          <th>Level</th>
+          <td><%= training_session.level %></td>
+        </tr>
+        <% if not training_session.recurrence == "never" %>
+            <tr>
+              <th>End date of training sessions</th>
+              <td><%= training_session.enddate.strftime("%d %b %Y, %H:%M") %></td>
+            </tr>
+            <tr>
+              <th>All dates of this session</th>
+              <td>
+              <% training_session.get_recurrence_dates.each_with_index do |val, index| %>
+                  <%= val.strftime("%d %b %Y, %H:%M") %><br />
+              <%end %>
+              </td>
+            </tr>
+        <% end %>
+
+      </table>
+
+
+      <% if is_own_training? training_session.training %>
+          <%= link_to 'Edit', edit_training_trainingsession_path(training_session.training, training_session), class: "btn btn-info" , :method => :get%>
+          <%= link_to('Destroy', training_trainingsession_path(training_session.training, training_session),
+                      method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
+      <%end%>
+
+      <a class="btn btn-info btn-social btn-twitter" href=
+        <%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop.chop+training_trainingsession_path(training_session.training, training_session)%>
+      ><i class="fa fa-twitter"></i>Tweet</a>
+
+      <a class="btn btn-info btn-social btn-facebook" href=
+              "<%="https://www.facebook.com/dialog/share?app_id="+ENV["FACEBOOK_KEY"]+"&display=popup&href="+root_url.chop+training_path(training_session.training)+"&redirect_uri="+url_for(:only_path => false)%>">
+        <i class="fa fa-facebook"></i>Facebook</a>
+    </div>
+  </div>
+  <!-- /.tab-content -->
+</div>
+<!-- /.nav-tabs-custom -->

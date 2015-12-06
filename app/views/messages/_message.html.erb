@@ -1,3 +1,33 @@
-<blockquote>
-  <%= message.user.username %>: <%= message.text %>
-</blockquote>
+<% if not current_user == message.user %>
+
+<div class="direct-chat-msg">
+  <div class="direct-chat-info clearfix">
+    <span class="direct-chat-name pull-left"><%= message.user.get_name %></span>
+    <span class="direct-chat-timestamp pull-right"><%= message.datetime.strftime("%d %b %Y, %H:%M") %></span>
+  </div>
+  <!-- /.direct-chat-info -->
+  <%= image_tag "user1.png", :class => "direct-chat-img", :alt => "Message User Image" %>
+  <!-- /.direct-chat-img -->
+  <div class="direct-chat-text">
+    <%= message.text %>
+  </div>
+  <!-- /.direct-chat-text -->
+</div>
+
+<% else %>
+
+    <div class="direct-chat-msg right">
+      <div class="direct-chat-info clearfix">
+        <span class="direct-chat-name pull-right"><%= message.user.get_name %></span>
+        <span class="direct-chat-timestamp pull-left"><%= message.datetime.strftime("%d %b %Y, %H:%M") %></span>
+      </div>
+      <!-- /.direct-chat-info -->
+      <%= image_tag "user0.png", :class => "direct-chat-img", :alt => "Message User Image" %><!-- /.direct-chat-img -->
+      <div class="direct-chat-text">
+        <%= message.text %>
+      </div>
+      <!-- /.direct-chat-text -->
+    </div>
+    <!-- /.direct-chat-msg -->
+
+<% end %>

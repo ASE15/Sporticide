@@ -1,23 +1,108 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBc3fYs8wV7YwDbzxEmyVuunE3aMVLIE&libraries=places"> </script>
 
 
-<h1>Overview Training</h1>
-
-<% if is_own_training? @training %>
-    <%= button_to('Destroy', training_path(@training),
-                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger pull-right'  ) %><span style="float:right;">&nbsp;&nbsp;</span>
-    <%= button_to 'Edit', edit_training_path(@training), class: "btn btn-info pull-right" , :method => :get%><span style="float:right;">&nbsp;&nbsp;</span>
-<%end%>
-
-<%= render @training %>
-
-<br /><br />
-<h2>Trainings</h2>
-
-
-<% @training.training_sessions.each do |s| %>
-    <%= render s %>
+<% content_for :title do %>
+    <h1>
+      <%= @training.title %>
+    </h1>
 <% end %>
 
-<br /><br />
-<%= link_to 'New session', new_training_trainingsession_path(@training), class:'btn btn-info' %>
+<div class="row">
+  <div class="col-md-4">
+
+    <!-- Profile Image -->
+    <%= render @training %>
+
+
+    <div class="box box-primary">
+      <div class="box-header ui-sortable-handle" style="cursor: move;">
+        <i class="fa fa-comments-o"></i>
+
+        <h3 class="box-title">Comments</h3>
+      </div>
+      <div id="chat-box" class="box-body chat" style="width: auto;">
+        <!-- chat item -->
+        <div class="item">
+          <%= image_tag "user0.png", :class => "online", :alt => "user image" %>
+
+          <p class="message">
+            <a class="name" href="#">
+              <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+              Mike Doe
+            </a>
+            I would like to meet you to discuss the latest news about
+            the arrival of the new theme. They say it is going to be one the
+            best themes on the market
+          </p>
+          <div class="attachment">
+            <h4>Attachments:</h4>
+
+            <p class="filename">
+              Theme-thumbnail-image.jpg
+            </p>
+
+            <div class="pull-right">
+              <button class="btn btn-primary btn-sm btn-flat" type="button">Open</button>
+            </div>
+          </div>
+          <!-- /.attachment -->
+        </div>
+        <!-- /.item -->
+        <!-- chat item -->
+        <div class="item">
+          <%= image_tag "user0.png", :class => "offline", :alt => "user image" %>
+
+          <p class="message">
+            <a class="name" href="#">
+              <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
+              Alexander Pierce
+            </a>
+            I would like to meet you to discuss the latest news about
+            the arrival of the new theme. They say it is going to be one the
+            best themes on the market
+          </p>
+        </div>
+        <!-- /.item -->
+        <!-- chat item -->
+        <div class="item">
+          <%= image_tag "user0.png", :class => "online", :alt => "user image" %>
+
+          <p class="message">
+            <a class="name" href="#">
+              <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+              Susan Doe
+            </a>
+            I would like to meet you to discuss the latest news about
+            the arrival of the new theme. They say it is going to be one the
+            best themes on the market
+          </p>
+        </div>
+        <!-- /.item -->
+      </div>
+      <!-- /.chat -->
+      <div class="box-footer">
+        <div class="input-group">
+          <input placeholder="Type message..." class="form-control">
+
+          <div class="input-group-btn">
+            <button class="btn btn-primary" type="button"><i class="fa fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.col -->
+  <div class="col-md-8">
+
+    <% training_i = @training.training_sessions.count %>
+    <% @training.training_sessions.reverse.each do |s| %>
+        <%= render partial: 'training_sessions/training_session', locals: {training_session:s, i: training_i} %>
+        <% training_i -= 1 %>
+    <% end %>
+
+  </div>
+  <!-- /.col -->
+</div>
+<!-- /.row -->
+</div>

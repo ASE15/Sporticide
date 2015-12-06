@@ -27,4 +27,12 @@ class LocalUser < ActiveRecord::Base
       'N/A'
     end
   end
+
+  def get_name
+    if (self.firstname.nil? and self.lastname.nil?) or (self.firstname.empty? and self.lastname.empty?)
+      self.username
+    else
+      return "#{self.firstname} #{self.lastname}"
+    end
+  end
 end

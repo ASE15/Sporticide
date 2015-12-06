@@ -1,4 +1,5 @@
 <%= form_for([@chat, @chat.messages.build], url: chat_messages_path(@chat)) do |f| %>
+
     <% if @chat.errors.any? %>
         <div class="alert alert-danger">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -11,17 +12,10 @@
         </div>
     <% end %>
 
-    <div class="row col-md-6">
-
-      <div class="form-group">
-        <%= f.label :text %>
-        <%= f.text_area(:text, size: '60x12') %>
-      </div>
-
-      <p>
-        <%= f.submit({class:"btn btn-success"}) %>
-      </p>
-
-    </div>
-
+  <div class="input-group">
+    <%= f.text_field(:text, {placeholder: "Type Message ...", class: "form-control"}) %>
+                      <span class="input-group-btn">
+                        <%= f.submit("Send",{class:"btn btn-primary btn-flat"}) %>
+                      </span>
+  </div>
 <% end %>

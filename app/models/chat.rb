@@ -11,6 +11,14 @@ class Chat < ActiveRecord::Base
     where("(chats.user_id = ? AND chats.partner_id =?) OR (chats.user_id = ? AND chats.partner_id =?)", sender_id,recipient_id, recipient_id, sender_id)
   end
 
+  def get_partner(user)
+    if self.user == user
+      self.partner
+    else
+      self.user
+    end
+  end
+
   def unread?(user)
     if self.user == user
       not self.userRead
@@ -40,5 +48,13 @@ class Chat < ActiveRecord::Base
     elsif self.partner == user
       self.userRead = false
     end
+  end
+
+  def self.sort_desc(chats)
+    chats.sort {|a, b| a.get_last_message[:datetime] <=> b.get_last_message[:datetime]}.reverse
+  end
+
+  def involved?(user)
+    self.user == user or self.partner == user
   end
 end

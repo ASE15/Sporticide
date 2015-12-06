@@ -34,3 +34,20 @@ Doc: http://1000hz.github.io/bootstrap-validator/
 ### Facebook
 Facebook Login is currently configured to work on localhost:3000, so 
 it won't work on heroku currently.
+
+### Templates
+To set the big and small title in the new template, include following code in a specific template:
+
+```<% content_for :title do %>
+   <h1>
+      Title
+      <small>small title</small>
+  </h1>
+<% end %>
+```
+
+### User name
+If you want to display the users full name if available, you the method
+> user_model.get_name
+
+This prints either the uername, if no first & last name is available, other else it begins with returning the first name and perhaps concatenated with the last.

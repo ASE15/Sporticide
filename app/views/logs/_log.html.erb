@@ -1,28 +1,26 @@
-<blockquote>
-<p>
-  <strong>Date:</strong>
-  <%= log.created_at %>
-</p>
+<div class="item">
+  <%= image_tag "user0.png", :class => "online", :alt => "user image" %>
 
-<p>
-  <strong>Intensity (1: easy, 5: hard):</strong>
-  <%= log.intensity %>
-</p>
+  <p class="message">
+    <a class="name" href="#">
+      <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> <%= log.created_at.strftime("%d %b %Y, %H:%M") %></small>
+      <%= log.user.get_name %>
+    </a>
+    <%= log.comment %>
+  </p>
+  <div class="attachment">
+    <b>Date:</b> <%= log.created_at.strftime("%d %b %Y, %H:%M") %><br />
+    <b>Rating:</b> <%= log.get_rating %><br />
+    <b>Intensity:</b> <%= log.get_intensity %>
 
-<p>
-  <strong>Rating (1: bad, 5: good):</strong>
-  <%= log.rating %>
-</p>
-
-<p>
-  <strong>Comment:</strong>
-  <%= log.comment %>
-</p>
-
-
-<% if is_own_log? log %>
-    <%= link_to 'Edit', edit_training_trainingsession_log_path(log.training_session.training, log.training_session, log), class: "btn btn-info" , :method => :get%>
-    <%= link_to('Destroy', training_trainingsession_log_path(log.training_session.training, log.training_session, log),
-                  method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  ) %>
-<%end%>
-</blockquote>
+    <div class="pull-right">
+      <% if is_own_log? log %>
+          <%= link_to 'Edit', edit_training_trainingsession_log_path(log.training_session.training, log.training_session, log), class: "btn btn-info btn-xs" , :method => :get%>
+          <%= link_to('Destroy', training_trainingsession_log_path(log.training_session.training, log.training_session, log),
+                      method: "delete", data: { confirm: 'Are you sure?' }, class: 'btn btn-xs btn-danger'  ) %>
+      <%end%>
+    </div>
+  </div>
+  <!-- /.attachment -->
+</div>
+<!-- /.item -->

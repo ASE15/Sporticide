@@ -1,0 +1,56 @@
+<div class="box-footer">
+  <%= form_for([session, log], url: log.id.nil? ? training_trainingsession_logs_path(session.training, session) : training_trainingsession_log_path(session.training, session, log))  do |f| %>
+      <% if session.errors.any? %>
+          <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <h3><%= pluralize(session.errors.count, "error") %> prohibited this training from being saved:</h3>
+            <ul>
+              <% session.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+  <div class="form-horizontal">
+    <% intensities = [
+            ['very easy', '1'],
+            ['easy', '2'],
+            ['middle', '3'],
+            ['hard', '4'],
+            ['very hard', '5']
+    ]
+    %>
+
+    <div class="form-group">
+      <%= f.label 'Intensity', {class:"col-sm-2 control-label label-left"} %>
+      <div class="col-sm-3">
+        <%= f.select(:intensity, intensities, {}, {class: "form-control"}) %>
+      </div>
+    </div>
+
+    <% ratings = [
+            ['very bad', '1'],
+            ['bad', '2'],
+            ['average', '3'],
+            ['good', '4'],
+            ['best', '5']
+    ]
+    %>
+    <div class="form-group">
+      <%= f.label 'Rating', {class:"col-sm-2 control-label label-left"} %>
+      <div class="col-sm-3">
+        <%= f.select(:rating, ratings, {}, {class: "form-control"}) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <%= f.text_field(:comment, {class: "form-control", placeholder: "Type comment..."}) %>
+
+    <div class="input-group-btn">
+      <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i></button>
+    </div>
+  </div>
+</div>
+<% end %>

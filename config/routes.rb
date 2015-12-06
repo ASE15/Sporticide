@@ -15,8 +15,8 @@ Rails.application.routes.draw do
     get 'join', to: 'trainings#join'
     get 'leave', to: 'trainings#leave'
     get 'invite', to: 'trainings#invite'
-    resources :trainingsessions, controller:'training_sessions' do
-      resources :logs
+    resources :trainingsessions, controller:'training_sessions', only: [:destroy, :create, :new, :edit, :update] do
+      resources :logs, only: [:destroy, :create, :new, :edit, :update]
     end
   end
 
@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   resources :training_notifiers
 
+  resources :calendar, only: [:index]
   resources :statistics
 
   resources :friends
@@ -40,7 +41,8 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :local_users
-  resource :profile, :controller => :profile
+  resource :profile, :controller => :profile, only: [:show, :edit, :update]
+  get 'profile/:username', to: 'profile#profile', as: 'user_profile'
   #get 'profile', to: 'profile#show' #not necessary anymore
 
   # Example of regular route:

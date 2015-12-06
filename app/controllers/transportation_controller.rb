@@ -25,8 +25,15 @@ class TransportationController < ApplicationController
       puts e
     end
     
-    connection = connection.nil? ? nil : connection[0]
-    
+    if(!connection.nil? && !connection[0].nil?)
+      puts connection
+      connection = connection[0]
+      connection["from"]["departure"] = DateTime.parse(connection["from"]["departure"]).strftime("%d %b %Y, %H:%M");
+      connection["to"]["arrival"] = DateTime.parse(connection["to"]["arrival"]).strftime("%d %b %Y, %H:%M");
+    else 
+      connection = nil
+    end
+
     render :json => connection
   end
 end

@@ -1,0 +1,35 @@
+<% if user_signed_in? %>
+<%
+   list = current_user.training_notifiers
+   count = list.count
+   list = list.sort_by{|e| -e[:id]}
+%>
+
+<li class="dropdown messages-menu">
+  <!-- Menu toggle button -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-bell-o"></i>
+    <% if count > 0 %><span class="label label-warning"><%= count %></span><% end %>
+  </a>
+  <ul class="dropdown-menu">
+    <li class="header">You have <%= count %> notification<% if count>1 or count == 0 %>s<% end %></li>
+    <li>
+      <!-- Inner Menu: contains the notifications -->
+      <ul class="menu">
+
+        <% list.each do |t| %>
+            <li>
+              <%= render t %>
+            </li>
+        <% end %>
+        <!--<li>
+          <a href="#">
+            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+          </a>
+        </li>-->
+      </ul>
+    </li>
+    <li class="footer"><%= link_to 'View all',  training_notifiers_path %></li>
+  </ul>
+</li>
+<% end %>

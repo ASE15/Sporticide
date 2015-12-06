@@ -6,10 +6,12 @@ class TrainingSessionsController < ApplicationController
 
   end
 
+=begin
   def show
     @training = Training.find(params[:training_id])
     @session = TrainingSession.find(params[:id])
   end
+=end
 
   def new
     @training = Training.find(params[:training_id])

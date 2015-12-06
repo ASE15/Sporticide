@@ -1,6 +1,15 @@
-<h1>Editing Session<small class="small-title">Change Data About your Session</small></h1>
+<% content_for :title do %>
+    <h1>
+      Edit Saison
+      <small>Change data about your training session</small>
+    </h1>
+<% end %>
+
+<div class="box box-primary">
+  <div class="box-body">
 
 <%= render 'form' %>
-<br /><br />
 <div style="clear:both;"></div>
 <%= link_to 'Back', training_path(@training), class:"btn btn-default" %>
+
+  </div></div>
