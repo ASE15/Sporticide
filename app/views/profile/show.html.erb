@@ -63,7 +63,14 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <strong><i class="fa fa-smile-o margin-r-5"></i> Age:</strong>
+
+        <strong><i class="fa fa-map-marker margin-r-5"></i> Place</strong>
+
+        <p class="text-muted"><%= @profile.place %></p>
+
+        <hr>
+
+        <strong><i class="fa fa-smile-o margin-r-5"></i> Age</strong>
 
         <p class="text-muted">
           <%= @profile.age_at(Date.today,@profile.date) %>
@@ -71,13 +78,13 @@
 
         <hr>
 
-        <strong><i class="fa fa-user margin-r-5"></i> Height:</strong>
+        <strong><i class="fa fa-user margin-r-5"></i> Height</strong>
 
         <p class="text-muted"><%= @profile.height %> cm</p>
 
         <hr>
 
-        <strong><i class="fa fa-heart margin-r-5"></i> Weight:</strong>
+        <strong><i class="fa fa-heart margin-r-5"></i> Weight</strong>
 
         <p class="text-muted"><%= @profile.weight %> kg</p>
 

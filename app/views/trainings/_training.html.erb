@@ -9,7 +9,7 @@
 
     <ul class="list-group list-group-unbordered">
       <li class="list-group-item">
-        <b>Owner</b> <a href="#" class="pull-right"><%= training.owner.get_name %></a>
+        <b>Owner</b> <a href="<%= user_profile_path(training.owner.username) %>" class="pull-right"><%= training.owner.get_name %></a>
       </li>
       <li class="list-group-item">
         <b>Members</b> <span class="pull-right"><%= training.users.count %></span>

@@ -6,6 +6,9 @@
       </h1>
 <% end %>
 
+<div class="box box-primary">
+  <div class="box-body">
+
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:username) %>:</strong></dt>
   <dd><%= @user.username %></dd>
@@ -31,3 +34,6 @@
               :class => 'btn btn-danger' %>
       <% end %>
 </div>
+
+      </div>
+    </div>

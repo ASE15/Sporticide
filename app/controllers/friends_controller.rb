@@ -3,13 +3,7 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if params[:start].nil?
-      params[:start] = 0
-    end
-    if params[:size].nil?
-      params[:size] = 20
-    end
-    @myfriends = current_user.friends.where(:id => params[:start]..params[:size])
+    @myfriends = current_user.friends
   end
 
   def create

@@ -94,6 +94,10 @@
         <td><%= training_session.length %></td>
         </tr>
         <tr>
+          <th>Location:</th>
+          <td><%= link_to training_session.location, "http://maps.google.com/maps?q="+ training_session.location, :target => "_blank" %> </td>
+        </tr>
+        <tr>
           <th>Level</th>
           <td><%= training_session.level %></td>
         </tr>
