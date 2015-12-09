@@ -26,6 +26,21 @@ module OmniAuth
   end
 end
 
+# Overwritting standard to_s method of DateTime and TimeWithZone
+module ActiveSupport
+  class TimeWithZone
+    def to_s
+      self.strftime("%d %b %Y, %H:%M")
+    end
+  end
+end
+
+class DateTime
+  def to_s
+    self.strftime("%d %b %Y, %H:%M")
+  end
+end
+
 module Sporticide
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

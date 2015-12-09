@@ -1,13 +1,38 @@
-<p>
-  <strong>Transportation (<%=current_user.place%>):</strong>
-  <% connection = training_session.get_connection_to(current_user.place) %>
-  <%if(! connection.nil?)%>
-    <p>Departure: <%=connection["from"]["departure"]%></p>
-    <p>Arrival: <%=connection["to"]["arrival"]%></p>
-    <p>Traveling time: <%= time = (connection["to"]["arrivalTimestamp"] - connection["from"]["departureTimestamp"]) / 60 %> Minutes</p>
-  <%else%>
-    Could not find a connection!
-  <%end%>
-</p>
+<% if(!current_user.place.nil? && !current_user.place.empty?) %>
+  <script>
+      $.ajax("/transportation/connection?from=<%= URI.encode(current_user.place)%>&to=<%=URI.encode(training_session.location)%>&dateToArrival=<%=training_session.datetime.strftime("%Y-%m-%d")%>&timeAtArrival=<%=training_session.datetime.strftime("%H-%M")%>")
+        .done(function(data) {
+          var schedule = $('#schedule-<%=training_session.id%>');
+          if(data === null) {
+            schedule.append("<div>You live directly at this place.</div>");
+            schedule.find('.schedule-loader-img').remove();
+            schedule.find('.schedule-link').empty();
+          }
+          else {
+            var table = $("<table class='table'></table>");
+            var departure = $("<tr><th>Departure</th><td>" +  data.from.station.name + " at " + data.from.departure + "</td></tr>" );
+            var arrival = $("<tr><th>Arrival</th><td>" + data.to.station.name + " at " + data.to.arrival + "</td></tr>");
+            var time = $("<tr><th>Traveling time</th><td>" + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes</td></tr>");
+            var link = $("<tr><th>SBB</th><td>To get a more precise schedule visit <a href='http://fahrplan.sbb.ch/bin/query.exe/dn'>SBB homepage</a></td></tr>");
+            var img = schedule.find(".schedule-loader-img")
+            table.insertAfter(img);
+            table.append(departure);
+            table.append(arrival);
+            table.append(time);
+            table.append(link);
+            schedule.find('.schedule-loader-img').remove();
+          }
+        });
+  </script>
+<% end %>
+
+<div id="schedule-<%=training_session.id%>">
+  <% if(!current_user.place.nil? && !current_user.place.empty?) %>
+    <img class="schedule-loader-img" src="/assets/ajax-loader.gif" alt="loading...">
+  <% else %>
+    <div> Cannot find a connection to this training session. To enable this feature you have to define an address in your profile. </div>
+  <% end %>
+</div>
+
 
 
