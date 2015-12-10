@@ -82,7 +82,7 @@ class UsersController < ApplicationController
       
         session[:user_id] = user_params[:username]
         session[:passwd] = user_params[:password]
-        format.html { redirect_to user_path(@user), :notice => 'User was successfully created and successfully logged in.' }
+        format.html { redirect_to root_path, :notice => 'User was successfully created and successfully logged in.' }
         format.json { head :no_content }
       else
         session[:user] = my_params
