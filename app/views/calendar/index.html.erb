@@ -70,7 +70,12 @@ $(document).ready(function() {
     <% end %>
     $('#calendar').fullCalendar({
 
-            events:dict
+            events:dict,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            }
 
 
 
