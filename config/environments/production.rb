@@ -32,9 +32,6 @@ Rails.application.configure do
   # Generate digests for assets URLs.
   config.assets.digest = true
 
-  #precomiple fonts
-  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
