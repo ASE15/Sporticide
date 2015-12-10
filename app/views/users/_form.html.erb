@@ -1,4 +1,4 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, url:user_path(@user)) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :realname, :class => 'control-label col-sm-4 label-left' %>
+      <%= f.label 'Real name', :class => 'control-label col-sm-4 label-left' %>
       <div class="col-sm-4">
         <%= f.text_field :realname, :class => 'form-control' %>
       </div>
@@ -50,7 +50,7 @@
       ]
       %>
       <div class="form-group">
-        <%= f.label :publicvisible, {class:"control-label col-sm-4 label-left"} %>
+        <%= f.label 'Public visible', {class:"control-label col-sm-4 label-left"} %>
         <div class="col-sm-4">
           <%= f.select(:publicvisible, levels, {}, {class: "form-control"}) %>
         </div>

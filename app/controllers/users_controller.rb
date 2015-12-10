@@ -114,7 +114,7 @@ class UsersController < ApplicationController
       end
 
       if status
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to edit_profile_path, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { redirect_to @user, alert: "Could not update" }
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
         format.html {redirect_to root_path}
         format.json { head :no_content }
       else
-        format.html { redirect_to @user, alert: "Could not delete"}
+        format.html { redirect_to edit_profile_path, alert: "Could not delete"}
         format.json { render json: @users.errors, status: "Could not delete" }
       end
     end

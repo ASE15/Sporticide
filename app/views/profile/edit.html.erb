@@ -7,9 +7,34 @@
 
 <div class="box box-primary">
   <div class="box-header with-border">
-    <h3 class="box-title"><%= current_user.username %></h3>
+    <h3 class="box-title">Profile of <%= current_user.username %></h3>
   </div>
   <div class="box-body">
     <%= render 'form' %>
+  </div>
+</div>
+
+
+<div class="box box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">Account details of <%= current_user.username %></h3>
+  </div>
+  <div class="box-body">
+    <%= render 'users/form' %>
+  </div>
+</div>
+
+
+<div class="box box-danger">
+  <div class="box-header with-border">
+    <h3 class="box-title">Delete account <%= current_user.username %></h3>
+  </div>
+  <div class="box-body">
+    <p>Do you really want to delete your CyberCoach account?</p><br />
+    <%= link_to 'Destroy',
+                user_path(@user),
+                :method => 'delete',
+                :data => {:confirm => 'Are you sure?'},
+                :class => 'btn btn-danger' %>
   </div>
 </div>

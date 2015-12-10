@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :statistics
 
   resources :friends
-  resources :users
+  resources :users, only: [:new, :show, :new, :create, :update, :destroy]
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :local_users

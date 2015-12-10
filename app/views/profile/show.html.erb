@@ -42,7 +42,6 @@
 
         <% if current_user == @profile %>
             <%= link_to 'Edit your profile', edit_profile_path, class: "btn btn-info btn-block" %><br />
-            <%= link_to 'Account management', user_path(current_user.username), class: "btn btn-warning btn-block" %><br />
         <% elsif current_user.friends.include?(@profile) %>
             <%= link_to "Remove friend", friend_path(@profile), method: :delete, data: {confirm: "Are you sure?" }, class: "btn btn-block btn-danger", style: "font-weight:bold;" %><br />
         <% else %>

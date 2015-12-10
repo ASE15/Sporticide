@@ -1,6 +1,7 @@
 class ProfileController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :set_user, only: [:edit, :update]
 
   # def index
   #   @profile = current_user
@@ -32,5 +33,22 @@ class ProfileController < ApplicationController
   private
   def profile_params
     params.require(:local_user).permit(:firstname, :lastname, :height, :weight, :address, :address_nr, :plz, :place, :date)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    #User.user = session[:user_id]
+    #User.password = session[:passwd]
+    Api::Base.user = session[:user_id]
+    Api::Base.password = session[:passwd]
+
+    begin
+      @user = User.find(current_user.username)
+    rescue ActiveResource::ResourceNotFound
+      flash[:error] = 'No user found'
+      redirect_to users_path
+    rescue ActiveResource::ResourceConflict, ActiveResource::ResourceInvalid
+      redirect_to new_user_path
+    end
   end
 end
