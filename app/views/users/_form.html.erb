@@ -11,45 +11,59 @@
     </div>
   <% end %>
 
-    <div class="control-group">
-      <%= f.label :username, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :username, :class => 'text_field' %>
+
+    <div class="form-horizontal">
+
+    <div class="form-group">
+      <%= f.label :username, :class => 'control-label col-sm-4 label-left' %>
+      <div class="col-sm-4">
+        <%= f.text_field :username, :class => 'form-control' %>
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :email, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :email, :class => 'text_field' %>
+    <div class="form-group">
+      <%= f.label :email, :class => 'control-label col-sm-4 label-left' %>
+      <div class="col-sm-4">
+        <%= f.text_field :email, :class => 'form-control' %>
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :password, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password, :class => 'password_field' %>
+    <div class="form-group">
+      <%= f.label :password, :class => 'control-label col-sm-4 label-left' %>
+      <div class="col-sm-4">
+        <%= f.password_field :password, :class => 'form-control' %>
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :realname, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :realname, :class => 'text_field' %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :publicvisible, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.number_field :publicvisible, :class => 'number_field' %>
+    <div class="form-group">
+      <%= f.label :realname, :class => 'control-label col-sm-4 label-left' %>
+      <div class="col-sm-4">
+        <%= f.text_field :realname, :class => 'form-control' %>
       </div>
     </div>
 
 
-    <div class="form-actions">
+      <% levels = [
+              ['not visible (0)', '0'],
+              ['partly visible (1)', '1'],
+              ['fully visible (2)', '2']
+      ]
+      %>
+      <div class="form-group">
+        <%= f.label :publicvisible, {class:"control-label col-sm-4 label-left"} %>
+        <div class="col-sm-4">
+          <%= f.select(:publicvisible, levels, {}, {class: "form-control"}) %>
+        </div>
+      </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-4">
       <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  users_path, :class => 'btn' %>
+      <%= link_to 'Cancel',
+                  users_path, :class => 'btn btn-default' %>
     </div>
+    </div>
+
+  </div>
 <% end %>
