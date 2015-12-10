@@ -53,21 +53,19 @@
     <a href="<%= root_path %>" style="color:#fff !important;"><b>Sporticide</b></a>
   </div>
   <!-- /.login-logo -->
-  <div class="login-box-body">
+  <div class="login-box-body" style="border-radius:4px;">
     <p class="login-box-msg">Sign in to start your session</p>
 
     <% if alert or flash[:error] %>
 
         <div class="alert alert-danger alert-dismissible">
           <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-          <h4><i class="icon fa fa-ban"></i> Alert!</h4>
           <%= alert ? alert : flash[:error] %>
         </div>
     <% end %>
     <% if notice or flash[:notice] %>
         <div class="alert alert-info alert-dismissible">
           <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-          <h4><i class="icon fa fa-info"></i> Alert!</h4>
           <%= notice ? notice : flash[:notice] %>
         </div>
     <% end %>
