@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter :redirect_if_not_authenticated
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
 
@@ -28,7 +29,8 @@ class UsersController < ApplicationController
 		@user.email = session[:user]["email"]
 		@user.realname = session[:user]["realname"]
 		@user.publicvisible = session[:user]["publicvisible"]
-	end
+    end
+    render 'new', :layout => 'register'
   end
 
   # GET /users/1/edit
@@ -42,7 +44,15 @@ class UsersController < ApplicationController
     respond_to do |format|
        my_params = {:username => user_params[:username], :email => user_params[:email], 
 		:publicvisible => user_params[:publicvisible], :realname => user_params[:realname], 
-		:password => user_params[:password]} 
+		:password => user_params[:password]}
+
+      if not (my_params[:username].length > 1 \
+      and my_params[:email].length > 1 \
+      and my_params[:realname].length > 1 \
+      and my_params[:password].length > 1)
+        redirect_to new_user_path, :alert => "Fill in all fields!"
+        return
+      end
     
       #@user = User.new({:username => user_params[:username], :email => user_params[:email], :publicvisible => user_params[:publicvisible], :realname => user_params[:realname], :password => user_params[:password]}, true)
       #if user_params[:password] != '*'

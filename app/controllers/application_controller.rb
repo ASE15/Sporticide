@@ -3,6 +3,9 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  #before_action :redirect_if_not_authenticated, :unless => :users_controller?
+  before_filter :redirect_if_not_authenticated
+
   def owns_training!
     unless is_own_training?
       flash[:error] = 'You are not the owner of this training!'
@@ -59,5 +62,11 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :authenticate_user!
+
+  def redirect_if_not_authenticated
+    unless user_signed_in?
+      redirect_to new_session_path
+    end
+  end
 
 end

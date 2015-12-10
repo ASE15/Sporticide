@@ -1,15 +1,57 @@
-<% content_for :title do %>
-    <h1>
-      New user
-      <small>Create a new CyberCoach user</small>
-    </h1>
+<p class="login-box-msg">Register a new membership</p>
+
+<%= form_for(@user) do |f| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+  <div class="form-group has-feedback">
+    <%= f.text_field :username, {:class => 'form-control', :placeholder => 'Username'} %>
+    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+  </div>
+  <div class="form-group has-feedback">
+    <%= f.text_field :email, {:class => 'form-control', :placeholder => 'Email'} %>
+    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+  </div>
+    <div class="form-group has-feedback">
+      <%= f.text_field :realname, {:class => 'form-control',:placeholder => 'Real name'} %>
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+    </div>
+    <div class="form-group has-feedback">
+    <% levels = [
+            ['not visible (0)', '0'],
+            ['partly visible (1)', '1'],
+            ['fully visible (2)', '2']
+    ]
+    %>
+      <%= f.label :publicvisible, {class:"control-label col-sm-4 label-left", style:"margin-top:6px;"} %>
+      <div class="col-sm-8"><%= f.select(:publicvisible, levels, {}, {class: "form-control"}) %></div>
+      <div style="clear:both;"></div>
+  </div>
+
+  <div class="form-group has-feedback">
+    <%= f.password_field :password, {:class => 'form-control',:placeholder => 'Password'} %>
+    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 pull-right">
+      <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+    </div>
+    <!-- /.col -->
+  </div>
 <% end %>
 
-<div class="box box-primary">
-  <div class="box-body">
+<div class="social-auth-links text-center">
+  <p>- OR -</p>
+  <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+    Facebook</a>
+</div>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', users_path %>
-
-  </div></div>
+<a href="<%= new_session_path %>" class="text-center">I already have a membership</a>

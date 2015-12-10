@@ -1,8 +1,11 @@
 require 'rest-client'
 
 class SessionsController < ApplicationController
-  def new
 
+	skip_before_filter :redirect_if_not_authenticated
+
+  def new
+		render 'new', layout: 'login'
   end
   
   #
