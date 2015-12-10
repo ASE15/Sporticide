@@ -9,6 +9,12 @@ class TrainingsController < ApplicationController
 
   def show
     @training = Training.find(params[:id])
+    if not @training.isPublic?
+      if not @training.users.include?(current_user)
+        redirect_to trainings_path, :alert => "This is a private training!"
+        return
+      end
+    end
   end
 
   def new
