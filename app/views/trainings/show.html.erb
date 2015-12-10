@@ -20,11 +20,13 @@
 
         <h3 class="box-title">Comments</h3>
       </div>
-      <div id="chat-box" class="box-body chat" style="width: auto;overflow:auto;height:350px;">
+      <div id="chat-box" class="box-body chat" style="width: auto;overflow:auto;max-height:350px;">
         <%= render @training.comments.reverse %>
       </div>
       <!-- /.chat -->
-      <%= render partial: 'comments/form', locals: {training:@training} %>
+      <% if @training.users.include?(current_user) %>
+            <%= render partial: 'comments/form', locals: {training:@training} %>
+      <% end %>
     </div>
 
   </div>
