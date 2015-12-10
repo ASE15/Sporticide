@@ -5,8 +5,7 @@
   <% if user_signed_in? %>
       <li class="<%= 'active' if current_page?(root_path) %>"><a href="<%= root_path %>"><i class="glyphicon glyphicon-home"></i> <span>Home</span></a></li>
       <li class="<%= 'active' if current_page?(trainings_path) %>"><a href="<%= trainings_path %>"><i class="fa fa-calendar"></i><span>Trainings</span></a></li>
-      <li class="<%= 'active' if current_page? (users_path)  %>"><a href="<%= users_path %>"><i class="fa fa-user"></i><span>Users</span></a></li>
-      <li class="<%= 'active' if current_page? (local_users_path)  %>"><a href="<%= local_users_path %>"><i class="fa fa-user"></i><span>Local Users</span></a></li>
+      <li class="<%= 'active' if current_page? (local_users_path)  %>"><a href="<%= local_users_path %>"><i class="fa fa-user"></i><span>Sporticide Users</span></a></li>
       <li class="<%= 'active' if current_page?(friends_path) %>"><a href="<%= friends_path %>"><i class="fa fa-users"></i><span>Friends</span></a></li>
       <li class="<%= 'active' if current_page?(training_notifiers_path) %>"><a href="<%= training_notifiers_path %>"><i class="fa fa-bell"></i><span>Notifications</span></a></li>
       <li class="<%= 'active' if current_page?(statistics_path) %>"><a href="<%= statistics_path %>"><i class="fa fa-bar-chart"></i><span>Statistics</span></a></li>

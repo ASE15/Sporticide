@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
+=begin
   def index
     if params[:start].nil?
       params[:start] = 0
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
     end
     @users = User.find(:all , :params => {:start => params[:start], :size => params[:size]})
   end
+=end
 
   # GET /users/1
   # GET /users/1.json
