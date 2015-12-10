@@ -32,9 +32,9 @@ Rails.application.configure do
   # Generate digests for assets URLs.
   config.assets.digest = true
   #include fonts path to assets
-  #config.assets.paths << Rails.root.join('app', 'assets','fonts')
+  config.assets.paths << Rails.root.join('app', 'assets','fonts')
   #precomiple fonts
-  #config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
