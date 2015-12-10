@@ -110,7 +110,7 @@ class SessionsController < ApplicationController
   def sign_in(password)
 	session[:user_id] = @user.username
 	session[:passwd] = password
-	redirect_to user_path(@user), :notice => "Logged in!"
+	redirect_to root_path, :notice => "Logged in!"
   end
   
   def authenticated_user?(password)
