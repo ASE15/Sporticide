@@ -13,7 +13,11 @@ class ProfileController < ApplicationController
 
   def profile
     @profile = LocalUser.find_by(username: params[:username])
-    render 'show'
+    if @profile.nil?
+      redirect_to local_users_path, :alert => "This profile does not exist!"
+    else
+      render 'show'
+    end
   end
 
   def edit

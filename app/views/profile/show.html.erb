@@ -215,14 +215,14 @@
       <div class="box-body no-padding">
         <ul class="users-list clearfix">
           <% @profile.friends.each do |f| %>
-              <li><a href="<%= user_profile_path(f) %>">
+              <li><a href="<%= user_profile_path(f.username) %>">
                 <% if current_user == f %>
                     <%= image_tag "user1.png", :alt => "User Image" %>
                 <% else %>
                     <%= image_tag "user0.png", :alt => "User Image" %></a>
                 <% end %>
                 </a>
-                <a href="<%= user_profile_path(f) %>" class="users-list-name"><%= f.get_name %></a>
+                <a href="<%= user_profile_path(f.username) %>" class="users-list-name"><%= f.get_name %></a>
             <span class="users-list-date">
               <% if current_user != @profile and current_user.friends.include?(f) %>common friend <% end %>
               <% if current_user != @profile and current_user == f %>You<% end %>
