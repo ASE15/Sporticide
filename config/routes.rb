@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'join', to: 'trainings#join'
     get 'leave', to: 'trainings#leave'
     get 'invite', to: 'trainings#invite'
+    resource :comments, only: [:new, :destroy, :create]
     resources :trainingsessions, controller:'training_sessions', only: [:destroy, :create, :new, :edit, :update] do
       resources :logs, only: [:destroy, :create, :new, :edit, :update]
     end

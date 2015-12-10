@@ -1,0 +1,23 @@
+<%= form_for([training, training.comments.build], url: training_comments_path(training)) do |f| %>
+<% if training.errors.any? %>
+<div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <h3><%= pluralize(training.errors.count, "error") %> prohibited this training from being saved:</h3>
+    <ul>
+        <% training.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+        <% end %>
+    </ul>
+</div>
+<% end %>
+
+<div class="box-footer">
+    <div class="input-group">
+        <%= f.text_field(:text, {class: "form-control", placeholder: "Type comment..."}) %>
+        <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i></button>
+        </div>
+    </div>
+</div>
+
+<% end %>

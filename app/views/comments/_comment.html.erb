@@ -1,0 +1,11 @@
+<div class="item">
+  <%= image_tag "user0.png", :class => ((comment.user == current_user) ? "offline" : "online"), :alt => "user image" %>
+
+  <p class="message">
+    <a class="name" href="<%= user_profile_path(comment.user.username) %>">
+      <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> <%= comment.created_at.strftime("%d %b %Y, %H:%M") %></small>
+      <%= comment.user.get_name %>
+    </a>
+    <%= comment.text %>
+  </p>
+</div>
