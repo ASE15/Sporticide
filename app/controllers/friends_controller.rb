@@ -12,12 +12,12 @@ class FriendsController < ApplicationController
       if mynewfriend != current_user && !(mynewfriend.friends.detect { |f| f.id == current_user.id })
         mynewfriend.friends << current_user
         current_user.friends << mynewfriend
-        redirect_to friends_path, :notice => 'Friend added.'
+        redirect_to user_profile_path(mynewfriend.username), :notice => 'Friend added.'
       else
         if (mynewfriend == current_user)
-          redirect_to local_users_path, :alert => 'You cant add yourself as a friend.'
+          redirect_to user_profile_path(mynewfriend.username), :alert => 'You cant add yourself as a friend.'
         else
-          redirect_to local_users_path, :alert => 'This user is already your friend.'
+          redirect_to user_profile_path(mynewfriend.username), :alert => 'This user is already your friend.'
         end
       end
   end
@@ -26,6 +26,6 @@ class FriendsController < ApplicationController
     myoldfriend = LocalUser.find(params[:id])
     myoldfriend.friends.delete(current_user)
     current_user.friends.delete(myoldfriend)
-    redirect_to friends_path, :notice => 'Friend removed.'
+    redirect_to user_profile_path(myoldfriend.username), :notice => 'Friend removed.'
   end
 end

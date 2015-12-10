@@ -18,11 +18,13 @@
     </h1>
 <% end %>
 
+<% partner = @chat.get_partner(current_user) %>
+
 <div class="row">
 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
 <div class="box box-primary direct-chat direct-chat-primary">
   <div class="box-header with-border">
-    <h3 class="box-title">Chat with <%= @chat.get_partner(current_user).get_name %></h3>
+    <h3 class="box-title">Chat with <a href="<%= user_profile_path(partner.username) %>"><%= partner.get_name %></a></h3>
 
     <div class="box-tools pull-right">
       <span data-toggle="tooltip" title="<%= @chat.messages.count %> Messages" class="badge bg-light-blue"><%= @chat.messages.count %></span>
