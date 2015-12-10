@@ -34,13 +34,14 @@
   <div class="col-md-8">
 
     <% training_i = @training.training_sessions.count %>
-    <% @training.training_sessions.reverse.each do |s| %>
-        <%= render partial: 'training_sessions/training_session', locals: {training_session:s, i: training_i} %>
-        <% training_i -= 1 %>
-    <% end %>
 
     <% if training_i == 0 %>
         <h3>No training sessions available.</h3>
+    <% else %>
+        <% @training.training_sessions.reverse.each do |s| %>
+            <%= render partial: 'training_sessions/training_session', locals: {training_session:s, i: training_i} %>
+            <% training_i -= 1 %>
+        <% end %>
     <% end %>
 
   </div>
