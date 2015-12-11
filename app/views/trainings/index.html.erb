@@ -29,6 +29,7 @@
       </thead>
       <tbody>
   <% @trainings.each do |t| %>
+      <% if not (not t.isPublic and not t.users.include?(current_user)) %>
       <tr class="table-row">
         <td><%= t.title %></td>
         <td class="sport-entry"><%= t.sport.capitalize %></td>
@@ -44,6 +45,7 @@
             <% end %>
         </td>
       </tr>
+      <% end %>
   <% end %>
       </tbody>
 </table>
