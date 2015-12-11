@@ -51,22 +51,21 @@
 $(document).ready(function() {
     var dict = [];
 
-    <% @trainings.each do |t| %>
-        <%t.training_sessions.each do |s| %>
-            var d = {};
-                <% if s.recurrence == 'never' %>
-                    d['title']= '<%=t.title%>';
-                    d['start']= '<%=s.datetime.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
+    <% @sessions.each do |s| %>
+
+        var d = {};
+            <% if s.recurrence == 'never' %>
+                d['title']= '<%=s.training.title%>';
+                d['start']= '<%=s.datetime.strftime('%Y-%m-%d %H:%M:%S')%>';
+                dict.push(d);
+            <% else%>
+                <%s.get_recurrence_dates.each do |r| %>
+                    d['title']= '<%=s.training.title%>';
+                    d['start']= '<%=r.strftime('%Y-%m-%d %H:%M:%S')%>';
                     dict.push(d);
-                <% else%>
-                    <%s.get_recurrence_dates.each do |r| %>
-                        d['title']= '<%=t.title%>';
-                        d['start']= '<%=r.to_time.strftime('%Y-%m-%d %H:%M:%S')%>';
-                        dict.push(d);
-                        var d = {};
-                    <% end %>
+                    var d = {};
                 <% end %>
-        <% end %>
+            <% end %>
     <% end %>
     $('#calendar').fullCalendar({
 
@@ -81,18 +80,7 @@ $(document).ready(function() {
 
 
     });
-// page is now ready, initialize the calendar...
 
-//    $('#calendar').fullCalendar({
-//        events: [
-//            {
-//                title  : 'event1',
-//                start  : '2015-11-28'
-//            }
-//
-//
-//        ]
-//    });
 
 });
 </script>
