@@ -19,7 +19,7 @@
       </li>
       <li class="list-group-item">
         <b>Social</b> <a class="btn btn-info pull-right btn-xs btn-social btn-twitter" href=
-        "<%="/twitter/tweet?message=Join%20us%20for%20a%20training!%20"+root_url.chop+training_path(training)%>"
+        "/twitter/tweet?message=<%=URI.encode("Join us for a training! ")%><%=URI.encode(root_url.chop+training_path(training))%>&redirect_uri=<%=URI.encode(root_url.chop+training_path(training))%>"
       ><i class="fa fa-twitter"></i>Tweet</a>
       </li>
       <% if is_own_training? @training %>
