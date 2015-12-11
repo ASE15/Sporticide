@@ -9,6 +9,27 @@ class TrainingSessionValidator < ActiveModel::Validator
     #end
     check_enddate(record)
     is_valid_enddate?(record)
+    check_distance(record)
+    check_duration(record)
+    check_location(record)
+  end
+
+  def check_distance(record)
+    if record.length.nil? or not record.length or record.length == 0
+      record.errors[:length] << "Distance must not be empty or 0"
+    end
+  end
+
+  def check_location(record)
+    if record.location.nil? or record.location.empty?
+      record.errors[:location] << "Location must not be empty"
+    end
+  end
+
+  def check_duration(record)
+    if record.duration.nil? or not record.duration or record.duration == 0
+      record.errors[:duration] << "Duration must not be empty or 0"
+    end
   end
 
   def check_enddate(record)
@@ -57,6 +78,8 @@ class TrainingSession < ActiveRecord::Base
 
   #validates :enddate, :if => :is_valid_enddate?
   validates_with TrainingSessionValidator, :on => :update
+
+  validates_with TrainingSessionValidator, :on => :create
 
   def get_connection_to(from)
     begin
