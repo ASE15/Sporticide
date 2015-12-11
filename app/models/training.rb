@@ -3,6 +3,8 @@ class Training < ActiveRecord::Base
   has_many :training_sessions, :inverse_of => :training, :dependent => :destroy
   has_many :comments, :inverse_of => :training, :dependent => :destroy
 
+  validates :title, :length => { :minimum => 1 }, allow_nil: false, allow_blank: false
+
   #has_and_belongs_to_many :users
 
   has_and_belongs_to_many(:users,
