@@ -137,7 +137,7 @@ class TrainingSession < ActiveRecord::Base
         when "weekly"
           d = self.datetime + i.weeks
         when "monthly"
-          d = self.dateimte + i.months
+          d = self.datetime + i.months
       end
       results.push(d)
     end
