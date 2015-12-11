@@ -37,7 +37,7 @@ class TransportationController < ApplicationController
 end
 
 def get_geocoordinates(address) 
- return JSON.parse(RestClient.get "https://maps.googleapis.com/maps/api/geocode/json?address="+URI.escape(address))
+  return JSON.parse(RestClient.get "https://maps.googleapis.com/maps/api/geocode/json?address="+URI.escape(address))
 end
 
 def get_location(geocoordinates) 

@@ -1,28 +1,64 @@
 <% if(!current_user.place.nil? && !current_user.place.empty?) %>
   <script>
-      $.ajax("/transportation/connection?from=<%= URI.encode(current_user.place)%>&to=<%=URI.encode(training_session.location)%>&dateToArrival=<%=training_session.datetime.strftime("%Y-%m-%d")%>&timeAtArrival=<%=training_session.datetime.strftime("%H-%M")%>")
-        .done(function(data) {
-          var schedule = $('#schedule-<%=training_session.id%>');
-          if(data === null) {
-            schedule.append("<div>You live directly at this place.</div>");
-            schedule.find('.schedule-loader-img').remove();
-            schedule.find('.schedule-link').empty();
-          }
-          else {
-            var table = $("<table class='table'></table>");
-            var departure = $("<tr><th>Departure</th><td>" +  data.from.station.name + " at " + data.from.departure + "</td></tr>" );
-            var arrival = $("<tr><th>Arrival</th><td>" + data.to.station.name + " at " + data.to.arrival + "</td></tr>");
-            var time = $("<tr><th>Traveling time</th><td>" + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes</td></tr>");
-            var link = $("<tr><th>SBB</th><td>To get a more precise schedule visit <a href='http://fahrplan.sbb.ch/bin/query.exe/dn'>SBB homepage</a></td></tr>");
-            var img = schedule.find(".schedule-loader-img")
-            table.insertAfter(img);
-            table.append(departure);
-            table.append(arrival);
-            table.append(time);
-            table.append(link);
-            schedule.find('.schedule-loader-img').remove();
-          }
-        });
+      function error_<%=training_session.id%>(jqXHR) {
+        var schedule = $('#schedule-<%=training_session.id%>');
+        schedule.append("<div class=\"schedule-error\">Could not fetch a connection from SBB server. Please try again later. <a onclick=\"retry_<%=training_session.id%>()\">Retry</a></div>");
+        schedule.find('.schedule-loader-img').remove();
+        schedule.find('.schedule-link').empty();
+      }
+      
+      function retry_<%=training_session.id%>() {
+        var schedule = $('#schedule-<%=training_session.id%>');
+        schedule.find('.schedule-error').remove();
+        schedule.append("<img class=\"schedule-loader-img\" src=\"/assets/ajax-loader.gif\" alt=\"loading...\">");
+        ajax_<%=training_session.id%>();
+      }
+      
+      function ajax_<%=training_session.id%>() {
+        $.ajax("https://maps.googleapis.com/maps/api/geocode/json?address=<%=URI.encode(current_user.place)%>")
+          .done(function(from) {
+            from = from.results[0].geometry.location;
+            $.ajax("https://maps.googleapis.com/maps/api/geocode/json?address=<%=URI.encode(training_session.location)%>")
+            .done(function(to) {
+              to = to.results[0].geometry.location;
+              $.ajax("http://transport.opendata.ch/v1/locations?x="+from.lat+"&y="+from.lng)
+              .done(function(from_location) {
+                  from_location = from_location.stations[0];
+                  $.ajax("http://transport.opendata.ch/v1/locations?x="+to.lat+"&y="+to.lng)
+                  .done(function(to_location) {
+                    to_location = to_location.stations[0];
+                    $.ajax("http://transport.opendata.ch/v1/connections?from="+encodeURI(from_location.name)+"&to="+encodeURI(to_location.name)+"&limit=1&isArrivalTime=0&date=<%=training_session.datetime.strftime("%Y-%m-%d")%>&time=<%=training_session.datetime.strftime("%H-%M")%>")
+                    .done(function(connection) {
+                      console.log(connection);
+                      var schedule = $('#schedule-<%=training_session.id%>');
+                      if(connection.connections.length == 0) {
+                        schedule.append("<div>Could not find a connection. You probably live directly at this place.</div>");
+                        schedule.find('.schedule-loader-img').remove();
+                        schedule.find('.schedule-link').empty();
+                      }
+                      else {
+                        var data = connection.connections[0];
+                        var table = $("<table class='table'></table>");
+                        var departure = $("<tr><th>Departure</th><td>" +  data.from.station.name + " at " + data.from.departure + "</td></tr>" );
+                        var arrival = $("<tr><th>Arrival</th><td>" + data.to.station.name + " at " + data.to.arrival + "</td></tr>");
+                        var time = $("<tr><th>Traveling time</th><td>" + (data.to.arrivalTimestamp-data.from.departureTimestamp) / 60 + " Minutes</td></tr>");
+                        var link = $("<tr><th>SBB</th><td>To get a more precise schedule visit <a href='http://fahrplan.sbb.ch/bin/query.exe/dn'>SBB homepage</a></td></tr>");
+                        var img = schedule.find(".schedule-loader-img")
+                        table.insertAfter(img);
+                        table.append(departure);
+                        table.append(arrival);
+                        table.append(time);
+                        table.append(link);
+                        schedule.find('.schedule-loader-img').remove();
+                      }
+                    }).fail(function(jqXHR) { error_<%=training_session.id%>(jqXHR); });
+                  }).fail(function(jqXHR) { error_<%=training_session.id%>(jqXHR); });
+              }).fail(function(jqXHR) { error_<%=training_session.id%>(jqXHR); });
+            }).fail(function(jqXHR) { error_<%=training_session.id%>(jqXHR); });
+          }).fail(function(jqXHR) { error_<%=training_session.id%>(jqXHR); });
+        }
+        
+        ajax_<%=training_session.id%>();
   </script>
 <% end %>
 
