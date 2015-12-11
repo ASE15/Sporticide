@@ -78,7 +78,7 @@ class TrainingSessionsController < ApplicationController
   def destroy
     @training = Training.find(params[:training_id])
     @session = TrainingSession.find(params[:id])
-    @session.destroy
+
     @system_log = @session.system_logs.build
     @system_log.training_session_id = @session.id
     @system_log.log = "A training session for " + @training.title + " deleted!"
@@ -93,6 +93,7 @@ class TrainingSessionsController < ApplicationController
       @training_notifier.isRead = false
       @training_notifier.save
     end
+    @session.destroy
     redirect_to @training
   end
 
