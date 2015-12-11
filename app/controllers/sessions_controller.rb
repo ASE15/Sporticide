@@ -49,7 +49,10 @@ class SessionsController < ApplicationController
 	# this user name.
 	begin
 		@user = User.find(identity.nickname)
-		local_user = LocalUser.find(username: identity.nickname)
+		local_user = LocalUser.find_by(username: identity.nickname)
+    puts("User and local_user");
+    puts(@user);
+    puts(local_user);
 
 		if !@user || !local_user	
 			redirect_to new_session_path, :alert => "Could not find " + identity.nickname
@@ -61,6 +64,7 @@ class SessionsController < ApplicationController
 			return
 		end
 		
+    puts(local_user.password)
 		sign_in local_user.password
 	rescue
 		session[:user] = {}
@@ -108,9 +112,9 @@ class SessionsController < ApplicationController
   end
   
   def sign_in(password)
-	session[:user_id] = @user.username
-	session[:passwd] = password
-	redirect_to root_path, :notice => "Logged in!"
+    session[:user_id] = @user.username
+    session[:passwd] = password
+    redirect_to root_path, :notice => "Logged in!"
   end
   
   def authenticated_user?(password)
