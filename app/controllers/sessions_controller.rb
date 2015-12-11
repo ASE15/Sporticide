@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
 	# this user name.
 	begin
 		@user = User.find(identity.nickname)
-		local_user = LocalUser.find_by(username: identity.nickname)
+		local_user = LocalUser.find(identity.nickname)
 
 		if @user && local_user	
 			redirect_to new_session_path, :alert => "Could not find " + identity.nickname
