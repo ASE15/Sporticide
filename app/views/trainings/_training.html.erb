@@ -95,7 +95,7 @@
       <% end %>
     </ul>
 
-    <% if training.owner == current_user && !(current_user.friends.nil?) %>
+    <% if training.owner == current_user && !(current_user.friends.nil?) && current_user.friends.count > 0 %>
         <div class="dropdown">
           <button class="btn btn-block btn-success dropdown-toggle" data-toggle="dropdown">Invite a friend to training <span class="caret"></span></button>
           <ul class ="dropdown-menu">
