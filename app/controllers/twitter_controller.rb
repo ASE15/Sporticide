@@ -37,7 +37,7 @@ class TwitterController < ApplicationController
 	  if(error)
       redirect_to redirect, alert: error
 	  else
-      redirect_to redirect, notice: "You successfully tweeted about this auction!"
+      redirect_to redirect, notice: "You successfully tweeted about this training!"
 	  end
   end
 end
