@@ -16,7 +16,7 @@ class TwitterController < ApplicationController
     
     # If we couldn't find an identity then we login again
     if(identity.nil?) 
-	    session[:session_back] = "/twitter/tweet?message=" + URI.encode(tweet)
+	    session[:session_back] = "/twitter/tweet?message=" + URI.encode(tweet) + "&redirect_uri=" + URI.encode(redirect);
       redirect_to "/auth/twitter"
       return
     end
